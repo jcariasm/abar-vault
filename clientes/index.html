@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repositorio de documentos para clientes | Abargon</title>
+    <link rel="stylesheet" href="/clientes/styles.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <a class="back" href="/">Volver al laboratorio</a>
+        <div class="brand">AB</div>
+        <p>ABARGON CLIENT DOCS</p>
+        <h1>Repositorio de documentos para clientes.</h1>
+        <p class="lede">
+          Un punto de acceso ordenado para entregables, guias, reportes y materiales de trabajo compartibles.
+        </p>
+      </header>
+
+      <section class="notice">
+        <strong>Acceso</strong>
+        <span>
+          Esta version es publica por enlace. Para documentos confidenciales, conviene activar proteccion por usuario, contrasena o un flujo privado de entrega.
+        </span>
+      </section>
+
+      <section class="toolbar" aria-label="Controles de documentos">
+        <label class="search">
+          <span aria-hidden="true">Search</span>
+          <input id="search-input" placeholder="Buscar por cliente, tema o etiqueta" />
+        </label>
+        <select id="client-filter" aria-label="Filtrar por cliente">
+          <option value="all">Todos los clientes</option>
+        </select>
+      </section>
+
+      <section class="documents" id="documents" aria-label="Documentos disponibles"></section>
+    </main>
+    <script src="/clientes/portal.js" type="module"></script>
+  </body>
+</html>

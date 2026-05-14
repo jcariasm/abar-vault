@@ -1,0 +1,14 @@
+{
+  "documents": [
+    {
+      "title": "Bienvenida al repositorio de clientes",
+      "client": "General",
+      "category": "Guia",
+      "fileType": "HTML",
+      "description": "Documento inicial que explica como se organizan entregables, reportes y materiales compartibles.",
+      "href": "/library/client-documents/general/bienvenida.html",
+      "date": "2026-05-13",
+      "tags": ["inicio", "clientes", "documentos"]
+    }
+  ]
+}

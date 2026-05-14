@@ -7,6 +7,8 @@ Biblioteca web para publicar documentos, prototipos y simuladores interactivos c
 - `library/documents`: PDFs, presentaciones exportadas, documentos y material descargable.
 - `library/simulators`: simuladores HTML, apps estáticas o carpetas con recursos interactivos.
 - `library/manifest.json`: índice editable de todo lo que aparece en la página.
+- `clientes`: portal público de documentos para clientes.
+- `library/client-documents`: documentos y manifiesto del portal de clientes.
 - `src`: interfaz del catálogo.
 
 ## Uso local
