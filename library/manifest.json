@@ -1,0 +1,20 @@
+{
+  "title": "Simuladores interactivos",
+  "description": "Documentos, prototipos y experiencias interactivas listas para compartir.",
+  "items": [
+    {
+      "title": "Cómo agregar contenido",
+      "type": "document",
+      "description": "Guía breve para registrar documentos y simuladores dentro del manifiesto.",
+      "href": "/library/documents/como-agregar-contenido.html",
+      "tags": ["guía", "referencia"]
+    },
+    {
+      "title": "Ejemplo de simulador",
+      "type": "simulator",
+      "description": "Mini simulador incluido para comprobar que las experiencias interactivas se abren correctamente.",
+      "href": "/library/simulators/ejemplo/index.html",
+      "tags": ["simulador", "interactivo"]
+    }
+  ]
+}

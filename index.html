@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simuladores interactivos</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="kicker">
+            <span aria-hidden="true">[ ]</span>
+            Biblioteca viva
+          </div>
+          <h1 id="library-title">Simuladores interactivos</h1>
+          <p id="library-description">Documentos, prototipos y experiencias interactivas listas para compartir.</p>
+        </div>
+      </section>
+
+      <section class="toolbar" aria-label="Controles de biblioteca">
+        <label class="search">
+          <span aria-hidden="true">⌕</span>
+          <input id="search-input" placeholder="Buscar por nombre, tema o etiqueta" />
+        </label>
+        <div class="segments" role="tablist" aria-label="Filtrar por tipo">
+          <button class="active" data-filter="all">Todo</button>
+          <button data-filter="document">Documentos</button>
+          <button data-filter="simulator">Simuladores</button>
+        </div>
+      </section>
+
+      <section class="grid" id="library-grid" aria-label="Contenido publicado"></section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
