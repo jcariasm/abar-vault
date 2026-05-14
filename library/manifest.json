@@ -1,7 +1,14 @@
 {
   "title": "Simuladores interactivos",
-  "description": "Documentos, prototipos y experiencias interactivas listas para compartir.",
+  "description": "Modelos, documentos y experiencias interactivas para convertir decisiones digitales en escenarios medibles.",
   "items": [
+    {
+      "title": "Simulador de ROI en marketing digital",
+      "type": "simulator",
+      "description": "Calcula inversión, clientes, CAC, ingresos y retorno estimado para una campaña orientada a adquisición rentable.",
+      "href": "/library/simulators/roi-marketing/index.html",
+      "tags": ["marketing", "roi", "performance", "pesos"]
+    },
     {
       "title": "Cómo agregar contenido",
       "type": "document",

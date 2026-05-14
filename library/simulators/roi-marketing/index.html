@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador de ROI en marketing digital | Abargon</title>
+    <style>
+      :root {
+        --ink: #001b22;
+        --deep: #003249;
+        --signal: #007ea7;
+        --mint: #9ad1d4;
+        --wash: #eaf4f2;
+        --lime: #b7ff6a;
+        --copy: #33484c;
+        --line: rgba(0, 27, 34, 0.16);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          linear-gradient(90deg, rgba(0, 27, 34, 0.06) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(154, 209, 212, 0.5), rgba(234, 244, 242, 0) 520px),
+          var(--wash);
+        background-size: 42px 42px, auto, auto;
+      }
+
+      main {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 44px 0 56px;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: end;
+        padding-bottom: 30px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .kicker {
+        color: var(--signal);
+        font-weight: 800;
+        margin: 0 0 14px;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin: 0;
+        font-size: clamp(42px, 7vw, 88px);
+        line-height: 0.94;
+        letter-spacing: 0;
+      }
+
+      header p {
+        max-width: 650px;
+        margin: 22px 0 0;
+        color: var(--copy);
+        font-size: 19px;
+        line-height: 1.5;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 84px;
+        height: 84px;
+        background: var(--ink);
+        color: var(--lime);
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(300px, 0.95fr) minmax(340px, 1.2fr);
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .panel,
+      .results {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.84);
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      .control {
+        display: grid;
+        gap: 10px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .control:last-child {
+        border-bottom: 0;
+      }
+
+      label {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--copy);
+        font-weight: 750;
+      }
+
+      label output {
+        color: var(--ink);
+      }
+
+      input {
+        width: 100%;
+        accent-color: var(--signal);
+      }
+
+      .results {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+      }
+
+      .metric {
+        background: rgba(255, 255, 255, 0.9);
+        min-height: 156px;
+        padding: 24px;
+      }
+
+      .metric.feature {
+        grid-column: 1 / -1;
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      .metric span {
+        color: var(--signal);
+        display: block;
+        font-size: 13px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .metric.feature span {
+        color: var(--lime);
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 16px;
+        font-size: clamp(34px, 5vw, 64px);
+        line-height: 1;
+      }
+
+      .metric p {
+        margin: 12px 0 0;
+        color: var(--copy);
+        line-height: 1.45;
+      }
+
+      .metric.feature p {
+        color: #d8e9e7;
+      }
+
+      .bar {
+        grid-column: 1 / -1;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 24px;
+      }
+
+      .bar-track {
+        height: 20px;
+        background: #d9e7e4;
+        margin-top: 18px;
+      }
+
+      .bar-fill {
+        width: 0;
+        height: 100%;
+        max-width: 100%;
+        background: var(--lime);
+        transition: width 180ms ease;
+      }
+
+      @media (max-width: 860px) {
+        header,
+        .workspace,
+        .results {
+          grid-template-columns: 1fr;
+        }
+
+        .brand-mark {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <p class="kicker">ABARGON LABS / PERFORMANCE</p>
+          <h1>Marketing que se mide en pesos.</h1>
+          <p>
+            Ajusta una campaña hipotética para estimar clientes, CAC, ingresos y retorno. Sirve como conversación inicial, no como promesa financiera.
+          </p>
+        </div>
+        <div class="brand-mark" aria-hidden="true">AB</div>
+      </header>
+
+      <section class="workspace">
+        <form class="panel">
+          <div class="control">
+            <label for="investment">Inversión mensual <output id="investmentOut"></output></label>
+            <input id="investment" type="range" min="25000" max="750000" step="5000" value="120000" />
+          </div>
+          <div class="control">
+            <label for="cpc">Costo por clic <output id="cpcOut"></output></label>
+            <input id="cpc" type="range" min="4" max="120" step="1" value="28" />
+          </div>
+          <div class="control">
+            <label for="conversion">Conversión a cliente <output id="conversionOut"></output></label>
+            <input id="conversion" type="range" min="0.5" max="12" step="0.1" value="3.2" />
+          </div>
+          <div class="control">
+            <label for="ticket">Ticket promedio <output id="ticketOut"></output></label>
+            <input id="ticket" type="range" min="500" max="50000" step="500" value="9500" />
+          </div>
+          <div class="control">
+            <label for="margin">Margen bruto <output id="marginOut"></output></label>
+            <input id="margin" type="range" min="10" max="90" step="1" value="42" />
+          </div>
+        </form>
+
+        <section class="results" aria-label="Resultados del escenario">
+          <article class="metric feature">
+            <span>ROI estimado</span>
+            <strong id="roi">0%</strong>
+            <p id="verdict">Ajusta los supuestos para construir un escenario viable.</p>
+          </article>
+          <article class="metric">
+            <span>Clientes estimados</span>
+            <strong id="customers">0</strong>
+            <p>Clientes atribuibles al presupuesto del escenario.</p>
+          </article>
+          <article class="metric">
+            <span>CAC</span>
+            <strong id="cac">$0</strong>
+            <p>Costo de adquisición estimado por cliente.</p>
+          </article>
+          <article class="metric">
+            <span>Ingresos</span>
+            <strong id="revenue">$0</strong>
+            <p>Venta bruta mensual estimada.</p>
+          </article>
+          <article class="metric">
+            <span>Utilidad bruta</span>
+            <strong id="profit">$0</strong>
+            <p>Contribución antes de costos operativos no incluidos.</p>
+          </article>
+          <article class="bar">
+            <strong>Eficiencia del escenario</strong>
+            <div class="bar-track"><div class="bar-fill" id="barFill"></div></div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const money = new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        maximumFractionDigits: 0
+      });
+      const number = new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 });
+
+      const ids = ['investment', 'cpc', 'conversion', 'ticket', 'margin'];
+      const inputs = Object.fromEntries(ids.map((id) => [id, document.querySelector(`#${id}`)]));
+
+      function calculate() {
+        const investment = Number(inputs.investment.value);
+        const cpc = Number(inputs.cpc.value);
+        const conversion = Number(inputs.conversion.value) / 100;
+        const ticket = Number(inputs.ticket.value);
+        const margin = Number(inputs.margin.value) / 100;
+
+        const clicks = investment / cpc;
+        const customers = Math.max(0, Math.round(clicks * conversion));
+        const revenue = customers * ticket;
+        const grossProfit = revenue * margin;
+        const roi = investment > 0 ? ((grossProfit - investment) / investment) * 100 : 0;
+        const cac = customers > 0 ? investment / customers : 0;
+
+        document.querySelector('#investmentOut').textContent = money.format(investment);
+        document.querySelector('#cpcOut').textContent = money.format(cpc);
+        document.querySelector('#conversionOut').textContent = `${inputs.conversion.value}%`;
+        document.querySelector('#ticketOut').textContent = money.format(ticket);
+        document.querySelector('#marginOut').textContent = `${inputs.margin.value}%`;
+
+        document.querySelector('#roi').textContent = `${number.format(roi)}%`;
+        document.querySelector('#customers').textContent = number.format(customers);
+        document.querySelector('#cac').textContent = money.format(cac);
+        document.querySelector('#revenue').textContent = money.format(revenue);
+        document.querySelector('#profit').textContent = money.format(grossProfit);
+
+        const verdict =
+          roi >= 120
+            ? 'Escenario atractivo: hay espacio para escalar con control de CAC.'
+            : roi >= 35
+              ? 'Escenario viable: conviene optimizar conversiones antes de escalar.'
+              : 'Escenario frágil: el CAC o el margen requieren rediseño.';
+
+        document.querySelector('#verdict').textContent = verdict;
+        document.querySelector('#barFill').style.width = `${Math.max(4, Math.min(100, roi / 2))}%`;
+      }
+
+      Object.values(inputs).forEach((input) => input.addEventListener('input', calculate));
+      calculate();
+    </script>
+  </body>
+</html>
