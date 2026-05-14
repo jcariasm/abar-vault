@@ -1,6 +1,16 @@
 {
   "documents": [
     {
+      "title": "Clientes — Abargon",
+      "client": "General",
+      "category": "Cartera institucional",
+      "fileType": "HTML",
+      "description": "Página interactiva con cartera de clientes por sector, búsqueda, resumen y vista alfabética.",
+      "href": "/library/client-documents/general/clientes-abargon.html",
+      "date": "2026-05-14",
+      "tags": ["clientes", "cartera", "sectores", "abargon"]
+    },
+    {
       "title": "Bienvenida al repositorio de clientes",
       "client": "General",
       "category": "Guia",
