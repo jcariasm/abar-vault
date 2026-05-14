@@ -145,6 +145,10 @@
         background: linear-gradient(180deg, #fff, #fafafa);
         padding: 22px;
       }
+      .card.has-media {
+        border-color: rgba(0, 122, 255, .28);
+        background: linear-gradient(180deg, #f5fbff, #fff);
+      }
       .card h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; line-height: 1.05; }
       .card p { margin: 12px 0 0; color: #444; line-height: 1.45; }
       .meta {
@@ -159,6 +163,20 @@
         color: #666;
         padding: 4px 9px;
         font-size: 12px;
+      }
+      .more-info {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        margin-top: 16px;
+        border: 1px solid rgba(0, 122, 255, .28);
+        border-radius: 999px;
+        background: #eaf6ff;
+        color: #06c;
+        padding: 0 14px;
+        font-weight: 700;
+        cursor: pointer;
       }
       .alpha-list {
         columns: 3 260px;
@@ -182,6 +200,56 @@
       .notes h2 { font-size: 34px; margin-bottom: 14px; }
       .notes li { margin: 10px 0; }
       .hidden { display: none; }
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: none;
+        background: rgba(0,0,0,.72);
+        padding: 24px;
+        overflow: auto;
+      }
+      .modal.open { display: block; }
+      .modal-panel {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        border-radius: 28px;
+        background: #fff;
+        padding: 22px;
+      }
+      .modal-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: start;
+        border-bottom: 1px solid rgba(0,0,0,.08);
+        padding-bottom: 16px;
+      }
+      .modal-head h2 {
+        font-size: clamp(28px, 4vw, 52px);
+      }
+      .close {
+        min-width: 42px;
+        min-height: 42px;
+        border: 0;
+        border-radius: 999px;
+        background: #f5f5f7;
+        cursor: pointer;
+      }
+      .shot-group { padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,.08); }
+      .shot-group h3 { margin: 0 0 12px; font-size: 18px; letter-spacing: -.01em; }
+      .shots {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 12px;
+      }
+      .shots img {
+        width: 100%;
+        height: auto;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 16px;
+        background: #f5f5f7;
+      }
       @media (max-width: 760px) {
         .hero { padding-top: 64px; }
         .stats, .controls, .section-head { grid-template-columns: 1fr; }
@@ -234,6 +302,18 @@
         </ul>
       </section>
     </main>
+    <div class="modal" id="evidenceModal" aria-hidden="true">
+      <div class="modal-panel">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">Screenshots del curriculum</p>
+            <h2 id="modalTitle">Más info</h2>
+          </div>
+          <button class="close" id="closeModal" aria-label="Cerrar">x</button>
+        </div>
+        <div id="modalBody"></div>
+      </div>
+    </div>
 
     <script>
       const sectors = [
@@ -373,14 +453,52 @@
         ]}
       ];
 
+      let evidenceEntries = [];
       const state = { query: '', view: 'sectors', sector: 'all' };
       const content = document.querySelector('#content');
       const sectorNav = document.querySelector('#sectorNav');
       const search = document.querySelector('#search');
       const viewButtons = [...document.querySelectorAll('[data-view]')];
+      const evidenceModal = document.querySelector('#evidenceModal');
+      const modalTitle = document.querySelector('#modalTitle');
+      const modalBody = document.querySelector('#modalBody');
+      const closeModal = document.querySelector('#closeModal');
 
       function normalize(value) {
         return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      }
+
+      function compact(value) {
+        return normalize(value).replace(/[^a-z0-9]/g, '');
+      }
+
+      function evidenceFor(name) {
+        const target = compact(name);
+        if (!target || !evidenceEntries.length) return null;
+        return evidenceEntries.find((entry) => {
+          const key = compact(entry.name);
+          return key.length > 4 && (target.includes(key) || key.includes(target));
+        });
+      }
+
+      function syncEvidenceSector() {
+        const existing = new Set(sectors.flatMap((sector) => sector.clients.map((client) => compact(client[0]))));
+        const missing = evidenceEntries
+          .filter((entry) => !existing.has(compact(entry.name)) && !evidenceForExisting(entry.name))
+          .map((entry) => [entry.name, 'Proyecto incluido en el Curriculum Abargon.pptx con screenshots disponibles.', 'Curriculum PPTX']);
+        const index = sectors.findIndex((sector) => sector.id === 'pptx-evidence');
+        if (index >= 0) sectors.splice(index, 1);
+        if (missing.length) {
+          sectors.push({ id: 'pptx-evidence', title: 'Curriculum PPTX con screenshots', clients: missing });
+        }
+      }
+
+      function evidenceForExisting(name) {
+        const target = compact(name);
+        return sectors.some((sector) => sector.id !== 'pptx-evidence' && sector.clients.some((client) => {
+          const key = compact(client[0]);
+          return key.length > 4 && target.length > 4 && (target.includes(key) || key.includes(target));
+        }));
       }
 
       function allClients() {
@@ -407,16 +525,46 @@
       }
 
       function card(client, sector) {
+        const evidence = evidenceFor(client[0]);
         return `
-          <article class="card">
+          <article class="card ${evidence ? 'has-media' : ''}">
             <h3>${client[0]}</h3>
             <p>${client[1]}</p>
             <div class="meta">
               <span>${sector}</span>
               ${client[2] ? `<span>${client[2]}</span>` : ''}
             </div>
+            ${evidence ? `<button class="more-info" data-evidence="${evidence.key}">Más info</button>` : ''}
           </article>
         `;
+      }
+
+      function attachEvidenceButtons() {
+        content.querySelectorAll('[data-evidence]').forEach((button) => {
+          button.addEventListener('click', () => openEvidence(button.dataset.evidence));
+        });
+      }
+
+      function openEvidence(key) {
+        const entry = evidenceEntries.find((item) => item.key === key);
+        if (!entry) return;
+        modalTitle.textContent = entry.name;
+        modalBody.innerHTML = entry.slides.map((slide) => `
+          <section class="shot-group">
+            <h3>${slide.title} · slide ${slide.slide}</h3>
+            <div class="shots">
+              ${slide.images.map((src) => `<a href="${src}" target="_blank" rel="noreferrer"><img src="${src}" loading="lazy" alt="${entry.name} screenshot" /></a>`).join('')}
+            </div>
+          </section>
+        `).join('');
+        evidenceModal.classList.add('open');
+        evidenceModal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeEvidence() {
+        evidenceModal.classList.remove('open');
+        evidenceModal.setAttribute('aria-hidden', 'true');
+        modalBody.innerHTML = '';
       }
 
       function renderSectorNav() {
@@ -442,6 +590,7 @@
             <div class="grid">${sector.clients.map((client) => card(client, sector.title)).join('')}</div>
           </section>
         `).join('');
+        attachEvidenceButtons();
       }
 
       function renderAlphabetical() {
@@ -484,6 +633,23 @@
           render();
         });
       });
+
+      closeModal.addEventListener('click', closeEvidence);
+      evidenceModal.addEventListener('click', (event) => {
+        if (event.target === evidenceModal) closeEvidence();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeEvidence();
+      });
+
+      fetch('/library/client-documents/general/clientes-abargon/screenshots-manifest.json')
+        .then((response) => response.json())
+        .then((data) => {
+          evidenceEntries = data.entries || [];
+          syncEvidenceSector();
+          render();
+        })
+        .catch(() => render());
 
       render();
     </script>
