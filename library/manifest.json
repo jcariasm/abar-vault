@@ -3,6 +3,13 @@
   "description": "Modelos, documentos y experiencias interactivas para convertir decisiones digitales en escenarios medibles.",
   "items": [
     {
+      "title": "Creator Economy Revenue Benchmarks",
+      "type": "simulator",
+      "description": "Artifact interactivo para comparar modelos de monetización y mezcla de ingresos en creadores y compañías de medios.",
+      "href": "/library/simulators/creator-economy-benchmarks/index.html",
+      "tags": ["creator economy", "monetización", "benchmarks", "revenue"]
+    },
+    {
       "title": "Simulador de ROI en marketing digital",
       "type": "simulator",
       "description": "Calcula inversión, clientes, CAC, ingresos y retorno estimado para una campaña orientada a adquisición rentable.",

@@ -5,3 +5,4 @@ dist/
 .env.local
 *.log
 scratch_pptx_extract/
+scratch_*

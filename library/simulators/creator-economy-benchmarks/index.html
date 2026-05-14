@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creator Economy Revenue Benchmarks | Abargon Labs</title>
+    <style>
+      :root {
+        color: #001b22;
+        background: #eaf4f2;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --ink: #001b22;
+        --deep: #003249;
+        --signal: #007ea7;
+        --mint: #9ad1d4;
+        --wash: #eaf4f2;
+        --lime: #b7ff6a;
+        --copy: #33484c;
+        --line: rgba(0, 27, 34, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          linear-gradient(90deg, rgba(0, 27, 34, 0.06) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(154, 209, 212, 0.48), rgba(234, 244, 242, 0) 520px),
+          var(--wash);
+        background-size: 42px 42px, auto, auto;
+      }
+
+      main {
+        width: min(1320px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 34px 0 56px;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: end;
+        padding: 20px 0 26px;
+      }
+
+      .back {
+        color: var(--signal);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .kicker {
+        margin: 44px 0 14px;
+        color: var(--signal);
+        font-weight: 850;
+      }
+
+      h1 {
+        max-width: 900px;
+        margin: 0;
+        font-size: clamp(42px, 7vw, 86px);
+        line-height: 0.94;
+        letter-spacing: 0;
+      }
+
+      p {
+        max-width: 760px;
+        color: var(--copy);
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        background: var(--ink);
+        color: #ffffff;
+        padding: 0 16px;
+        text-decoration: none;
+        font-weight: 800;
+      }
+
+      .action.secondary {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.82);
+        color: var(--ink);
+      }
+
+      .frame-wrap {
+        height: min(78vh, 880px);
+        min-height: 620px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        box-shadow: 0 24px 60px rgba(0, 27, 34, 0.12);
+      }
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: #ffffff;
+      }
+
+      .note {
+        margin: 12px 0 0;
+        color: #5a7277;
+        font-size: 14px;
+      }
+
+      @media (max-width: 760px) {
+        header {
+          grid-template-columns: 1fr;
+        }
+
+        .frame-wrap {
+          height: 72vh;
+          min-height: 520px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <a class="back" href="/">Volver al catálogo</a>
+          <p class="kicker">ABARGON LABS / ARTIFACT</p>
+          <h1>Creator Economy Revenue Benchmarks.</h1>
+          <p>
+            Análisis interactivo para comparar modelos de monetización, rangos de ingreso y patrones de diversificación en creadores y compañías de medios.
+          </p>
+          <div class="actions">
+            <a class="action" href="https://claude.ai/public/artifacts/f83d3473-c3cc-4b32-85f5-0c542d747d18" target="_blank" rel="noreferrer">Abrir artifact original</a>
+            <a class="action secondary" href="https://www.claudeusercontent.com/artifact/f83d3473-c3cc-4b32-85f5-0c542d747d18?domain=&errorReportingMode=parent&formattedSpreadsheets=true" target="_blank" rel="noreferrer">Abrir vista directa</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="frame-wrap" aria-label="Artifact embebido">
+        <iframe
+          title="Creator Economy Revenue Benchmarks"
+          src="https://claude.ai/public/artifacts/f83d3473-c3cc-4b32-85f5-0c542d747d18"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allow="fullscreen; clipboard-write"
+        ></iframe>
+      </section>
+      <p class="note">
+        Si Claude bloquea la vista embebida por verificación de seguridad, usa el botón “Abrir artifact original”.
+      </p>
+    </main>
+  </body>
+</html>
