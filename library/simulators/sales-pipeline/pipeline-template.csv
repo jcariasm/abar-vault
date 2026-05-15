@@ -1,0 +1,7 @@
+id,lead,tema,monto,ponderado,semana
+1,as,Notarios / ADN,40000000,20,actual
+2,jc,KIO Maghandi,40000000,15,actual
+3,as,USA,30000000,10,actual
+1,as,Notarios / ADN,40000000,20,anterior
+2,jc,KIO Maghandi,40000000,10,anterior
+3,as,USA,30000000,10,anterior

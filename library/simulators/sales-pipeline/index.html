@@ -30,7 +30,7 @@
     <div id="root"><div class="loading">Cargando pipeline...</div></div>
 
     <script type="text/babel">
-      const { useState, useMemo, useCallback } = React;
+      const { useState, useMemo, useCallback, useEffect } = React;
       const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } = Recharts;
 
       const prevWeek = {
@@ -87,6 +87,13 @@
         { id: "20", lead: "ll", tema: "Mario", monto: 0, ponderado: 0, montoTD: 0 },
       ];
 
+      const SHEET_STORAGE_KEY = "abargon-pipeline-sheet-url";
+      const sheetTemplate = [
+        ["id", "lead", "tema", "monto", "ponderado", "semana"],
+        ["1", "as", "Notarios / ADN", "40000000", "20", "actual"],
+        ["1", "as", "Notarios / ADN", "40000000", "20", "anterior"],
+      ];
+
       const F = "Helvetica, 'Helvetica Neue', sans-serif";
       const fmt = (n) => {
         if (Math.abs(n) >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
@@ -96,6 +103,94 @@
       const fmtN = (n) => `$${Number(n).toLocaleString("es-MX")}`;
       const fmtDelta = (n) => n > 0 ? `+${fmt(n)}` : n < 0 ? fmt(n) : "-";
       const fmtDeltaPp = (n) => n > 0 ? `+${n}pp` : n < 0 ? `${n}pp` : "";
+
+      function parseNumber(value) {
+        if (value === undefined || value === null) return 0;
+        const cleaned = String(value).replace(/[$,%\s]/g, "").replace(/,/g, "");
+        return Number(cleaned) || 0;
+      }
+
+      function parseCsv(text) {
+        const rows = [];
+        let row = [];
+        let cell = "";
+        let quoted = false;
+        for (let i = 0; i < text.length; i += 1) {
+          const char = text[i];
+          const next = text[i + 1];
+          if (char === '"' && quoted && next === '"') {
+            cell += '"';
+            i += 1;
+          } else if (char === '"') {
+            quoted = !quoted;
+          } else if (char === "," && !quoted) {
+            row.push(cell);
+            cell = "";
+          } else if ((char === "\n" || char === "\r") && !quoted) {
+            if (char === "\r" && next === "\n") i += 1;
+            row.push(cell);
+            if (row.some((value) => value.trim() !== "")) rows.push(row);
+            row = [];
+            cell = "";
+          } else {
+            cell += char;
+          }
+        }
+        row.push(cell);
+        if (row.some((value) => value.trim() !== "")) rows.push(row);
+        return rows;
+      }
+
+      function normalizeHeader(value) {
+        return String(value || "")
+          .trim()
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9]+/g, "");
+      }
+
+      function csvToPipeline(text) {
+        const rows = parseCsv(text);
+        if (rows.length < 2) throw new Error("La hoja no tiene filas de datos.");
+        const headers = rows[0].map(normalizeHeader);
+        const get = (row, names) => {
+          const idx = headers.findIndex((header) => names.includes(header));
+          return idx >= 0 ? row[idx] : "";
+        };
+        const current = [];
+        const previous = {};
+        rows.slice(1).forEach((row, index) => {
+          const tema = String(get(row, ["tema", "oportunidad", "deal", "cliente", "nombre"]) || "").trim();
+          if (!tema) return;
+          const monto = parseNumber(get(row, ["monto", "montotd", "pipeline", "pipe", "valor"]));
+          const ponderado = Math.min(100, Math.max(0, parseNumber(get(row, ["ponderado", "pond", "probabilidad", "prob", "porcentaje"]))));
+          const montoTDFromSheet = parseNumber(get(row, ["montoponderado", "piponderado", "pipetd", "forecast", "montototalponderado"]));
+          const montoTD = montoTDFromSheet || Math.round((monto * ponderado) / 100);
+          const lead = String(get(row, ["lead", "owner", "responsable"]) || "").trim().toLowerCase();
+          const id = String(get(row, ["id", "clave"]) || index + 1).trim();
+          const semana = normalizeHeader(get(row, ["semana", "periodo", "version", "snapshot"]));
+          const deal = { id, lead, tema, monto, ponderado, montoTD };
+          if (["anterior", "previa", "prev", "previous", "lastweek", "semanaanterior"].includes(semana)) {
+            previous[tema] = { monto, ponderado, montoTD };
+          } else {
+            current.push(deal);
+          }
+        });
+        if (!current.length) throw new Error("No encontre oportunidades actuales en la hoja.");
+        return { current, previous: Object.keys(previous).length ? previous : prevWeek };
+      }
+
+      function toPublishedCsvUrl(url) {
+        const value = String(url || "").trim();
+        if (!value) return "";
+        const match = value.match(/\/spreadsheets\/d\/([^/]+)/);
+        if (match) {
+          const gid = value.match(/[?&]gid=([^&]+)/)?.[1] || "0";
+          return `https://docs.google.com/spreadsheets/d/${match[1]}/export?format=csv&gid=${gid}`;
+        }
+        return value;
+      }
 
       function KPI({ label, value, delta, deltaLabel }) {
         const isPos = delta > 0;
@@ -143,8 +238,11 @@
 
       function PipelineDashboard() {
         const [deals, setDeals] = useState(initialDeals);
+        const [previousMap, setPreviousMap] = useState(prevWeek);
         const [tab, setTab] = useState("table");
         const [filterLead, setFilterLead] = useState("all");
+        const [sheetUrl, setSheetUrl] = useState(() => localStorage.getItem(SHEET_STORAGE_KEY) || "");
+        const [sourceStatus, setSourceStatus] = useState("Usando datos base incluidos en el simulador.");
 
         const updateDeal = useCallback((idx, field, value) => {
           setDeals(prev => {
@@ -170,6 +268,47 @@
           return { total, totalTD, avgPond, active: active.length, byLead };
         }, [deals]);
 
+        const prevTotals = useMemo(() => {
+          const values = Object.values(previousMap);
+          return {
+            total: values.reduce((s, d) => s + d.monto, 0),
+            totalTD: values.reduce((s, d) => s + d.montoTD, 0),
+          };
+        }, [previousMap]);
+
+        const loadFromSheet = useCallback(async (rawUrl = sheetUrl) => {
+          const csvUrl = toPublishedCsvUrl(rawUrl);
+          if (!csvUrl) {
+            setSourceStatus("Pega primero el enlace publicado de Google Sheets.");
+            return;
+          }
+          setSourceStatus("Cargando Google Sheets...");
+          try {
+            const response = await fetch(csvUrl, { cache: "no-store" });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const parsed = csvToPipeline(await response.text());
+            setDeals(parsed.current);
+            setPreviousMap(parsed.previous);
+            localStorage.setItem(SHEET_STORAGE_KEY, rawUrl);
+            setSourceStatus(`Conectado a Google Sheets. ${parsed.current.length} oportunidades cargadas.`);
+          } catch (error) {
+            setSourceStatus(`No pude cargar la hoja. Revisa que este publicada como CSV. ${error.message}`);
+          }
+        }, [sheetUrl]);
+
+        const resetToBase = useCallback(() => {
+          setDeals(initialDeals);
+          setPreviousMap(prevWeek);
+          localStorage.removeItem(SHEET_STORAGE_KEY);
+          setSheetUrl("");
+          setSourceStatus("Usando datos base incluidos en el simulador.");
+        }, []);
+
+        useEffect(() => {
+          const saved = localStorage.getItem(SHEET_STORAGE_KEY);
+          if (saved) loadFromSheet(saved);
+        }, []);
+
         const filtered = filterLead === "all" ? deals : deals.filter(d => d.lead === filterLead);
         const topDeals = [...deals].filter(d => d.montoTD > 0).sort((a, b) => b.montoTD - a.montoTD);
         const barData = deals.filter(d => d.monto > 0).map(d => ({ name: d.tema.length > 16 ? d.tema.substring(0, 15) + "..." : d.tema, Monto: d.monto / 1000000, Ponderado: d.montoTD / 1000000 }));
@@ -184,11 +323,11 @@
           return { ...b, count: ds.length, monto: ds.reduce((s, d) => s + d.monto, 0) };
         });
         const dealsWithDelta = filtered.map(d => {
-          const p = prevWeek[d.tema] || { monto: 0, ponderado: 0, montoTD: 0 };
+          const p = previousMap[d.tema] || { monto: 0, ponderado: 0, montoTD: 0 };
           return { ...d, deltaMonto: d.monto - p.monto, deltaPond: d.ponderado - p.ponderado, deltaTD: d.montoTD - p.montoTD };
         });
-        const totalDeltaTD = stats.totalTD - prevTotalTD;
-        const prevAvgPond = prevTotal > 0 ? Math.round((prevTotalTD / prevTotal) * 100) : 0;
+        const totalDeltaTD = stats.totalTD - prevTotals.totalTD;
+        const prevAvgPond = prevTotals.total > 0 ? Math.round((prevTotals.totalTD / prevTotals.total) * 100) : 0;
         const tabStyle = (t) => ({ padding: "10px 24px", fontSize: 14, fontFamily: F, fontWeight: 500, color: tab === t ? "#1d1d1f" : "#86868b", background: tab === t ? "rgba(255,255,255,0.9)" : "transparent", border: "none", borderBottom: tab === t ? "2px solid #007aff" : "2px solid transparent", cursor: "pointer" });
 
         return (
@@ -201,8 +340,27 @@
               <div style={{ fontSize: 13, color: "#86868b" }}>{deals.length} oportunidades - Semana del 17 mar 2026</div>
             </div>
 
+            <div style={{ marginBottom: 18, padding: 18, borderRadius: 16, background: "rgba(255,255,255,0.78)", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: -0.3 }}>Datos desde Google Sheets</div>
+                  <div style={{ fontSize: 13, color: "#86868b", marginTop: 4 }}>Columnas: id, lead, tema, monto, ponderado, semana. Usa semana=actual o semana=anterior para calcular deltas.</div>
+                </div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  <button onClick={() => navigator.clipboard?.writeText(sheetTemplate.map((row) => row.join("\t")).join("\n"))} style={{ minHeight: 36, padding: "0 12px", borderRadius: 18, border: "none", background: "rgba(0,0,0,0.06)", color: "#1d1d1f", fontFamily: F, fontWeight: 600, cursor: "pointer" }}>Copiar plantilla</button>
+                  <a href="/library/simulators/sales-pipeline/pipeline-template.csv" download style={{ display: "inline-flex", alignItems: "center", minHeight: 36, padding: "0 12px", borderRadius: 18, background: "rgba(0,0,0,0.06)", color: "#1d1d1f", textDecoration: "none", fontFamily: F, fontWeight: 600 }}>Descargar CSV</a>
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <input value={sheetUrl} onChange={(event) => setSheetUrl(event.target.value)} placeholder="Pega aqui el enlace publicado CSV o el link de Google Sheets" style={{ flex: "1 1 420px", minHeight: 40, border: "1px solid rgba(0,0,0,0.08)", borderRadius: 10, background: "#fff", padding: "0 12px", fontFamily: F, fontSize: 14, outline: "none" }} />
+                <button onClick={() => loadFromSheet()} style={{ minHeight: 40, padding: "0 16px", borderRadius: 20, border: "none", background: "#007aff", color: "#fff", fontFamily: F, fontWeight: 700, cursor: "pointer" }}>Cargar hoja</button>
+                <button onClick={resetToBase} style={{ minHeight: 40, padding: "0 16px", borderRadius: 20, border: "none", background: "rgba(0,0,0,0.06)", color: "#1d1d1f", fontFamily: F, fontWeight: 700, cursor: "pointer" }}>Datos base</button>
+              </div>
+              <div style={{ marginTop: 10, fontSize: 13, color: sourceStatus.startsWith("No pude") ? "#c93400" : "#86868b" }}>{sourceStatus}</div>
+            </div>
+
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 28 }}>
-              <KPI label="Pipeline Total" value={fmtN(stats.total)} delta={stats.total - prevTotal} deltaLabel={fmtDelta(stats.total - prevTotal) + " vs sem. anterior"} />
+              <KPI label="Pipeline Total" value={fmtN(stats.total)} delta={stats.total - prevTotals.total} deltaLabel={fmtDelta(stats.total - prevTotals.total) + " vs sem. anterior"} />
               <KPI label="Pipe Ponderado" value={fmtN(stats.totalTD)} delta={totalDeltaTD} deltaLabel={fmtDelta(totalDeltaTD) + " vs sem. anterior"} />
               <KPI label="% Ponderado" value={`${stats.avgPond}%`} delta={stats.avgPond - prevAvgPond} deltaLabel={fmtDeltaPp(stats.avgPond - prevAvgPond) + " vs sem. anterior"} />
               <KPI label="Deals Activos" value={stats.active} />
@@ -271,7 +429,7 @@
                   ].map(c => <div key={c.label} style={{ background: "#fff", borderRadius: 16, padding: 24, textAlign: "center", border: "1px solid rgba(0,0,0,0.06)" }}><div style={{ fontSize: 13, color: "#86868b", fontWeight: 500, marginBottom: 10 }}>{c.label}</div><div style={{ fontSize: 30, fontWeight: 700, color: c.color, letterSpacing: -1.5 }}>{fmtN(c.value)}</div></div>)}</div>
                   <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>Contribucion Ponderada</h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>{topDeals.map((d, i) => { const pct = stats.totalTD > 0 ? (d.montoTD / stats.totalTD) * 100 : 0; return <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}><LeadDot lead={d.lead} /><div style={{ width: 170, fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.tema}</div><div style={{ flex: 1, height: 28, background: "rgba(0,0,0,0.04)", borderRadius: 14, overflow: "hidden" }}><div style={{ height: "100%", width: `${pct}%`, borderRadius: 14, background: LEAD_CONFIG[d.lead]?.color || "#8e8e93", display: "flex", alignItems: "center", paddingLeft: 10 }}>{pct > 12 && <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{fmtN(d.montoTD)}</span>}</div></div><div style={{ width: 48, textAlign: "right", fontSize: 13, color: "#86868b", fontWeight: 500 }}>{pct.toFixed(0)}%</div></div>; })}</div>
-                  <div style={{ marginTop: 28, padding: 20, borderRadius: 16, background: "rgba(0,122,255,0.04)", border: "1px solid rgba(0,122,255,0.1)" }}><div style={{ fontSize: 15, fontWeight: 600, marginBottom: 12 }}>Cambios vs semana anterior</div>{deals.filter(d => { const p = prevWeek[d.tema]; return p && (d.ponderado !== p.ponderado || d.monto !== p.monto); }).map(d => { const p = prevWeek[d.tema]; return <div key={d.id} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 14, flexWrap: "wrap", marginTop: 8 }}><LeadDot lead={d.lead} /><span style={{ fontWeight: 600, minWidth: 180 }}>{d.tema}</span>{d.ponderado !== p.ponderado && <span style={{ padding: "3px 10px", borderRadius: 12, fontSize: 13, fontWeight: 600, background: d.ponderado > p.ponderado ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.ponderado > p.ponderado ? "#248a3d" : "#c93400" }}>Pond. {p.ponderado}% a {d.ponderado}%</span>}{d.montoTD !== p.montoTD && <span style={{ padding: "3px 10px", borderRadius: 12, fontSize: 13, fontWeight: 600, background: d.montoTD > p.montoTD ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.montoTD > p.montoTD ? "#248a3d" : "#c93400" }}>TD {fmtDelta(d.montoTD - p.montoTD)}</span>}</div>; })}</div>
+                  <div style={{ marginTop: 28, padding: 20, borderRadius: 16, background: "rgba(0,122,255,0.04)", border: "1px solid rgba(0,122,255,0.1)" }}><div style={{ fontSize: 15, fontWeight: 600, marginBottom: 12 }}>Cambios vs semana anterior</div>{deals.filter(d => { const p = previousMap[d.tema]; return p && (d.ponderado !== p.ponderado || d.monto !== p.monto); }).map(d => { const p = previousMap[d.tema]; return <div key={d.id} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 14, flexWrap: "wrap", marginTop: 8 }}><LeadDot lead={d.lead} /><span style={{ fontWeight: 600, minWidth: 180 }}>{d.tema}</span>{d.ponderado !== p.ponderado && <span style={{ padding: "3px 10px", borderRadius: 12, fontSize: 13, fontWeight: 600, background: d.ponderado > p.ponderado ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.ponderado > p.ponderado ? "#248a3d" : "#c93400" }}>Pond. {p.ponderado}% a {d.ponderado}%</span>}{d.montoTD !== p.montoTD && <span style={{ padding: "3px 10px", borderRadius: 12, fontSize: 13, fontWeight: 600, background: d.montoTD > p.montoTD ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.montoTD > p.montoTD ? "#248a3d" : "#c93400" }}>TD {fmtDelta(d.montoTD - p.montoTD)}</span>}</div>; })}</div>
                   <div style={{ marginTop: 16, padding: 20, borderRadius: 16, background: "rgba(255,149,0,0.06)", border: "1px solid rgba(255,149,0,0.15)" }}><div style={{ fontSize: 15, fontWeight: 600, marginBottom: 8 }}>Concentracion de riesgo</div><div style={{ fontSize: 14, color: "#48484a", lineHeight: 1.6 }}>{(() => { const top3 = topDeals.slice(0, 3); const top3Total = top3.reduce((s, d) => s + d.montoTD, 0); const pct = stats.totalTD > 0 ? ((top3Total / stats.totalTD) * 100).toFixed(0) : 0; return `Los 3 deals ponderados mas grandes (${top3.map(d => d.tema).join(", ")}) representan el ${pct}% del pipe ponderado.`; })()}</div></div>
                 </div>
               )}
