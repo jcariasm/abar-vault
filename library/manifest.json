@@ -3,6 +3,13 @@
   "description": "Modelos, documentos y experiencias interactivas para convertir decisiones digitales en escenarios medibles.",
   "items": [
     {
+      "title": "Sales Pipeline Abargon",
+      "type": "simulator",
+      "description": "Dashboard interactivo para revisar pipeline, pipe ponderado, forecast, cambios semanales y concentracion de riesgo.",
+      "href": "/library/simulators/sales-pipeline/index.html",
+      "tags": ["ventas", "pipeline", "forecast", "abargon"]
+    },
+    {
       "title": "Creator Economy Revenue Benchmarks",
       "type": "simulator",
       "description": "Artifact interactivo para comparar modelos de monetización y mezcla de ingresos en creadores y compañías de medios.",

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sales Pipeline | Abargon</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 320px; background: #f5f5f7; }
+      .back {
+        position: fixed; left: 24px; bottom: 18px; z-index: 20;
+        display: inline-flex; align-items: center; min-height: 42px; padding: 0 14px;
+        border: 1px solid rgba(0,0,0,.08); border-radius: 999px;
+        background: rgba(255,255,255,.84); color: #1d1d1f; text-decoration: none;
+        font: 600 13px Helvetica, "Helvetica Neue", Arial, sans-serif;
+        backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
+      .loading { display: grid; min-height: 100vh; place-items: center; color: #86868b; font: 500 15px Helvetica, Arial, sans-serif; }
+      @media (max-width: 720px) { .back { left: 12px; bottom: 12px; } }
+    </style>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts@2.12.7/umd/Recharts.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <a class="back" href="/">Volver al catalogo</a>
+    <div id="root"><div class="loading">Cargando pipeline...</div></div>
+
+    <script type="text/babel">
+      const { useState, useMemo, useCallback } = React;
+      const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } = Recharts;
+
+      const prevWeek = {
+        "Notarios / ADN": { monto: 40000000, ponderado: 20, montoTD: 8000000 },
+        "KIO Maghandi": { monto: 40000000, ponderado: 10, montoTD: 4000000 },
+        "USA": { monto: 30000000, ponderado: 10, montoTD: 3000000 },
+        "Smart Cities": { monto: 20000000, ponderado: 20, montoTD: 4000000 },
+        "Grants (CA/TX/DE)": { monto: 10000000, ponderado: 50, montoTD: 5000000 },
+        "Portales": { monto: 10000000, ponderado: 10, montoTD: 1000000 },
+        "Mini so": { monto: 10000000, ponderado: 0, montoTD: 0 },
+        "Altech Fintech (Chuy)": { monto: 6000000, ponderado: 80, montoTD: 4800000 },
+        "Yucatan.travel": { monto: 6000000, ponderado: 20, montoTD: 1200000 },
+        "Unas": { monto: 5000000, ponderado: 10, montoTD: 500000 },
+        "Rendichicas": { monto: 2000000, ponderado: 20, montoTD: 400000 },
+        "Barron": { monto: 2000000, ponderado: 0, montoTD: 0 },
+        "Hoteleros turismo Malula": { monto: 2000000, ponderado: 0, montoTD: 0 },
+        "Axelera": { monto: 1500000, ponderado: 80, montoTD: 1200000 },
+        "Super AKI, Bepensa": { monto: 1500000, ponderado: 25, montoTD: 375000 },
+        "Royal Holiday (Gaby Vargas)": { monto: 1200000, ponderado: 0, montoTD: 0 },
+        "Abilia - declaraciones": { monto: 0, ponderado: 0, montoTD: 0 },
+        "COPRESA (webinar)": { monto: 0, ponderado: 0, montoTD: 0 },
+        "Notario": { monto: 0, ponderado: 0, montoTD: 0 },
+        "Mario": { monto: 0, ponderado: 0, montoTD: 0 },
+      };
+      const prevTotalTD = Object.values(prevWeek).reduce((s, d) => s + d.montoTD, 0);
+      const prevTotal = Object.values(prevWeek).reduce((s, d) => s + d.monto, 0);
+
+      const LEAD_CONFIG = {
+        as: { color: "#34c759", label: "as" },
+        jc: { color: "#af52de", label: "jc" },
+        ll: { color: "#ffcc00", label: "ll" },
+      };
+
+      const initialDeals = [
+        { id: "1", lead: "as", tema: "Notarios / ADN", monto: 40000000, ponderado: 20, montoTD: 8000000 },
+        { id: "2", lead: "jc", tema: "KIO Maghandi", monto: 40000000, ponderado: 15, montoTD: 6000000 },
+        { id: "3", lead: "as", tema: "USA", monto: 30000000, ponderado: 10, montoTD: 3000000 },
+        { id: "4", lead: "as", tema: "Smart Cities", monto: 20000000, ponderado: 20, montoTD: 4000000 },
+        { id: "5", lead: "ll", tema: "Grants (CA/TX/DE)", monto: 10000000, ponderado: 50, montoTD: 5000000 },
+        { id: "6", lead: "jc", tema: "Portales", monto: 10000000, ponderado: 5, montoTD: 500000 },
+        { id: "7", lead: "ll", tema: "Mini so", monto: 10000000, ponderado: 0, montoTD: 0 },
+        { id: "8", lead: "jc", tema: "Altech Fintech (Chuy)", monto: 6000000, ponderado: 80, montoTD: 4800000 },
+        { id: "9", lead: "jc", tema: "Yucatan.travel", monto: 6000000, ponderado: 20, montoTD: 1200000 },
+        { id: "10", lead: "ll", tema: "Unas", monto: 5000000, ponderado: 10, montoTD: 500000 },
+        { id: "11", lead: "ll", tema: "Rendichicas", monto: 2000000, ponderado: 20, montoTD: 400000 },
+        { id: "12", lead: "jc", tema: "Barron", monto: 2000000, ponderado: 0, montoTD: 0 },
+        { id: "13", lead: "jc", tema: "Hoteleros turismo Malula", monto: 2000000, ponderado: 0, montoTD: 0 },
+        { id: "14", lead: "jc", tema: "Axelera", monto: 1500000, ponderado: 80, montoTD: 1200000 },
+        { id: "15", lead: "jc", tema: "Super AKI, Bepensa", monto: 1500000, ponderado: 40, montoTD: 600000 },
+        { id: "16", lead: "", tema: "Royal Holiday (Gaby Vargas)", monto: 1200000, ponderado: 0, montoTD: 0 },
+        { id: "17", lead: "jc", tema: "Abilia - declaraciones", monto: 0, ponderado: 0, montoTD: 0 },
+        { id: "18", lead: "jc", tema: "COPRESA (webinar)", monto: 0, ponderado: 0, montoTD: 0 },
+        { id: "19", lead: "ll", tema: "Notario", monto: 0, ponderado: 0, montoTD: 0 },
+        { id: "20", lead: "ll", tema: "Mario", monto: 0, ponderado: 0, montoTD: 0 },
+      ];
+
+      const F = "Helvetica, 'Helvetica Neue', sans-serif";
+      const fmt = (n) => {
+        if (Math.abs(n) >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
+        if (Math.abs(n) >= 1000) return `$${(n / 1000).toFixed(0)}K`;
+        return `$${n}`;
+      };
+      const fmtN = (n) => `$${Number(n).toLocaleString("es-MX")}`;
+      const fmtDelta = (n) => n > 0 ? `+${fmt(n)}` : n < 0 ? fmt(n) : "-";
+      const fmtDeltaPp = (n) => n > 0 ? `+${n}pp` : n < 0 ? `${n}pp` : "";
+
+      function KPI({ label, value, delta, deltaLabel }) {
+        const isPos = delta > 0;
+        return (
+          <div style={{
+            flex: 1, minWidth: 180, padding: "20px 24px",
+            background: "rgba(255,255,255,0.72)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+            borderRadius: 16, border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+          }}>
+            <div style={{ fontSize: 13, color: "#86868b", fontWeight: 500, marginBottom: 8, letterSpacing: -0.1 }}>{label}</div>
+            <div style={{ fontSize: 30, fontWeight: 700, color: "#1d1d1f", letterSpacing: -1.5, lineHeight: 1 }}>{value}</div>
+            {delta !== undefined && delta !== 0 && (
+              <div style={{ marginTop: 8, fontSize: 13, fontWeight: 600, color: isPos ? "#34c759" : "#ff3b30", display: "flex", alignItems: "center", gap: 4 }}>
+                <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 20, height: 20, borderRadius: 10, background: isPos ? "rgba(52,199,89,0.12)" : "rgba(255,59,48,0.12)" }}>{isPos ? "up" : "down"}</span>
+                {deltaLabel}
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      function EditNum({ value, onChange }) {
+        const [editing, setEditing] = useState(false);
+        const [temp, setTemp] = useState(value);
+        const commit = () => { setEditing(false); onChange(parseFloat(String(temp).replace(/[^0-9.-]/g, "")) || 0); };
+        if (editing) return <input autoFocus value={temp} onChange={(e) => setTemp(e.target.value)} onBlur={commit} onKeyDown={(e) => e.key === "Enter" && commit()} style={{ width: "100%", padding: "6px 10px", border: "2px solid #007aff", borderRadius: 8, fontSize: 14, fontFamily: F, outline: "none", background: "#f5f5f7" }} />;
+        return <div onClick={() => { setTemp(value); setEditing(true); }} style={{ cursor: "pointer", padding: "6px 10px", borderRadius: 8 }}>{fmtN(value)}</div>;
+      }
+
+      function EditPct({ value, onChange }) {
+        const [editing, setEditing] = useState(false);
+        const [temp, setTemp] = useState(value);
+        const commit = () => { setEditing(false); onChange(Math.min(100, Math.max(0, parseFloat(String(temp).replace(/[^0-9.-]/g, "")) || 0))); };
+        if (editing) return <input autoFocus value={temp} onChange={(e) => setTemp(e.target.value)} onBlur={commit} onKeyDown={(e) => e.key === "Enter" && commit()} style={{ width: 56, padding: "6px 8px", border: "2px solid #007aff", borderRadius: 8, fontSize: 14, fontFamily: F, outline: "none", background: "#f5f5f7", textAlign: "center" }} />;
+        const bg = value >= 70 ? "rgba(52,199,89,0.12)" : value >= 40 ? "rgba(255,204,0,0.15)" : value >= 10 ? "rgba(255,149,0,0.12)" : "rgba(0,0,0,0.04)";
+        const color = value >= 70 ? "#248a3d" : value >= 40 ? "#a05a00" : value >= 10 ? "#c93400" : "#86868b";
+        return <div onClick={() => { setTemp(value); setEditing(true); }} style={{ cursor: "pointer", padding: "4px 12px", borderRadius: 20, background: bg, color, fontWeight: 600, fontSize: 14, textAlign: "center", display: "inline-block", opacity: value === 0 ? .3 : 1 }}>{value}%</div>;
+      }
+
+      function LeadDot({ lead }) {
+        const cfg = LEAD_CONFIG[lead];
+        if (!cfg) return <span style={{ fontSize: 13, color: "#86868b" }}>-</span>;
+        return <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 28, height: 22, borderRadius: 6, background: cfg.color, color: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: .3, textTransform: "uppercase" }}>{cfg.label}</span>;
+      }
+
+      function PipelineDashboard() {
+        const [deals, setDeals] = useState(initialDeals);
+        const [tab, setTab] = useState("table");
+        const [filterLead, setFilterLead] = useState("all");
+
+        const updateDeal = useCallback((idx, field, value) => {
+          setDeals(prev => {
+            const next = [...prev];
+            const d = { ...next[idx], [field]: value };
+            if (field === "monto" || field === "ponderado") d.montoTD = Math.round((field === "monto" ? value : d.monto) * (field === "ponderado" ? value : d.ponderado) / 100);
+            next[idx] = d;
+            return next;
+          });
+        }, []);
+
+        const stats = useMemo(() => {
+          const active = deals.filter(d => d.monto > 0);
+          const total = deals.reduce((s, d) => s + d.monto, 0);
+          const totalTD = deals.reduce((s, d) => s + d.montoTD, 0);
+          const avgPond = total > 0 ? Math.round((totalTD / total) * 100) : 0;
+          const byLead = {};
+          deals.forEach(d => {
+            const l = d.lead || "sin";
+            if (!byLead[l]) byLead[l] = { count: 0, monto: 0, montoTD: 0 };
+            byLead[l].count++; byLead[l].monto += d.monto; byLead[l].montoTD += d.montoTD;
+          });
+          return { total, totalTD, avgPond, active: active.length, byLead };
+        }, [deals]);
+
+        const filtered = filterLead === "all" ? deals : deals.filter(d => d.lead === filterLead);
+        const topDeals = [...deals].filter(d => d.montoTD > 0).sort((a, b) => b.montoTD - a.montoTD);
+        const barData = deals.filter(d => d.monto > 0).map(d => ({ name: d.tema.length > 16 ? d.tema.substring(0, 15) + "..." : d.tema, Monto: d.monto / 1000000, Ponderado: d.montoTD / 1000000 }));
+        const leadPieData = Object.entries(stats.byLead).filter(([, v]) => v.montoTD > 0).map(([k, v]) => ({ name: k === "sin" ? "Sin asignar" : k.toUpperCase(), value: v.montoTD, color: LEAD_CONFIG[k]?.color || "#d1d5db" }));
+        const ponderadoBuckets = [
+          { name: "70-100%", range: [70, 100], color: "#34c759" },
+          { name: "40-69%", range: [40, 69], color: "#ffcc00" },
+          { name: "10-39%", range: [10, 39], color: "#ff9500" },
+          { name: "0-9%", range: [0, 9], color: "#8e8e93" },
+        ].map(b => {
+          const ds = deals.filter(d => d.ponderado >= b.range[0] && d.ponderado <= b.range[1]);
+          return { ...b, count: ds.length, monto: ds.reduce((s, d) => s + d.monto, 0) };
+        });
+        const dealsWithDelta = filtered.map(d => {
+          const p = prevWeek[d.tema] || { monto: 0, ponderado: 0, montoTD: 0 };
+          return { ...d, deltaMonto: d.monto - p.monto, deltaPond: d.ponderado - p.ponderado, deltaTD: d.montoTD - p.montoTD };
+        });
+        const totalDeltaTD = stats.totalTD - prevTotalTD;
+        const prevAvgPond = prevTotal > 0 ? Math.round((prevTotalTD / prevTotal) * 100) : 0;
+        const tabStyle = (t) => ({ padding: "10px 24px", fontSize: 14, fontFamily: F, fontWeight: 500, color: tab === t ? "#1d1d1f" : "#86868b", background: tab === t ? "rgba(255,255,255,0.9)" : "transparent", border: "none", borderBottom: tab === t ? "2px solid #007aff" : "2px solid transparent", cursor: "pointer" });
+
+        return (
+          <div style={{ fontFamily: F, background: "#f5f5f7", minHeight: "100vh", padding: "32px 24px 76px", color: "#1d1d1f", WebkitFontSmoothing: "antialiased" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 28, flexWrap: "wrap", gap: 12 }}>
+              <div>
+                <div style={{ fontSize: 13, color: "#86868b", fontWeight: 500, marginBottom: 2 }}>Abargon Technology Solutions</div>
+                <h1 style={{ fontSize: 36, fontWeight: 700, margin: 0, letterSpacing: -1.5, color: "#1d1d1f" }}>Sales Pipeline</h1>
+              </div>
+              <div style={{ fontSize: 13, color: "#86868b" }}>{deals.length} oportunidades - Semana del 17 mar 2026</div>
+            </div>
+
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 28 }}>
+              <KPI label="Pipeline Total" value={fmtN(stats.total)} delta={stats.total - prevTotal} deltaLabel={fmtDelta(stats.total - prevTotal) + " vs sem. anterior"} />
+              <KPI label="Pipe Ponderado" value={fmtN(stats.totalTD)} delta={totalDeltaTD} deltaLabel={fmtDelta(totalDeltaTD) + " vs sem. anterior"} />
+              <KPI label="% Ponderado" value={`${stats.avgPond}%`} delta={stats.avgPond - prevAvgPond} deltaLabel={fmtDeltaPp(stats.avgPond - prevAvgPond) + " vs sem. anterior"} />
+              <KPI label="Deals Activos" value={stats.active} />
+            </div>
+
+            <div style={{ display: "flex", gap: 4, borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
+              {[["table", "Pipeline"], ["charts", "Analisis"], ["forecast", "Forecast"]].map(([k, l]) => <button key={k} onClick={() => setTab(k)} style={tabStyle(k)}>{l}</button>)}
+            </div>
+
+            <div style={{ background: "rgba(255,255,255,0.72)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: "1px solid rgba(0,0,0,0.06)", borderTop: "none", borderRadius: "0 0 16px 16px", padding: 24, minHeight: 420, boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
+              {tab === "table" && (
+                <>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
+                    {["all", "as", "jc", "ll"].map(k => <button key={k} onClick={() => setFilterLead(k)} style={{ padding: "6px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, background: filterLead === k ? "#1d1d1f" : "rgba(0,0,0,0.04)", color: filterLead === k ? "#fff" : "#1d1d1f", border: "none", cursor: "pointer", fontFamily: F }}>{k === "all" ? `Todos (${deals.length})` : `${k.toUpperCase()} (${stats.byLead[k]?.count || 0})`}</button>)}
+                  </div>
+                  <div style={{ overflowX: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "0 2px", fontSize: 14, fontFamily: F }}>
+                      <thead><tr>{["Lead", "Tema", "Montos TD", "Pond.", "Pipe ponderado", "Delta sem"].map(h => <th key={h} style={{ textAlign: "left", padding: "12px 12px 8px", fontSize: 12, color: "#86868b", fontWeight: 500, borderBottom: "1px solid rgba(0,0,0,0.08)" }}>{h}</th>)}</tr></thead>
+                      <tbody>{dealsWithDelta.map(d => {
+                        const realIdx = deals.findIndex(x => x.id === d.id);
+                        const hasChange = d.deltaPond !== 0 || d.deltaTD !== 0 || d.deltaMonto !== 0;
+                        return <tr key={d.id} style={{ background: hasChange ? "rgba(0,122,255,0.03)" : "transparent" }}>
+                          <td style={{ padding: "8px 12px", borderBottom: "1px solid rgba(0,0,0,0.04)" }}><LeadDot lead={d.lead} /></td>
+                          <td style={{ padding: "8px 12px", fontWeight: 600, maxWidth: 220, borderBottom: "1px solid rgba(0,0,0,0.04)" }}>{d.tema}{hasChange && <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 3, background: "#007aff", marginLeft: 8 }} />}</td>
+                          <td style={{ padding: "8px 12px", borderBottom: "1px solid rgba(0,0,0,0.04)" }}><EditNum value={d.monto} onChange={(v) => updateDeal(realIdx, "monto", v)} /></td>
+                          <td style={{ padding: "8px 12px", borderBottom: "1px solid rgba(0,0,0,0.04)" }}><div style={{ display: "flex", alignItems: "center", gap: 4 }}><EditPct value={d.ponderado} onChange={(v) => updateDeal(realIdx, "ponderado", v)} />{d.deltaPond !== 0 && <span style={{ fontSize: 12, fontWeight: 600, color: d.deltaPond > 0 ? "#34c759" : "#ff3b30" }}>{d.deltaPond > 0 ? "+" : ""}{d.deltaPond}</span>}</div></td>
+                          <td style={{ padding: "8px 12px", fontWeight: 600, borderBottom: "1px solid rgba(0,0,0,0.04)", color: d.montoTD > 0 ? "#1d1d1f" : "#c7c7cc" }}>{fmtN(d.montoTD)}</td>
+                          <td style={{ padding: "8px 12px", borderBottom: "1px solid rgba(0,0,0,0.04)", fontSize: 13 }}>{d.deltaTD !== 0 ? <span style={{ padding: "3px 10px", borderRadius: 12, background: d.deltaTD > 0 ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.deltaTD > 0 ? "#248a3d" : "#c93400", fontWeight: 600 }}>{d.deltaTD > 0 ? "up" : "down"} {fmt(Math.abs(d.deltaTD))}</span> : <span style={{ color: "#c7c7cc" }}>-</span>}</td>
+                        </tr>;
+                      })}</tbody>
+                      <tfoot><tr style={{ fontWeight: 700 }}>
+                        <td colSpan={2} style={{ padding: "16px 12px", fontSize: 15, borderTop: "2px solid rgba(0,0,0,0.1)" }}>Total</td>
+                        <td style={{ padding: "16px 12px", fontSize: 15, borderTop: "2px solid rgba(0,0,0,0.1)" }}>{fmtN(filtered.reduce((s, d) => s + d.monto, 0))}</td>
+                        <td style={{ padding: "16px 12px", fontSize: 15, borderTop: "2px solid rgba(0,0,0,0.1)" }}>{(() => { const t = filtered.reduce((s, d) => s + d.monto, 0); const td = filtered.reduce((s, d) => s + d.montoTD, 0); return t > 0 ? `${Math.round(td / t * 100)}%` : "0%"; })()}</td>
+                        <td style={{ padding: "16px 12px", fontSize: 15, borderTop: "2px solid rgba(0,0,0,0.1)" }}>{fmtN(filtered.reduce((s, d) => s + d.montoTD, 0))}</td>
+                        <td style={{ padding: "16px 12px", borderTop: "2px solid rgba(0,0,0,0.1)", fontSize: 14, fontWeight: 600, color: totalDeltaTD >= 0 ? "#248a3d" : "#c93400" }}>{fmtDelta(totalDeltaTD)}</td>
+                      </tr></tfoot>
+                    </table>
+                  </div>
+                </>
+              )}
+
+              {tab === "charts" && (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 28 }}>
+                  <div>
+                    <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>Pipe Ponderado por Lead</h3>
+                    <ResponsiveContainer width="100%" height={280}><PieChart><Pie data={leadPieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} innerRadius={60} paddingAngle={4} cornerRadius={4}>{leadPieData.map((d, i) => <Cell key={i} fill={d.color} stroke="rgba(255,255,255,0.8)" strokeWidth={2} />)}</Pie><Tooltip formatter={(v) => fmtN(v)} /><Legend /></PieChart></ResponsiveContainer>
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>Distribucion por % Ponderado</h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 24 }}>{ponderadoBuckets.map(b => <div key={b.name} style={{ display: "flex", alignItems: "center", gap: 14 }}><div style={{ width: 72, fontSize: 13, fontWeight: 600, color: b.color }}>{b.name}</div><div style={{ flex: 1, height: 32, background: "rgba(0,0,0,0.04)", borderRadius: 16, overflow: "hidden" }}><div style={{ height: "100%", width: `${stats.total > 0 ? (b.monto / stats.total) * 100 : 0}%`, background: b.color, borderRadius: 16, display: "flex", alignItems: "center", paddingLeft: 10 }}>{b.monto > 0 && <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{fmt(b.monto)}</span>}</div></div><div style={{ width: 32, textAlign: "right", fontSize: 13, color: "#86868b", fontWeight: 500 }}>{b.count}</div></div>)}</div>
+                  </div>
+                  <div style={{ gridColumn: "1 / -1" }}>
+                    <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>Pipeline Bruto vs Ponderado (M MXN)</h3>
+                    <ResponsiveContainer width="100%" height={300}><BarChart data={barData} layout="vertical"><XAxis type="number" tick={{ fontSize: 12, fontFamily: F, fill: "#86868b" }} axisLine={false} tickLine={false} /><YAxis type="category" dataKey="name" tick={{ fontSize: 12, fontFamily: F, fill: "#1d1d1f" }} width={150} axisLine={false} tickLine={false} /><Tooltip formatter={(v) => `$${v.toFixed(1)}M`} /><Legend /><Bar dataKey="Monto" fill="rgba(0,122,255,0.2)" radius={[0, 8, 8, 0]} /><Bar dataKey="Ponderado" fill="#007aff" radius={[0, 8, 8, 0]} /></BarChart></ResponsiveContainer>
+                  </div>
+                </div>
+              )}
+
+              {tab === "forecast" && (
+                <div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, marginBottom: 28 }}>{[
+                    { label: "Mejor Caso", value: stats.total, color: "#34c759" },
+                    { label: "Ponderado", value: stats.totalTD, color: "#007aff" },
+                    { label: "Conservador", value: Math.round(stats.totalTD * .6), color: "#ff9500" },
+                  ].map(c => <div key={c.label} style={{ background: "#fff", borderRadius: 16, padding: 24, textAlign: "center", border: "1px solid rgba(0,0,0,0.06)" }}><div style={{ fontSize: 13, color: "#86868b", fontWeight: 500, marginBottom: 10 }}>{c.label}</div><div style={{ fontSize: 30, fontWeight: 700, color: c.color, letterSpacing: -1.5 }}>{fmtN(c.value)}</div></div>)}</div>
+                  <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16 }}>Contribucion Ponderada</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>{topDeals.map((d, i) => { const pct = stats.totalTD > 0 ? (d.montoTD / stats.totalTD) * 100 : 0; return <div key={i} style={{ display: "flex", alignItems: "center", gap: 12 }}><LeadDot lead={d.lead} /><div style={{ width: 170, fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.tema}</div><div style={{ flex: 1, height: 28, background: "rgba(0,0,0,0.04)", borderRadius: 14, overflow: "hidden" }}><div style={{ height: "100%", width: `${pct}%`, borderRadius: 14, background: LEAD_CONFIG[d.lead]?.color || "#8e8e93", display: "flex", alignItems: "center", paddingLeft: 10 }}>{pct > 12 && <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{fmtN(d.montoTD)}</span>}</div></div><div style={{ width: 48, textAlign: "right", fontSize: 13, color: "#86868b", fontWeight: 500 }}>{pct.toFixed(0)}%</div></div>; })}</div>
+                  <div style={{ marginTop: 28, padding: 20, borderRadius: 16, background: "rgba(0,122,255,0.04)", border: "1px solid rgba(0,122,255,0.1)" }}><div style={{ fontSize: 15, fontWeight: 600, marginBottom: 12 }}>Cambios vs semana anterior</div>{deals.filter(d => { const p = prevWeek[d.tema]; return p && (d.ponderado !== p.ponderado || d.monto !== p.monto); }).map(d => { const p = prevWeek[d.tema]; return <div key={d.id} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 14, flexWrap: "wrap", marginTop: 8 }}><LeadDot lead={d.lead} /><span style={{ fontWeight: 600, minWidth: 180 }}>{d.tema}</span>{d.ponderado !== p.ponderado && <span style={{ padding: "3px 10px", borderRadius: 12, fontSize: 13, fontWeight: 600, background: d.ponderado > p.ponderado ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.ponderado > p.ponderado ? "#248a3d" : "#c93400" }}>Pond. {p.ponderado}% a {d.ponderado}%</span>}{d.montoTD !== p.montoTD && <span style={{ padding: "3px 10px", borderRadius: 12, fontSize: 13, fontWeight: 600, background: d.montoTD > p.montoTD ? "rgba(52,199,89,0.1)" : "rgba(255,59,48,0.1)", color: d.montoTD > p.montoTD ? "#248a3d" : "#c93400" }}>TD {fmtDelta(d.montoTD - p.montoTD)}</span>}</div>; })}</div>
+                  <div style={{ marginTop: 16, padding: 20, borderRadius: 16, background: "rgba(255,149,0,0.06)", border: "1px solid rgba(255,149,0,0.15)" }}><div style={{ fontSize: 15, fontWeight: 600, marginBottom: 8 }}>Concentracion de riesgo</div><div style={{ fontSize: 14, color: "#48484a", lineHeight: 1.6 }}>{(() => { const top3 = topDeals.slice(0, 3); const top3Total = top3.reduce((s, d) => s + d.montoTD, 0); const pct = stats.totalTD > 0 ? ((top3Total / stats.totalTD) * 100).toFixed(0) : 0; return `Los 3 deals ponderados mas grandes (${top3.map(d => d.tema).join(", ")}) representan el ${pct}% del pipe ponderado.`; })()}</div></div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<PipelineDashboard />);
+    </script>
+  </body>
+</html>
