@@ -62,7 +62,7 @@ main {
 
 .kicker img {
   display: block;
-  width: min(220px, 56vw);
+  width: min(210px, 56vw);
   height: auto;
 }
 
