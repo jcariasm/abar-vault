@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sail Away Growth Simulator | Abargon</title>
+    <style>
+      :root {
+        --ink: #061726;
+        --navy: #08233d;
+        --deep: #003249;
+        --signal: #007ea7;
+        --sky: #d9edf4;
+        --wash: #f4f9fb;
+        --lime: #b7ff6a;
+        --orange: #ef6b3a;
+        --copy: #36515a;
+        --line: rgba(6, 23, 38, 0.16);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          linear-gradient(90deg, rgba(0, 126, 167, 0.08) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(217, 237, 244, 0.92), rgba(244, 249, 251, 0) 560px),
+          var(--wash);
+        background-size: 42px 42px, auto, auto;
+      }
+
+      main {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 34px 0 56px;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 42px;
+        margin-bottom: 28px;
+        color: var(--deep);
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: 1fr minmax(280px, 0.62fr);
+        gap: 28px;
+        align-items: end;
+        padding-bottom: 30px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .kicker {
+        margin: 0 0 12px;
+        color: var(--signal);
+        font-size: 13px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 840px;
+        margin: 0;
+        font-size: clamp(42px, 7vw, 84px);
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      header p {
+        max-width: 690px;
+        margin: 22px 0 0;
+        color: var(--copy);
+        font-size: 19px;
+        line-height: 1.5;
+      }
+
+      .note {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.76);
+        padding: 22px;
+      }
+
+      .note strong {
+        display: block;
+        color: var(--signal);
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .note p {
+        margin: 10px 0 0;
+        color: var(--ink);
+        font-size: 15px;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) minmax(320px, 0.86fr);
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .panel,
+      .results {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.88);
+      }
+
+      .panel {
+        padding: 22px;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .control {
+        display: grid;
+        gap: 10px;
+      }
+
+      label,
+      .label {
+        color: var(--copy);
+        font-size: 13px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      input,
+      select {
+        width: 100%;
+        min-height: 54px;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: #ffffff;
+        color: var(--ink);
+        padding: 0 14px;
+        font: inherit;
+        font-size: 22px;
+        font-weight: 850;
+        outline: none;
+      }
+
+      select {
+        font-size: 16px;
+      }
+
+      input[type="range"] {
+        min-height: auto;
+        padding: 0;
+        accent-color: var(--signal);
+      }
+
+      .range-value {
+        font-size: 32px;
+        font-weight: 900;
+      }
+
+      .reading {
+        margin-top: 24px;
+        border: 1px solid var(--line);
+        background: rgba(217, 237, 244, 0.38);
+        padding: 20px;
+      }
+
+      .reading h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .reading p {
+        margin: 10px 0 0;
+        color: var(--copy);
+        line-height: 1.55;
+      }
+
+      .results {
+        overflow: hidden;
+        background: var(--line);
+      }
+
+      .results-head {
+        background:
+          linear-gradient(135deg, rgba(0, 126, 167, 0.38), transparent),
+          var(--ink);
+        color: #ffffff;
+        padding: 24px;
+      }
+
+      .results-head span {
+        color: var(--lime);
+        font-size: 13px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .results-head h2 {
+        margin: 12px 0 0;
+        font-size: clamp(30px, 4vw, 44px);
+        line-height: 1;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1px;
+      }
+
+      .metric {
+        min-height: 142px;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 22px;
+      }
+
+      .metric.feature {
+        grid-column: 1 / -1;
+      }
+
+      .metric span {
+        display: block;
+        color: var(--signal);
+        font-size: 12px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 14px;
+        font-size: clamp(28px, 3vw, 48px);
+        line-height: 1;
+      }
+
+      .progress {
+        height: 20px;
+        margin-top: 18px;
+        background: #d4e8e8;
+      }
+
+      .progress-fill {
+        width: 0;
+        height: 100%;
+        max-width: 100%;
+        background: var(--lime);
+        transition: width 180ms ease;
+      }
+
+      .path {
+        background: var(--navy);
+        color: #ffffff;
+      }
+
+      .path span {
+        color: var(--sky);
+      }
+
+      .footer-note {
+        margin-top: 18px;
+        color: var(--copy);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 860px) {
+        header,
+        .workspace,
+        .controls,
+        .metric-grid {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: clamp(38px, 13vw, 58px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="/">Volver al catalogo</a>
+
+      <header>
+        <div>
+          <p class="kicker">ABARGON LABS / SAIL AWAY</p>
+          <h1>Sail Away Growth Simulator</h1>
+          <p>
+            Calcula el potencial de crecimiento rentable al ordenar mercado, oferta, pricing y capacidades comerciales antes de iniciar una asesoria.
+          </p>
+        </div>
+        <aside class="note">
+          <strong>Uso sugerido</strong>
+          <p>Ajusta supuestos con datos reales del negocio y usa el resultado como punto de partida para decidir si conviene diagnostico, roadmap o crecimiento guiado.</p>
+        </aside>
+      </header>
+
+      <section class="workspace" aria-label="Simulador Sail Away Growth">
+        <div class="panel">
+          <div class="controls">
+            <div class="control">
+              <label for="monthly-sales">Ventas mensuales actuales</label>
+              <input id="monthly-sales" type="number" min="0" step="50000" value="1800000" />
+            </div>
+            <div class="control">
+              <label for="gross-margin">Margen bruto %</label>
+              <input id="gross-margin" type="number" min="1" max="90" step="1" value="34" />
+            </div>
+            <div class="control">
+              <label for="opportunities">Oportunidades activables</label>
+              <input id="opportunities" type="range" min="1" max="12" value="6" />
+              <div class="range-value" id="opportunities-value">6</div>
+            </div>
+            <div class="control">
+              <label for="capacity">Capacidad comercial</label>
+              <select id="capacity">
+                <option value="0.75">Equipo en modo reactivo</option>
+                <option value="1" selected>Proceso comercial estable</option>
+                <option value="1.25">Equipo listo para escalar</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="reading">
+            <h2>Lectura rapida</h2>
+            <p>
+              Este simulador estima el potencial comercial anual si Sail Away prioriza segmentos, recompra, pricing y ejecucion sobre una agenda de crecimiento guiado.
+            </p>
+          </div>
+          <p class="footer-note">El resultado es direccional y no sustituye un diagnostico financiero o comercial.</p>
+        </div>
+
+        <aside class="results">
+          <div class="results-head">
+            <span>Sail Away Growth</span>
+            <h2>Potencial anual estimado</h2>
+          </div>
+          <div class="metric-grid">
+            <div class="metric feature">
+              <span>Utilidad bruta incremental</span>
+              <strong id="additional-profit">$0</strong>
+            </div>
+            <div class="metric">
+              <span>Ventas nuevas</span>
+              <strong id="additional-sales">$0</strong>
+            </div>
+            <div class="metric">
+              <span>Crecimiento posible</span>
+              <strong id="growth-rate">0%</strong>
+            </div>
+            <div class="metric feature">
+              <span>Preparacion comercial</span>
+              <strong id="readiness">0/100</strong>
+              <div class="progress" aria-hidden="true">
+                <div class="progress-fill" id="readiness-fill"></div>
+              </div>
+            </div>
+            <div class="metric feature path">
+              <span>Ruta sugerida</span>
+              <strong id="suggested-path">Diagnostico de oportunidades</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script>
+      const fields = {
+        monthlySales: document.querySelector('#monthly-sales'),
+        grossMargin: document.querySelector('#gross-margin'),
+        opportunities: document.querySelector('#opportunities'),
+        capacity: document.querySelector('#capacity')
+      };
+
+      const output = {
+        opportunitiesValue: document.querySelector('#opportunities-value'),
+        additionalProfit: document.querySelector('#additional-profit'),
+        additionalSales: document.querySelector('#additional-sales'),
+        growthRate: document.querySelector('#growth-rate'),
+        readiness: document.querySelector('#readiness'),
+        readinessFill: document.querySelector('#readiness-fill'),
+        suggestedPath: document.querySelector('#suggested-path')
+      };
+
+      function money(value) {
+        return value.toLocaleString('es-MX', {
+          maximumFractionDigits: 0,
+          style: 'currency',
+          currency: 'MXN'
+        });
+      }
+
+      function compactMoney(value) {
+        if (Math.abs(value) >= 1000000) return `$${(value / 1000000).toFixed(1)}M`;
+        if (Math.abs(value) >= 1000) return `$${Math.round(value / 1000)}K`;
+        return money(value);
+      }
+
+      function calculate() {
+        const monthlySales = Number(fields.monthlySales.value) || 0;
+        const grossMargin = Math.min(90, Math.max(1, Number(fields.grossMargin.value) || 1));
+        const opportunities = Number(fields.opportunities.value) || 1;
+        const capacity = Number(fields.capacity.value) || 1;
+
+        const growthRate = Math.min(0.36, Math.max(0.04, opportunities * 0.018 * capacity));
+        const additionalSales = monthlySales * 12 * growthRate;
+        const additionalProfit = additionalSales * (grossMargin / 100);
+        const readiness = Math.min(100, Math.round(35 + opportunities * 4 + capacity * 15 + grossMargin * 0.25));
+        const suggestedPath =
+          readiness >= 78
+            ? 'Crecimiento Guiado 1 a 1'
+            : readiness >= 62
+              ? 'Roadmap comercial de 30 dias'
+              : 'Diagnostico de oportunidades';
+
+        output.opportunitiesValue.textContent = opportunities;
+        output.additionalProfit.textContent = money(additionalProfit);
+        output.additionalSales.textContent = compactMoney(additionalSales);
+        output.growthRate.textContent = `${Math.round(growthRate * 100)}%`;
+        output.readiness.textContent = `${readiness}/100`;
+        output.readinessFill.style.width = `${readiness}%`;
+        output.suggestedPath.textContent = suggestedPath;
+      }
+
+      Object.values(fields).forEach((field) => field.addEventListener('input', calculate));
+      calculate();
+    </script>
+  </body>
+</html>
