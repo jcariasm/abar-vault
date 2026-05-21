@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axelera | Reporte interno Abargon</title>
+    <link rel="stylesheet" href="/clientes/axelera/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/clientes/">
+          <span class="brand-mark">AB</span>
+          <span>Abargon</span>
+        </a>
+        <nav aria-label="Secciones">
+          <a href="#resumen">Resumen</a>
+          <a href="#actividades">Actividades</a>
+          <a href="#builds">Builds</a>
+          <a href="#ok">OK cliente</a>
+        </nav>
+        <a class="quiet-link" href="/clientes/saldo/">Portal general</a>
+      </header>
+
+      <section class="hero" id="resumen">
+        <div>
+          <p class="private">Revision interna</p>
+          <h1>Axelera</h1>
+          <p class="summary">
+            Reporte consolidado de horas, entregables y builds para explicar con claridad que se trabajo, que se libero y que requiere autorizacion del cliente.
+          </p>
+        </div>
+        <div class="hero-note">
+          <span>Regla de control</span>
+          <p>
+            Cada bloque debe ligar actividad, Jira/build, evidencia y OK. Lo que no tenga evidencia queda marcado como pendiente de documentar.
+          </p>
+        </div>
+      </section>
+
+      <section class="kpis" aria-label="Resumen de horas">
+        <article>
+          <span>Ene-Abr 2026</span>
+          <strong id="total-hours">316</strong>
+          <small>horas reportadas</small>
+        </article>
+        <article>
+          <span>Mes alto</span>
+          <strong>91</strong>
+          <small>enero</small>
+        </article>
+        <article>
+          <span>Ultimo mes</span>
+          <strong>61</strong>
+          <small>abril</small>
+        </article>
+        <article class="risk">
+          <span>Pendiente</span>
+          <strong>OK</strong>
+          <small>presupuesto y alcance por build</small>
+        </article>
+      </section>
+
+      <section class="dashboard">
+        <aside class="panel">
+          <div class="panel-head">
+            <h2>Totales por mes</h2>
+            <p>Basado en los screenshots compartidos.</p>
+          </div>
+          <div class="month-bars" id="month-bars"></div>
+        </aside>
+
+        <section class="panel main-panel" id="actividades">
+          <div class="panel-head row">
+            <div>
+              <h2>Actividades normalizadas</h2>
+              <p>El formato conserva dia, descripcion y horas, pero agrega clasificacion y trazabilidad.</p>
+            </div>
+            <div class="controls">
+              <button class="filter active" type="button" data-month="all">Todo</button>
+              <button class="filter" type="button" data-month="Enero">Ene</button>
+              <button class="filter" type="button" data-month="Febrero">Feb</button>
+              <button class="filter" type="button" data-month="Marzo">Mar</button>
+              <button class="filter" type="button" data-month="Abril">Abr</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mes</th>
+                  <th>Dia</th>
+                  <th>Descripcion</th>
+                  <th>Hrs</th>
+                  <th>Clasificacion</th>
+                  <th>Seguimiento</th>
+                </tr>
+              </thead>
+              <tbody id="activity-rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="lower-grid">
+        <section class="panel" id="builds">
+          <div class="panel-head">
+            <h2>Entregables y builds</h2>
+            <p>Vista inicial para documentar que se libero y con que evidencia.</p>
+          </div>
+          <div class="deliverables">
+            <article>
+              <span class="status review">Pendiente evidencia</span>
+              <h3>Scoring y sumas</h3>
+              <p>Ajustes de scoring, score LET220105RE5, sumas y solo vigentes.</p>
+              <small>Jira/build sugerido: AX-SCORING-2026-02</small>
+            </article>
+            <article>
+              <span class="status review">Pendiente evidencia</span>
+              <h3>Reportes PDPF / agrupado factoraje</h3>
+              <p>Reportes PDPF, agrupado factoraje, ajustes y revision de error.</p>
+              <small>Jira/build sugerido: AX-REPORTES-2026-04</small>
+            </article>
+            <article>
+              <span class="status ok">Documentar version</span>
+              <h3>Liberacion linea otorgada</h3>
+              <p>Liberacion y parametrizacion de linea otorgada reportada en enero.</p>
+              <small>Jira/build sugerido: AX-LINEA-2026-01</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="ok">
+          <div class="panel-head">
+            <h2>Autorizaciones necesarias</h2>
+            <p>Lo que el cliente debe aprobar para evitar malentendidos.</p>
+          </div>
+          <div class="ok-list">
+            <article>
+              <strong>OK-AX-REPORTES-ABRIL</strong>
+              <p>Autorizar cierre de reportes PDPF, agrupado factoraje, envio de ajustes y PM.</p>
+              <span>Presupuesto sugerido: 16-24h</span>
+            </article>
+            <article>
+              <strong>OK-AX-SCORING-FEB-MAR</strong>
+              <p>Validar alcance de ajustes scoring, parametros nuevos y reporte factoria.</p>
+              <span>Presupuesto sugerido: 24-40h</span>
+            </article>
+            <article>
+              <strong>OK-AX-SOPORTE-JUNTAS</strong>
+              <p>Confirmar si juntas y coordinacion consumen bolsa o se reportan como no billable.</p>
+              <span>Regla pendiente</span>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="/clientes/axelera/report.js" type="module"></script>
+  </body>
+</html>

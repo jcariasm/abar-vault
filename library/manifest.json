@@ -31,6 +31,20 @@
       "tags": ["ventas", "growth", "sail away", "asesoria"]
     },
     {
+      "title": "Portal de saldo de clientes",
+      "type": "document",
+      "description": "Mockup navegable para revisar horas contratadas, horas consumidas, saldo disponible, actividades y entregables por cliente.",
+      "href": "/clientes/saldo/",
+      "tags": ["clientes", "saldo", "horas", "entregables"]
+    },
+    {
+      "title": "Reporte interno Axelera",
+      "type": "document",
+      "description": "Vista interna para revisar horas historicas, actividades normalizadas, builds, entregables y autorizaciones pendientes de Axelera.",
+      "href": "/clientes/axelera/",
+      "tags": ["clientes", "axelera", "horas", "builds", "ok"]
+    },
+    {
       "title": "Como agregar contenido",
       "type": "document",
       "description": "Guia breve para registrar documentos y simuladores dentro del manifiesto.",
