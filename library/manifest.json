@@ -45,6 +45,13 @@
       "tags": ["clientes", "axelera", "horas", "builds", "ok"]
     },
     {
+      "title": "Presupuesto Real Milan 2026",
+      "type": "document",
+      "description": "Documento HTML de presupuesto ARVA para revision interna y consulta desde el site.",
+      "href": "/arva/",
+      "tags": ["arva", "presupuesto", "real milan", "2026"]
+    },
+    {
       "title": "Como agregar contenido",
       "type": "document",
       "description": "Guia breve para registrar documentos y simuladores dentro del manifiesto.",
