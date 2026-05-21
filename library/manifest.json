@@ -40,7 +40,7 @@
     {
       "title": "Reporte interno Axelera",
       "type": "document",
-      "description": "Vista interna para revisar horas historicas, actividades normalizadas, builds, entregables y autorizaciones pendientes de Axelera.",
+      "description": "Vista interna anual para revisar saldo de horas, actividades normalizadas, builds, entregables y autorizaciones pendientes de Axelera.",
       "href": "/clientes/axelera/",
       "tags": ["clientes", "axelera", "horas", "builds", "ok"]
     },

@@ -37,7 +37,8 @@ button {
 }
 
 .shell {
-  width: min(1420px, calc(100vw - 32px));
+  width: calc(100vw - 32px);
+  max-width: 1420px;
   margin: 0 auto;
   padding: 22px 0 52px;
 }
@@ -49,6 +50,10 @@ button {
   gap: 18px;
   min-height: 72px;
   border-bottom: 1px solid var(--line);
+}
+
+.topbar > * {
+  min-width: 0;
 }
 
 .brand,
@@ -219,6 +224,10 @@ h1 {
   align-items: start;
 }
 
+.activity-section {
+  margin-top: 16px;
+}
+
 .lower-grid {
   grid-template-columns: minmax(0, 1fr) 420px;
   margin-top: 16px;
@@ -284,6 +293,10 @@ h1 {
   background: var(--signal);
 }
 
+.bar span.over {
+  background: var(--orange);
+}
+
 .table-wrap {
   overflow-x: auto;
 }
@@ -292,6 +305,10 @@ table {
   width: 100%;
   min-width: 860px;
   border-collapse: collapse;
+}
+
+.annual-table {
+  min-width: 760px;
 }
 
 th,
@@ -347,6 +364,26 @@ td strong {
   border-color: rgba(239, 107, 58, 0.26);
   background: rgba(239, 107, 58, 0.1);
   color: #9d3a1f;
+}
+
+.tag.pm {
+  border-color: rgba(183, 255, 106, 0.5);
+  background: rgba(183, 255, 106, 0.18);
+  color: #325000;
+}
+
+.positive {
+  color: var(--signal);
+  font-weight: 950;
+}
+
+.negative {
+  color: #c03a18;
+  font-weight: 950;
+}
+
+.negative-row {
+  background: rgba(239, 107, 58, 0.04);
 }
 
 .deliverables,
@@ -405,8 +442,15 @@ td strong {
   }
 
   nav {
-    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 2px;
     max-width: 100%;
+  }
+
+  nav a,
+  .quiet-link {
+    padding: 0 8px;
+    font-size: 12px;
   }
 
   .quiet-link {
@@ -414,11 +458,22 @@ td strong {
   }
 
   .shell {
-    width: min(100vw - 20px, 1420px);
+    width: calc(100vw - 20px);
   }
 
   h1 {
     font-size: 48px;
+  }
+
+  .summary {
+    max-width: 31ch;
+  }
+
+  .hero-note p,
+  .panel-head p,
+  .deliverables p,
+  .ok-list p {
+    max-width: 32ch;
   }
 
   .hero-note,

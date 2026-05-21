@@ -15,6 +15,7 @@
         </a>
         <nav aria-label="Secciones">
           <a href="#resumen">Resumen</a>
+          <a href="#anual">Anual</a>
           <a href="#actividades">Actividades</a>
           <a href="#builds">Builds</a>
           <a href="#ok">OK cliente</a>
@@ -27,54 +28,79 @@
           <p class="private">Revision interna</p>
           <h1>Axelera</h1>
           <p class="summary">
-            Reporte consolidado de horas, entregables y builds para explicar con claridad que se trabajo, que se libero y que requiere autorizacion del cliente.
+            Reporte anual de horas y saldo, con detalle operativo de enero a mayo para explicar que se trabajo, que se libero y que requiere autorizacion del cliente.
           </p>
         </div>
         <div class="hero-note">
           <span>Regla de control</span>
           <p>
-            Cada bloque debe ligar actividad, Jira/build, evidencia y OK. Lo que no tenga evidencia queda marcado como pendiente de documentar.
+            Cada bloque debe ligar actividad, Jira/build, evidencia y OK. Los meses agosto-diciembre solo tienen total mensual; enero-mayo ya tienen detalle de actividades.
           </p>
         </div>
       </section>
 
       <section class="kpis" aria-label="Resumen de horas">
         <article>
-          <span>Ene-Abr 2026</span>
-          <strong id="total-hours">316</strong>
-          <small>horas reportadas</small>
+          <span>Ago-May</span>
+          <strong>715</strong>
+          <small>horas ejercidas</small>
         </article>
         <article>
           <span>Mes alto</span>
-          <strong>91</strong>
-          <small>enero</small>
+          <strong>96</strong>
+          <small>diciembre</small>
         </article>
         <article>
-          <span>Ultimo mes</span>
-          <strong>61</strong>
-          <small>abril</small>
+          <span>Saldo a mayo</span>
+          <strong>85</strong>
+          <small>horas acumuladas</small>
         </article>
         <article class="risk">
-          <span>Pendiente</span>
-          <strong>OK</strong>
-          <small>presupuesto y alcance por build</small>
+          <span>Proyeccion jul</span>
+          <strong>245</strong>
+          <small>si junio/julio no tienen consumo</small>
         </article>
       </section>
 
-      <section class="dashboard">
+      <section class="dashboard" id="anual">
         <aside class="panel">
           <div class="panel-head">
-            <h2>Totales por mes</h2>
-            <p>Basado en los screenshots compartidos.</p>
+            <h2>Horas ejercidas</h2>
+            <p>Meses 1-12 del reporte anual: agosto a julio.</p>
           </div>
           <div class="month-bars" id="month-bars"></div>
         </aside>
 
-        <section class="panel main-panel" id="actividades">
+        <section class="panel main-panel">
+          <div class="panel-head row">
+            <div>
+              <h2>Reporte anual</h2>
+              <p>La diferencia mensual es horas contratadas menos horas ejercidas. Negativo indica sobreconsumo en ese mes.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="annual-table">
+              <thead>
+                <tr>
+                  <th>Mes</th>
+                  <th>Contratadas</th>
+                  <th>Ejercidas</th>
+                  <th>Diferencia</th>
+                  <th>Saldo acumulado</th>
+                  <th>Lectura</th>
+                </tr>
+              </thead>
+              <tbody id="annual-rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel main-panel activity-section" id="actividades">
           <div class="panel-head row">
             <div>
               <h2>Actividades normalizadas</h2>
-              <p>El formato conserva dia, descripcion y horas, pero agrega clasificacion y trazabilidad.</p>
+              <p>Detalle disponible de enero a mayo. Agosto-diciembre quedan como totales hasta recibir el desglose.</p>
             </div>
             <div class="controls">
               <button class="filter active" type="button" data-month="all">Todo</button>
@@ -82,6 +108,7 @@
               <button class="filter" type="button" data-month="Febrero">Feb</button>
               <button class="filter" type="button" data-month="Marzo">Mar</button>
               <button class="filter" type="button" data-month="Abril">Abr</button>
+              <button class="filter" type="button" data-month="Mayo">May</button>
             </div>
           </div>
           <div class="table-wrap">
@@ -99,7 +126,6 @@
               <tbody id="activity-rows"></tbody>
             </table>
           </div>
-        </section>
       </section>
 
       <section class="lower-grid">
@@ -118,8 +144,14 @@
             <article>
               <span class="status review">Pendiente evidencia</span>
               <h3>Reportes PDPF / agrupado factoraje</h3>
-              <p>Reportes PDPF, agrupado factoraje, ajustes y revision de error.</p>
-              <small>Jira/build sugerido: AX-REPORTES-2026-04</small>
+              <p>Reportes PDPF, agrupado factoraje, ajustes, revision de error y reporte factoraje de mayo.</p>
+              <small>Jira/build sugerido: AX-REPORTES-2026-04-05</small>
+            </article>
+            <article>
+              <span class="status review">Pendiente evidencia</span>
+              <h3>Ajustes AXCDP y capital contable</h3>
+              <p>Revision/ajuste AXCDP y ajuste total pasivo capital contable reportados en mayo.</p>
+              <small>Jira/build sugerido: AX-AXCDP-2026-05</small>
             </article>
             <article>
               <span class="status ok">Documentar version</span>
@@ -138,13 +170,18 @@
           <div class="ok-list">
             <article>
               <strong>OK-AX-REPORTES-ABRIL</strong>
-              <p>Autorizar cierre de reportes PDPF, agrupado factoraje, envio de ajustes y PM.</p>
-              <span>Presupuesto sugerido: 16-24h</span>
+              <p>Autorizar cierre de reportes PDPF, agrupado factoraje, envio de ajustes y PM de abril/mayo.</p>
+              <span>Presupuesto sugerido: 24-32h</span>
             </article>
             <article>
               <strong>OK-AX-SCORING-FEB-MAR</strong>
-              <p>Validar alcance de ajustes scoring, parametros nuevos y reporte factoria.</p>
-              <span>Presupuesto sugerido: 24-40h</span>
+              <p>Validar alcance de ajustes scoring, parametros nuevos, score LET220105RE5 y reporte factoria.</p>
+              <span>Presupuesto sugerido: 32-48h</span>
+            </article>
+            <article>
+              <strong>OK-AX-AXCDP-MAYO</strong>
+              <p>Confirmar alcance de revision/ajuste AXCDP y pasivo capital contable.</p>
+              <span>Presupuesto sugerido: 5-8h</span>
             </article>
             <article>
               <strong>OK-AX-SOPORTE-JUNTAS</strong>
