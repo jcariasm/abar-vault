@@ -1,6 +1,6 @@
 {
-  "title": "Vault Abargon",
-  "description": "Espacio ordenado para leads, simuladores, clientes, presupuestos, reportes y entregables.",
+  "title": "Abar Vault",
+  "description": "Archivo, leads, clientes y tools en un solo espacio ordenado.",
   "items": [
     {
       "title": "Leads",
@@ -17,11 +17,11 @@
       "tags": ["lead", "juan carlos bautista jacobo", "seguimiento"]
     },
     {
-      "title": "Simuladores",
+      "title": "Tools",
       "type": "simulator",
-      "description": "Modelos interactivos para diagnosticar escenarios comerciales, marketing, crecimiento y pipeline.",
-      "href": "/vault/simuladores/",
-      "tags": ["simuladores", "modelos", "herramientas"]
+      "description": "Tools para diagnosticar escenarios comerciales, marketing, crecimiento y pipeline.",
+      "href": "/vault/tools/",
+      "tags": ["tools", "modelos", "herramientas"]
     },
     {
       "title": "Clientes",
@@ -52,11 +52,11 @@
       "tags": ["saldo", "horas", "template"]
     },
     {
-      "title": "Documentos internos",
+      "title": "Archivo",
       "type": "document",
-      "description": "Guías, formatos maestros y templates operativos del Vault.",
-      "href": "/vault/documentos/",
-      "tags": ["documentos", "templates", "guias"]
+      "description": "Guias, documentos, formatos maestros y templates operativos del Vault.",
+      "href": "/vault/archivo/",
+      "tags": ["archivo", "documentos", "templates", "guias"]
     }
   ]
 }

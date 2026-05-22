@@ -41,6 +41,26 @@
       "source": "/arva/:path*",
       "destination": "/vault/clientes/arva/:path*",
       "permanent": false
+    },
+    {
+      "source": "/vault/simuladores",
+      "destination": "/vault/tools",
+      "permanent": false
+    },
+    {
+      "source": "/vault/simuladores/:path*",
+      "destination": "/vault/tools/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/vault/documentos",
+      "destination": "/vault/archivo",
+      "permanent": false
+    },
+    {
+      "source": "/vault/documentos/:path*",
+      "destination": "/vault/archivo/:path*",
+      "permanent": false
     }
   ]
 }

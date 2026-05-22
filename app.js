@@ -2,7 +2,7 @@ const typeLabels = {
   client: 'Cliente',
   document: 'Documento',
   lead: 'Lead',
-  simulator: 'Simulador'
+  simulator: 'Tool'
 };
 
 const typeIcons = {

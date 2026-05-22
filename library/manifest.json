@@ -1,33 +1,33 @@
 {
-  "title": "Vault Abargon",
-  "description": "Espacio ordenado para leads, simuladores, clientes, presupuestos, reportes y entregables.",
+  "title": "Abar Vault",
+  "description": "Archivo, leads, clientes y tools en un solo espacio ordenado.",
   "items": [
     {
       "title": "Sales Pipeline Abargon",
       "type": "simulator",
       "description": "Dashboard interactivo para revisar pipeline, pipe ponderado, forecast, cambios semanales y concentracion de riesgo.",
-      "href": "/vault/simuladores/sales-pipeline/",
+      "href": "/vault/tools/sales-pipeline/",
       "tags": ["ventas", "pipeline", "forecast", "abargon"]
     },
     {
       "title": "Creator Economy Revenue Benchmarks",
       "type": "simulator",
       "description": "Artifact interactivo para comparar modelos de monetizacion y mezcla de ingresos en creadores y companias de medios.",
-      "href": "/vault/simuladores/creator-economy-benchmarks/",
+      "href": "/vault/tools/creator-economy-benchmarks/",
       "tags": ["creator economy", "monetizacion", "benchmarks", "revenue"]
     },
     {
       "title": "Simulador de ROI en marketing digital",
       "type": "simulator",
       "description": "Calcula inversion, clientes, CAC, ingresos y retorno estimado para una campana orientada a adquisicion rentable.",
-      "href": "/vault/simuladores/roi-marketing/",
+      "href": "/vault/tools/roi-marketing/",
       "tags": ["marketing", "roi", "performance", "pesos"]
     },
     {
       "title": "Sail Away Growth Simulator",
       "type": "simulator",
       "description": "Calcula potencial de crecimiento rentable, preparacion comercial y ruta sugerida de asesoria.",
-      "href": "/vault/simuladores/sail-away/",
+      "href": "/vault/tools/sail-away/",
       "tags": ["ventas", "growth", "sail away", "asesoria"]
     },
     {
@@ -54,7 +54,7 @@
     {
       "title": "Como agregar contenido",
       "type": "document",
-      "description": "Guia breve para registrar documentos y simuladores dentro del manifiesto.",
+      "description": "Guia breve para registrar contenido dentro del Vault.",
       "href": "/library/documents/como-agregar-contenido.html",
       "tags": ["guia", "referencia"]
     },
@@ -62,7 +62,7 @@
       "title": "Ejemplo de simulador",
       "type": "simulator",
       "description": "Mini simulador incluido para comprobar que las experiencias interactivas se abren correctamente.",
-      "href": "/vault/simuladores/ejemplo/",
+      "href": "/vault/tools/ejemplo/",
       "tags": ["simulador", "interactivo"]
     }
   ]

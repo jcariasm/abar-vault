@@ -1,14 +1,14 @@
-# Vault Abargon
+# Abar Vault
 
-Vault web para organizar leads, simuladores, clientes, documentos, presupuestos, reportes y entregables.
+Vault web para organizar archivo, leads, clientes y tools en un solo espacio.
 
 ## Estructura
 
 - `vault`: estructura principal del sitio.
 - `vault/leads`: prospectos, propuestas, presupuestos y acuerdos previos al cierre.
-- `vault/simuladores`: simuladores HTML, apps estaticas o carpetas con recursos interactivos.
+- `vault/tools`: tools HTML, simuladores, apps estaticas o carpetas con recursos interactivos.
 - `vault/clientes`: espacios por cliente con reportes, saldos, builds, entregables y autorizaciones.
-- `vault/documentos`: templates, guias y formatos maestros.
+- `vault/archivo`: templates, guias, documentos y formatos maestros.
 - `library`: biblioteca historica y recursos compartidos que se conservan por compatibilidad.
 
 ## Uso local

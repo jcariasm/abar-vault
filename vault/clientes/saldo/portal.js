@@ -16,7 +16,7 @@ const reports = {
       { date: 'May 02', title: 'Arquitectura inicial de contenidos', note: 'Estrategia', owner: 'AS', hours: 6, billable: true, deliverable: 'Mapa de contenidos' },
     ],
     deliverables: [
-      { title: 'Sail Away Growth Simulator', description: 'Simulador interactivo publicado para estimar crecimiento rentable.', status: 'Publicado', state: 'done', href: '/vault/simuladores/sail-away/' },
+      { title: 'Sail Away Growth Simulator', description: 'Tool interactivo publicado para estimar crecimiento rentable.', status: 'Publicado', state: 'done', href: '/vault/tools/sail-away/' },
       { title: 'Training landing wireframes', description: 'Wireframe y dos rutas visuales para aprobacion del programa.', status: 'En revision', state: 'review', href: '#' },
       { title: 'Benchmark memo', description: 'Lectura ejecutiva de oportunidades de contenido y venta consultiva.', status: 'Compartido', state: 'done', href: '#' },
     ],
