@@ -3,6 +3,15 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/vault/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300"
+        }
+      ]
+    },
+    {
       "source": "/library/(.*)",
       "headers": [
         {
@@ -10,6 +19,28 @@
           "value": "public, max-age=300"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/clientes",
+      "destination": "/vault/clientes",
+      "permanent": false
+    },
+    {
+      "source": "/clientes/:path*",
+      "destination": "/vault/clientes/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/arva",
+      "destination": "/vault/clientes/arva",
+      "permanent": false
+    },
+    {
+      "source": "/arva/:path*",
+      "destination": "/vault/clientes/arva/:path*",
+      "permanent": false
     }
   ]
 }

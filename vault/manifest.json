@@ -1,0 +1,62 @@
+{
+  "title": "Vault Abargon",
+  "description": "Espacio ordenado para leads, simuladores, clientes, presupuestos, reportes y entregables.",
+  "items": [
+    {
+      "title": "Leads",
+      "type": "lead",
+      "description": "Prospectos activos, propuestas, presupuestos y materiales previos a convertirse en cliente.",
+      "href": "/vault/leads/",
+      "tags": ["leads", "propuestas", "pipeline"]
+    },
+    {
+      "title": "Juan Carlos Bautista Jacobo",
+      "type": "lead",
+      "description": "Espacio de lead para concentrar presupuesto, propuesta, conversaciones y siguientes pasos.",
+      "href": "/vault/leads/juan-carlos-bautista-jacobo/",
+      "tags": ["lead", "juan carlos bautista jacobo", "seguimiento"]
+    },
+    {
+      "title": "Simuladores",
+      "type": "simulator",
+      "description": "Modelos interactivos para diagnosticar escenarios comerciales, marketing, crecimiento y pipeline.",
+      "href": "/vault/simuladores/",
+      "tags": ["simuladores", "modelos", "herramientas"]
+    },
+    {
+      "title": "Clientes",
+      "type": "client",
+      "description": "Reportes, saldos de horas, entregables, builds, autorizaciones y presupuestos por cliente.",
+      "href": "/vault/clientes/",
+      "tags": ["clientes", "reportes", "entregables"]
+    },
+    {
+      "title": "Axelera",
+      "type": "client",
+      "description": "Cliente activo. Reporte anual de horas, actividades, builds, entregables y autorizaciones.",
+      "href": "/vault/clientes/axelera/",
+      "tags": ["cliente", "axelera", "horas", "builds"]
+    },
+    {
+      "title": "ARVA",
+      "type": "client",
+      "description": "Cliente activo. Presupuesto Real Milan 2026 y futuros reportes relacionados.",
+      "href": "/vault/clientes/arva/",
+      "tags": ["cliente", "arva", "presupuesto", "real milan"]
+    },
+    {
+      "title": "Portal de saldo",
+      "type": "client",
+      "description": "Mockup base para revisar horas contratadas, horas consumidas, saldo disponible y entregables.",
+      "href": "/vault/clientes/saldo/",
+      "tags": ["saldo", "horas", "template"]
+    },
+    {
+      "title": "Documentos internos",
+      "type": "document",
+      "description": "Guías, formatos maestros y templates operativos del Vault.",
+      "href": "/vault/documentos/",
+      "tags": ["documentos", "templates", "guias"]
+    }
+  ]
+}

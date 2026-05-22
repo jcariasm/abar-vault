@@ -1,54 +1,54 @@
 {
-  "title": "Simuladores interactivos",
-  "description": "Modelos, documentos y experiencias interactivas para convertir decisiones digitales en escenarios medibles.",
+  "title": "Vault Abargon",
+  "description": "Espacio ordenado para leads, simuladores, clientes, presupuestos, reportes y entregables.",
   "items": [
     {
       "title": "Sales Pipeline Abargon",
       "type": "simulator",
       "description": "Dashboard interactivo para revisar pipeline, pipe ponderado, forecast, cambios semanales y concentracion de riesgo.",
-      "href": "/library/simulators/sales-pipeline/index.html",
+      "href": "/vault/simuladores/sales-pipeline/",
       "tags": ["ventas", "pipeline", "forecast", "abargon"]
     },
     {
       "title": "Creator Economy Revenue Benchmarks",
       "type": "simulator",
       "description": "Artifact interactivo para comparar modelos de monetizacion y mezcla de ingresos en creadores y companias de medios.",
-      "href": "/library/simulators/creator-economy-benchmarks/index.html",
+      "href": "/vault/simuladores/creator-economy-benchmarks/",
       "tags": ["creator economy", "monetizacion", "benchmarks", "revenue"]
     },
     {
       "title": "Simulador de ROI en marketing digital",
       "type": "simulator",
       "description": "Calcula inversion, clientes, CAC, ingresos y retorno estimado para una campana orientada a adquisicion rentable.",
-      "href": "/library/simulators/roi-marketing/index.html",
+      "href": "/vault/simuladores/roi-marketing/",
       "tags": ["marketing", "roi", "performance", "pesos"]
     },
     {
       "title": "Sail Away Growth Simulator",
       "type": "simulator",
       "description": "Calcula potencial de crecimiento rentable, preparacion comercial y ruta sugerida de asesoria.",
-      "href": "/library/simulators/sail-away/index.html",
+      "href": "/vault/simuladores/sail-away/",
       "tags": ["ventas", "growth", "sail away", "asesoria"]
     },
     {
       "title": "Portal de saldo de clientes",
       "type": "document",
       "description": "Mockup navegable para revisar horas contratadas, horas consumidas, saldo disponible, actividades y entregables por cliente.",
-      "href": "/clientes/saldo/",
+      "href": "/vault/clientes/saldo/",
       "tags": ["clientes", "saldo", "horas", "entregables"]
     },
     {
       "title": "Reporte interno Axelera",
       "type": "document",
       "description": "Vista interna anual para revisar saldo de horas, actividades normalizadas, builds, entregables y autorizaciones pendientes de Axelera.",
-      "href": "/clientes/axelera/",
+      "href": "/vault/clientes/axelera/",
       "tags": ["clientes", "axelera", "horas", "builds", "ok"]
     },
     {
       "title": "Presupuesto Real Milan 2026",
       "type": "document",
       "description": "Documento HTML de presupuesto ARVA para revision interna y consulta desde el site.",
-      "href": "/arva/",
+      "href": "/vault/clientes/arva/",
       "tags": ["arva", "presupuesto", "real milan", "2026"]
     },
     {
@@ -62,7 +62,7 @@
       "title": "Ejemplo de simulador",
       "type": "simulator",
       "description": "Mini simulador incluido para comprobar que las experiencias interactivas se abren correctamente.",
-      "href": "/library/simulators/ejemplo/index.html",
+      "href": "/vault/simuladores/ejemplo/",
       "tags": ["simulador", "interactivo"]
     }
   ]

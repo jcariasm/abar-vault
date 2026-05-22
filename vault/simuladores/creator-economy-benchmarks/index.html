@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creator Economy Revenue Benchmarks | Abargon Labs</title>
+    <style>
+      :root {
+        color: #080b0c;
+        background: #f7f8f7;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --ink: #080b0c;
+        --paper: #ffffff;
+        --soft: #f1f3f1;
+        --line: rgba(8, 11, 12, 0.12);
+        --muted: #5d6668;
+        --blue: #dff2ff;
+        --blue-ink: #005f8f;
+        --green: #e9f7ec;
+        --yellow: #fff4d7;
+        --pink: #ffe8ee;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(circle at top right, rgba(223, 242, 255, 0.9), transparent 34rem),
+          linear-gradient(180deg, #ffffff 0%, #f7f8f7 42rem);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      main {
+        width: min(1180px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 28px 0 60px;
+      }
+
+      .back {
+        display: inline-flex;
+        margin: 6px 0 56px;
+        color: var(--blue-ink);
+        font-weight: 760;
+        text-decoration: none;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+        gap: 42px;
+        align-items: end;
+        margin-bottom: 28px;
+      }
+
+      .kicker {
+        margin: 0 0 14px;
+        color: var(--blue-ink);
+        font-size: 13px;
+        font-weight: 820;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 820px;
+        margin: 0;
+        color: var(--ink);
+        font-size: clamp(44px, 7vw, 82px);
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 720px;
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.48;
+      }
+
+      .source-card {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.82);
+        padding: 22px;
+        box-shadow: 0 24px 60px rgba(8, 11, 12, 0.08);
+      }
+
+      .source-card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 18px;
+      }
+
+      .source-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        border: 1px solid var(--ink);
+        background: var(--ink);
+        color: #ffffff;
+        padding: 0 15px;
+        text-decoration: none;
+        font-weight: 780;
+      }
+
+      .button.secondary {
+        border-color: var(--line);
+        background: #ffffff;
+        color: var(--ink);
+      }
+
+      .simulator {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .panel,
+      .bench-card,
+      .summary {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .panel {
+        position: sticky;
+        top: 18px;
+        padding: 18px;
+      }
+
+      .panel h2,
+      .summary h2 {
+        margin: 0 0 14px;
+        font-size: 19px;
+        letter-spacing: 0;
+      }
+
+      label {
+        display: block;
+        margin: 16px 0 8px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 760;
+      }
+
+      select,
+      input[type="range"] {
+        width: 100%;
+      }
+
+      select {
+        min-height: 42px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        color: var(--ink);
+        padding: 0 10px;
+        font: inherit;
+      }
+
+      .value-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .value-row strong {
+        color: var(--ink);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .chip {
+        min-height: 34px;
+        border: 1px solid var(--line);
+        background: #ffffff;
+        color: var(--ink);
+        padding: 0 11px;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .chip.active {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      .summary {
+        margin-bottom: 18px;
+        padding: 20px;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        border: 1px solid var(--line);
+        background: var(--line);
+      }
+
+      .metric {
+        background: #ffffff;
+        padding: 14px;
+      }
+
+      .metric span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 24px;
+      }
+
+      .cards {
+        display: grid;
+        gap: 14px;
+      }
+
+      .bench-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 220px;
+        gap: 20px;
+        padding: 18px;
+      }
+
+      .bench-card header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .bench-card h3 {
+        margin: 0;
+        font-size: 23px;
+        letter-spacing: 0;
+      }
+
+      .badge {
+        display: inline-flex;
+        min-height: 30px;
+        align-items: center;
+        justify-content: center;
+        background: var(--blue);
+        color: var(--blue-ink);
+        padding: 0 10px;
+        font-size: 12px;
+        font-weight: 820;
+        white-space: nowrap;
+      }
+
+      .bench-card p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .range {
+        margin-top: 16px;
+        font-size: 15px;
+        font-weight: 820;
+      }
+
+      .bars {
+        display: grid;
+        gap: 8px;
+      }
+
+      .bar-row {
+        display: grid;
+        gap: 5px;
+      }
+
+      .bar-label {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .bar {
+        height: 9px;
+        background: var(--soft);
+        overflow: hidden;
+      }
+
+      .bar span {
+        display: block;
+        height: 100%;
+        background: var(--ink);
+      }
+
+      .bar-row:nth-child(2) .bar span {
+        background: var(--blue-ink);
+      }
+
+      .bar-row:nth-child(3) .bar span {
+        background: #7a6a00;
+      }
+
+      .bar-row:nth-child(4) .bar span {
+        background: #8b3750;
+      }
+
+      .empty {
+        border: 1px dashed var(--line);
+        padding: 24px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      @media (max-width: 940px) {
+        .hero,
+        .simulator,
+        .bench-card {
+          grid-template-columns: 1fr;
+        }
+
+        .panel {
+          position: static;
+        }
+
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 620px) {
+        main {
+          width: min(100% - 24px, 1180px);
+          padding-top: 20px;
+        }
+
+        .back {
+          margin-bottom: 34px;
+        }
+
+        .source-card,
+        .panel,
+        .summary,
+        .bench-card {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="/">Volver al cat&aacute;logo</a>
+
+      <section class="hero">
+        <div>
+          <p class="kicker">Abargon Labs / Simulador</p>
+          <h1>Creator Economy Revenue Benchmarks.</h1>
+          <p class="lead">
+            Explora modelos de monetizaci&oacute;n para creadores, medios y comunidades digitales. Ajusta el nivel de audiencia y revisa qu&eacute; mezcla de ingresos suele sostener cada arquetipo.
+          </p>
+        </div>
+        <aside class="source-card">
+          <strong>Fuente externa disponible</strong>
+          <p>
+            El artifact de Claude queda como referencia, pero esta versi&oacute;n funciona como simulador nativo dentro del repositorio.
+          </p>
+          <div class="actions">
+            <a class="button" href="https://claude.ai/public/artifacts/f83d3473-c3cc-4b32-85f5-0c542d747d18" target="_blank" rel="noreferrer">Abrir artifact</a>
+            <a class="button secondary" href="https://www.claudeusercontent.com/artifact/f83d3473-c3cc-4b32-85f5-0c542d747d18?domain=&errorReportingMode=parent&formattedSpreadsheets=true" target="_blank" rel="noreferrer">Vista directa</a>
+          </div>
+        </aside>
+      </section>
+
+      <section class="simulator" aria-label="Simulador de revenue benchmarks">
+        <aside class="panel">
+          <h2>Modelo</h2>
+          <label for="audience">Audiencia mensual</label>
+          <input id="audience" type="range" min="100000" max="12000000" step="100000" value="1800000" />
+          <div class="value-row">
+            <span>Alcance</span>
+            <strong id="audienceValue">1.8M</strong>
+          </div>
+
+          <label for="focus">Prioridad comercial</label>
+          <select id="focus">
+            <option value="all">Todas las mezclas</option>
+            <option value="sponsorships">Patrocinios</option>
+            <option value="subscriptions">Suscripciones</option>
+            <option value="products">Productos</option>
+            <option value="services">Servicios</option>
+          </select>
+
+          <div class="chips" aria-label="Filtro por escala">
+            <button class="chip active" data-scale="all" type="button">Todos</button>
+            <button class="chip" data-scale="emerging" type="button">Emergente</button>
+            <button class="chip" data-scale="growth" type="button">Crecimiento</button>
+            <button class="chip" data-scale="enterprise" type="button">Empresa</button>
+          </div>
+        </aside>
+
+        <div>
+          <section class="summary">
+            <h2>Lectura r&aacute;pida</h2>
+            <div class="summary-grid">
+              <div class="metric">
+                <span>Potencial anual</span>
+                <strong id="summaryRevenue">$0</strong>
+              </div>
+              <div class="metric">
+                <span>Modelo dominante</span>
+                <strong id="summaryModel">-</strong>
+              </div>
+              <div class="metric">
+                <span>Diversificaci&oacute;n</span>
+                <strong id="summaryMix">-</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="cards" id="cards" aria-live="polite"></section>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const benchmarks = [
+        {
+          name: "Creator premium",
+          scale: "growth",
+          range: [5000000, 18000000],
+          audienceFactor: 1.08,
+          description: "Personalidad con comunidad fiel, patrocinios selectivos y productos propios de alto margen.",
+          mix: { sponsorships: 42, subscriptions: 26, products: 22, services: 10 },
+        },
+        {
+          name: "Media niche",
+          scale: "growth",
+          range: [3000000, 12000000],
+          audienceFactor: 0.86,
+          description: "Newsletter, podcast o canal editorial con audiencia B2B y venta consultiva alrededor del contenido.",
+          mix: { sponsorships: 34, subscriptions: 32, products: 12, services: 22 },
+        },
+        {
+          name: "Education operator",
+          scale: "emerging",
+          range: [800000, 6500000],
+          audienceFactor: 0.72,
+          description: "Creador educativo con cursos, cohortes, membres&iacute;as y workshops recurrentes.",
+          mix: { sponsorships: 10, subscriptions: 28, products: 44, services: 18 },
+        },
+        {
+          name: "Studio / holding",
+          scale: "enterprise",
+          range: [25000000, 100000000],
+          audienceFactor: 1.32,
+          description: "Compa&ntilde;&iacute;a de medios con varias IPs, ventas enterprise, licensing y comercio propio.",
+          mix: { sponsorships: 38, subscriptions: 16, products: 28, services: 18 },
+        },
+        {
+          name: "Community SaaS",
+          scale: "enterprise",
+          range: [12000000, 55000000],
+          audienceFactor: 1.16,
+          description: "Comunidad que convierte reputaci&oacute;n y datos propios en software, herramientas o acceso profesional.",
+          mix: { sponsorships: 14, subscriptions: 36, products: 34, services: 16 },
+        },
+      ];
+
+      const labels = {
+        sponsorships: "Patrocinios",
+        subscriptions: "Suscripciones",
+        products: "Productos",
+        services: "Servicios",
+      };
+
+      const audience = document.querySelector("#audience");
+      const audienceValue = document.querySelector("#audienceValue");
+      const focus = document.querySelector("#focus");
+      const cards = document.querySelector("#cards");
+      const summaryRevenue = document.querySelector("#summaryRevenue");
+      const summaryModel = document.querySelector("#summaryModel");
+      const summaryMix = document.querySelector("#summaryMix");
+      const chips = Array.from(document.querySelectorAll(".chip"));
+      let selectedScale = "all";
+
+      function compactNumber(value) {
+        return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(value);
+      }
+
+      function money(value) {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0,
+          notation: value >= 1000000 ? "compact" : "standard",
+        }).format(value);
+      }
+
+      function estimate(item) {
+        const reach = Number(audience.value) / 1800000;
+        const low = item.range[0] * Math.pow(reach, 0.72) * item.audienceFactor;
+        const high = item.range[1] * Math.pow(reach, 0.82) * item.audienceFactor;
+        return [Math.round(low), Math.round(high)];
+      }
+
+      function render() {
+        audienceValue.textContent = compactNumber(Number(audience.value));
+        const selectedFocus = focus.value;
+        const visible = benchmarks.filter((item) => {
+          const scaleOk = selectedScale === "all" || item.scale === selectedScale;
+          const focusOk = selectedFocus === "all" || item.mix[selectedFocus] >= 24;
+          return scaleOk && focusOk;
+        });
+
+        cards.innerHTML = "";
+
+        if (!visible.length) {
+          cards.innerHTML = '<div class="empty">No hay benchmarks con esa combinaci&oacute;n. Ajusta el filtro para comparar otros modelos.</div>';
+          summaryRevenue.textContent = "-";
+          summaryModel.textContent = "-";
+          summaryMix.textContent = "-";
+          return;
+        }
+
+        let best = visible[0];
+        let bestHigh = 0;
+
+        visible.forEach((item) => {
+          const [low, high] = estimate(item);
+          if (high > bestHigh) {
+            bestHigh = high;
+            best = item;
+          }
+
+          const dominant = Object.entries(item.mix).sort((a, b) => b[1] - a[1])[0];
+          const article = document.createElement("article");
+          article.className = "bench-card";
+          article.innerHTML = `
+            <div>
+              <header>
+                <h3>${item.name}</h3>
+                <span class="badge">${labels[dominant[0]]}</span>
+              </header>
+              <p>${item.description}</p>
+              <div class="range">${money(low)} - ${money(high)} / a&ntilde;o</div>
+            </div>
+            <div class="bars">
+              ${Object.entries(item.mix)
+                .map(
+                  ([key, value]) => `
+                    <div class="bar-row">
+                      <div class="bar-label"><span>${labels[key]}</span><strong>${value}%</strong></div>
+                      <div class="bar"><span style="width:${value}%"></span></div>
+                    </div>
+                  `,
+                )
+                .join("")}
+            </div>
+          `;
+          cards.appendChild(article);
+        });
+
+        const [bestLow, bestMax] = estimate(best);
+        const dominant = Object.entries(best.mix).sort((a, b) => b[1] - a[1])[0];
+        const activeChannels = Object.values(best.mix).filter((value) => value >= 18).length;
+        summaryRevenue.textContent = `${money(bestLow)} - ${money(bestMax)}`;
+        summaryModel.textContent = labels[dominant[0]];
+        summaryMix.textContent = `${activeChannels} canales`;
+      }
+
+      audience.addEventListener("input", render);
+      focus.addEventListener("change", render);
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          selectedScale = chip.dataset.scale;
+          chips.forEach((item) => item.classList.toggle("active", item === chip));
+          render();
+        });
+      });
+
+      render();
+    </script>
+  </body>
+</html>

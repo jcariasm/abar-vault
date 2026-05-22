@@ -6,3 +6,6 @@ dist/
 *.log
 scratch_pptx_extract/
 scratch_*
+outputs/
+tmp-screens/
+backup-pre-vault-*.zip

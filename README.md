@@ -1,15 +1,15 @@
-# Simuladores interactivos
+# Vault Abargon
 
-Biblioteca web para publicar documentos, prototipos y simuladores interactivos creados en conjunto.
+Vault web para organizar leads, simuladores, clientes, documentos, presupuestos, reportes y entregables.
 
 ## Estructura
 
-- `library/documents`: PDFs, presentaciones exportadas, documentos y material descargable.
-- `library/simulators`: simuladores HTML, apps estáticas o carpetas con recursos interactivos.
-- `library/manifest.json`: índice editable de todo lo que aparece en la página.
-- `clientes`: portal público de documentos para clientes.
-- `library/client-documents`: documentos y manifiesto del portal de clientes.
-- `src`: interfaz del catálogo.
+- `vault`: estructura principal del sitio.
+- `vault/leads`: prospectos, propuestas, presupuestos y acuerdos previos al cierre.
+- `vault/simuladores`: simuladores HTML, apps estaticas o carpetas con recursos interactivos.
+- `vault/clientes`: espacios por cliente con reportes, saldos, builds, entregables y autorizaciones.
+- `vault/documentos`: templates, guias y formatos maestros.
+- `library`: biblioteca historica y recursos compartidos que se conservan por compatibilidad.
 
 ## Uso local
 
@@ -19,6 +19,6 @@ python -m http.server 5173
 
 Luego abre `http://127.0.0.1:5173`.
 
-## Publicación
+## Publicacion
 
-El proyecto está preparado como sitio estático para Vercel. Al conectarlo con GitHub, Vercel puede publicar cada cambio enviado a `main`.
+El proyecto esta preparado como sitio estatico para Vercel. Al conectarlo con GitHub, Vercel puede publicar cada cambio enviado a `main`.

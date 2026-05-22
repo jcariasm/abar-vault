@@ -1,10 +1,14 @@
 const typeLabels = {
+  client: 'Cliente',
   document: 'Documento',
+  lead: 'Lead',
   simulator: 'Simulador'
 };
 
 const typeIcons = {
+  client: 'CLI',
   document: 'DOC',
+  lead: 'LED',
   simulator: 'SIM'
 };
 
@@ -62,7 +66,7 @@ filterButtons.forEach((button) => {
   });
 });
 
-fetch('/library/manifest.json')
+fetch('/vault/manifest.json')
   .then((response) => response.json())
   .then((library) => {
     document.querySelector('#library-title').textContent = library.title;

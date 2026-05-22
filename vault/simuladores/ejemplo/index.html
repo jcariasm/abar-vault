@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplo de simulador</title>
+    <style>
+      body {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        margin: 0;
+        color: #15201b;
+        background: #edf2ef;
+        font-family: Inter, system-ui, sans-serif;
+      }
+      main {
+        width: min(680px, calc(100vw - 32px));
+      }
+      input {
+        width: 100%;
+      }
+      output {
+        display: block;
+        margin-top: 20px;
+        font-size: 42px;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Simulador de impacto</h1>
+      <p>Ajusta el valor para ver el resultado calculado.</p>
+      <input id="slider" type="range" min="0" max="100" value="42" />
+      <output id="result">42%</output>
+    </main>
+    <script>
+      const slider = document.querySelector('#slider');
+      const result = document.querySelector('#result');
+      slider.addEventListener('input', () => {
+        result.textContent = `${slider.value}%`;
+      });
+    </script>
+  </body>
+</html>
