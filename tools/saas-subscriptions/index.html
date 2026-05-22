@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Auditoria de SaaS y Suscripciones | Abargon</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef3f8;
+      --ink: #18212f;
+      --muted: #667286;
+      --line: #d9e1eb;
+      --accent: #0e766e;
+      --accent-2: #2457c5;
+      --danger: #b42318;
+      --warn: #a15c07;
+      --ok: #137333;
+      --shadow: 0 18px 50px rgba(24, 33, 47, .08);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    a { color: var(--accent-2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, .7fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .stamp {
+      justify-self: end;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      min-width: 320px;
+      box-shadow: var(--shadow);
+    }
+
+    .stamp strong {
+      display: block;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .stamp span {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 15px 16px;
+      box-shadow: var(--shadow);
+      min-height: 104px;
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 10px;
+    }
+
+    .metric .value {
+      font-size: 24px;
+      font-weight: 760;
+      line-height: 1.1;
+    }
+
+    .metric .note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .filters button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .filters button.active {
+      color: #fff;
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .search {
+      min-width: 280px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font: inherit;
+      color: var(--ink);
+      background: var(--surface-2);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1180px;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f9fbfd;
+      color: #475467;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      white-space: nowrap;
+    }
+
+    tbody tr:hover { background: #f9fbfd; }
+    tbody tr:last-child td { border-bottom: 0; }
+
+    .service {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 190px;
+    }
+
+    .service strong { font-size: 14px; }
+    .service span { color: var(--muted); font-size: 12px; }
+
+    .money {
+      font-variant-numeric: tabular-nums;
+      font-weight: 740;
+      white-space: nowrap;
+    }
+
+    .muted { color: var(--muted); }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .tag.high { color: #7a271a; background: #fff1ef; border-color: #ffd5cf; }
+    .tag.medium { color: #7a4a08; background: #fff7e6; border-color: #f9dc9c; }
+    .tag.low { color: #344054; background: #f2f4f7; border-color: #e4e7ec; }
+    .tag.ok { color: #0b5d2a; background: #eaf6ee; border-color: #cbe9d5; }
+    .tag.watch { color: #175cd3; background: #eff6ff; border-color: #cfe3ff; }
+    .tag.stop { color: #b42318; background: #fff1f3; border-color: #ffd1d8; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 170px;
+    }
+
+    .actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: var(--ink);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .actions a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .footnotes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .note-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .note-card h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .note-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    @media (max-width: 980px) {
+      .shell { padding: 18px; }
+      header { grid-template-columns: 1fr; }
+      .stamp { justify-self: stretch; min-width: 0; }
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .toolbar { align-items: stretch; flex-direction: column; }
+      .search { min-width: 0; width: 100%; }
+      .footnotes { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      h1 { font-size: 25px; }
+      .summary { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <h1>Auditoria de SaaS y suscripciones</h1>
+        <p class="lede">Inventario encontrado en Gmail para decidir renovaciones, cancelaciones y limpieza de proveedores. Los montos vienen de recibos, facturas y avisos detectados entre mayo 2025 y mayo 2026.</p>
+      </div>
+      <div class="stamp">
+        <strong>Corte</strong>
+        <span>22 de mayo de 2026</span>
+        <small class="muted">Estados: confirmado, variable, fallido/cancelado o requiere verificacion.</small>
+      </div>
+    </header>
+
+    <section class="summary" aria-label="Resumen">
+      <article class="metric">
+        <div class="label">Recurrente confirmado</div>
+        <div class="value">18</div>
+        <div class="note">SaaS/infra con recibo o renovacion</div>
+      </article>
+      <article class="metric">
+        <div class="label">USD mensual aprox.</div>
+        <div class="value">$790+</div>
+        <div class="note">Sin incluir AWS/Google variables</div>
+      </article>
+      <article class="metric">
+        <div class="label">EUR mensual</div>
+        <div class="value">€69.60</div>
+        <div class="note">n8n Cloud</div>
+      </article>
+      <article class="metric">
+        <div class="label">MXN variable</div>
+        <div class="value">MX$2.6k+</div>
+        <div class="note">Google Cloud mar 2026</div>
+      </article>
+      <article class="metric">
+        <div class="label">Revisar primero</div>
+        <div class="value">8</div>
+        <div class="note">Impacto alto o riesgo operativo</div>
+      </article>
+    </section>
+
+    <section class="toolbar" aria-label="Filtros">
+      <div class="filters">
+        <button class="active" data-filter="all">Todo</button>
+        <button data-filter="alta">Prioridad alta</button>
+        <button data-filter="confirmado">Confirmado</button>
+        <button data-filter="variable">Variable</button>
+        <button data-filter="cancelable">Cancelable</button>
+        <button data-filter="verificar">Verificar</button>
+      </div>
+      <input class="search" id="search" type="search" placeholder="Buscar servicio, categoria o nota..." />
+    </section>
+
+    <section class="table-wrap" aria-label="Tabla de suscripciones">
+      <table id="subscriptions">
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Categoria</th>
+            <th>Uso</th>
+            <th>Monto detectado</th>
+            <th>Periodicidad</th>
+            <th>Estado</th>
+            <th>Prioridad</th>
+            <th>Decision sugerida</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-tags="alta confirmado verificar">
+            <td><div class="service"><strong>AWS / Amazon Web Services</strong><span>Cuenta FinBe / infraestructura</span></div></td>
+            <td>Cloud / Infra</td>
+            <td>Consola y servicios cloud, saldo con riesgo de suspension.</td>
+            <td><span class="money">MX$4,340.39</span><br><span class="muted">antes: USD$3,316.49</span></td>
+            <td>Variable</td>
+            <td><span class="tag watch">Variable</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Auditar proyectos, apagar recursos huérfanos y definir owner.</td>
+            <td class="actions"><a href="https://console.aws.amazon.com/billing/home" target="_blank" rel="noreferrer">Billing</a><a href="https://aws.amazon.com" target="_blank" rel="noreferrer">AWS</a></td>
+          </tr>
+          <tr data-tags="alta confirmado verificar">
+            <td><div class="service"><strong>Google Cloud</strong><span>Billing ID 019077-EAAD13-4270A4</span></div></td>
+            <td>Cloud / Infra</td>
+            <td>Uso de Google Cloud Platform y APIs.</td>
+            <td><span class="money">MX$2,631.88</span><br><span class="muted">marzo 2026</span></td>
+            <td>Variable mensual</td>
+            <td><span class="tag watch">Variable</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Revisar costos por proyecto y presupuestos/alertas.</td>
+            <td class="actions"><a href="https://console.cloud.google.com/billing" target="_blank" rel="noreferrer">Billing</a><a href="https://console.cloud.google.com" target="_blank" rel="noreferrer">Console</a></td>
+          </tr>
+          <tr data-tags="alta confirmado">
+            <td><div class="service"><strong>Anthropic / Claude</strong><span>Claude Max</span></div></td>
+            <td>IA</td>
+            <td>Chat y asistencia con Claude.</td>
+            <td><span class="money">USD$200.00</span><br><span class="muted">ultimo cargo: USD$129.21 prorrateado</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Validar uso real vs plan Max; bajar plan si no se usa diario.</td>
+            <td class="actions"><a href="https://claude.ai/settings/billing" target="_blank" rel="noreferrer">Billing</a><a href="https://claude.ai" target="_blank" rel="noreferrer">Abrir</a></td>
+          </tr>
+          <tr data-tags="alta confirmado">
+            <td><div class="service"><strong>Atlassian / Jira</strong><span>Jira + Jira Service Management</span></div></td>
+            <td>Operaciones / Tickets</td>
+            <td>Gestion de proyectos, soporte y service desk.</td>
+            <td><span class="money">USD$124.72</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Revisar usuarios, proyectos activos y opcion free/downgrade.</td>
+            <td class="actions"><a href="https://admin.atlassian.com" target="_blank" rel="noreferrer">Admin</a><a href="https://www.atlassian.com" target="_blank" rel="noreferrer">Sitio</a></td>
+          </tr>
+          <tr data-tags="alta confirmado cancelable">
+            <td><div class="service"><strong>UXPin</strong><span>Advanced Monthly, 3 seats</span></div></td>
+            <td>Diseno / UX</td>
+            <td>Prototipado y diseño de producto.</td>
+            <td><span class="money">USD$117.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Confirmar si los 3 seats se usan; cancelar o reducir seats.</td>
+            <td class="actions"><a href="https://www.uxpin.com" target="_blank" rel="noreferrer">Abrir</a><a href="https://www.uxpin.com/contact" target="_blank" rel="noreferrer">Soporte</a></td>
+          </tr>
+          <tr data-tags="alta confirmado verificar">
+            <td><div class="service"><strong>Google Workspace</strong><span>Dominio abargon.com</span></div></td>
+            <td>Email / Productividad</td>
+            <td>Correo, cuentas y colaboracion interna.</td>
+            <td><span class="money">PDF pendiente</span><br><span class="muted">recibo detectado, monto no extraido</span></td>
+            <td>Mensual</td>
+            <td><span class="tag watch">Verificar</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Revisar usuarios inactivos y licencias asignadas.</td>
+            <td class="actions"><a href="https://admin.google.com/ac/billing/subscriptions" target="_blank" rel="noreferrer">Billing</a><a href="https://admin.google.com" target="_blank" rel="noreferrer">Admin</a></td>
+          </tr>
+          <tr data-tags="alta confirmado">
+            <td><div class="service"><strong>n8n Cloud</strong><span>Cloud Pro-1</span></div></td>
+            <td>Automatizacion</td>
+            <td>Workflows e integraciones operativas.</td>
+            <td><span class="money">EUR€69.60</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Listar workflows activos; migrar self-host si conviene.</td>
+            <td class="actions"><a href="https://app.n8n.cloud" target="_blank" rel="noreferrer">Abrir</a><a href="https://subscription-management.paddle.com" target="_blank" rel="noreferrer">Paddle</a></td>
+          </tr>
+          <tr data-tags="alta verificar">
+            <td><div class="service"><strong>Rackspace</strong><span>Cobranza ABC-Amega</span></div></td>
+            <td>Cloud / Hosting</td>
+            <td>Cuenta referida a cobranza por Rackspace US Inc.</td>
+            <td><span class="money">USD$334.29</span></td>
+            <td>Saldo vencido</td>
+            <td><span class="tag watch">Verificar</span></td>
+            <td><span class="tag high">Alta</span></td>
+            <td>Confirmar si el servicio sigue en uso o cerrar cuenta.</td>
+            <td class="actions"><a href="https://www.rackspace.com" target="_blank" rel="noreferrer">Rackspace</a><a href="https://abc-collect.com/#/PaymentPortal" target="_blank" rel="noreferrer">Pago</a></td>
+          </tr>
+          <tr data-tags="confirmado cancelable">
+            <td><div class="service"><strong>Beautiful.ai</strong><span>Pro</span></div></td>
+            <td>Presentaciones</td>
+            <td>Creacion de decks y slides con IA.</td>
+            <td><span class="money">USD$45.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Conservar solo si hay decks activos; si no, cancelar.</td>
+            <td class="actions"><a href="https://www.beautiful.ai" target="_blank" rel="noreferrer">Abrir</a><a href="https://www.beautiful.ai/pricing#faq" target="_blank" rel="noreferrer">Billing</a></td>
+          </tr>
+          <tr data-tags="confirmado cancelable">
+            <td><div class="service"><strong>TradingView Essential</strong><span>Plan Essential</span></div></td>
+            <td>Finanzas / Datos</td>
+            <td>Analisis de mercados y graficas.</td>
+            <td><span class="money">USD$17.34 aprox.</span><br><span class="muted">cargo promo: USD$34.63</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Revisar si se necesita junto con market data.</td>
+            <td class="actions"><a href="https://www.tradingview.com/u/#billing" target="_blank" rel="noreferrer">Billing</a><a href="https://www.tradingview.com" target="_blank" rel="noreferrer">Abrir</a></td>
+          </tr>
+          <tr data-tags="confirmado cancelable">
+            <td><div class="service"><strong>TradingView Market Data</strong><span>US Stock Markets bundle</span></div></td>
+            <td>Finanzas / Datos</td>
+            <td>Datos NYSE, NASDAQ, NYSE Arca, NASDAQ GIDS y OTC.</td>
+            <td><span class="money">USD$11.54</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Cancelar si no hay uso financiero recurrente.</td>
+            <td class="actions"><a href="https://www.tradingview.com/u/#billing" target="_blank" rel="noreferrer">Billing</a><a href="https://www.tradingview.com" target="_blank" rel="noreferrer">Abrir</a></td>
+          </tr>
+          <tr data-tags="confirmado cancelable">
+            <td><div class="service"><strong>Grok / xAI</strong><span>SuperGrok</span></div></td>
+            <td>IA</td>
+            <td>Chat y modelos de xAI.</td>
+            <td><span class="money">USD$30.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Comparar uso contra Claude/ChatGPT; posible duplicado.</td>
+            <td class="actions"><a href="https://x.ai" target="_blank" rel="noreferrer">Abrir</a><a href="https://help.x.com/en/using-x/x-premium" target="_blank" rel="noreferrer">Ayuda</a></td>
+          </tr>
+          <tr data-tags="confirmado cancelable">
+            <td><div class="service"><strong>HeyGen</strong><span>Creator Platform</span></div></td>
+            <td>Video / IA</td>
+            <td>Videos, avatares y generacion creativa.</td>
+            <td><span class="money">USD$29.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Conservar solo si hay campañas de video activas.</td>
+            <td class="actions"><a href="https://app.heygen.com" target="_blank" rel="noreferrer">Abrir</a><a href="https://www.heygen.com/faq" target="_blank" rel="noreferrer">Soporte</a></td>
+          </tr>
+          <tr data-tags="confirmado cancelable">
+            <td><div class="service"><strong>Recraft</strong><span>Pro 2K</span></div></td>
+            <td>Diseno / IA</td>
+            <td>Generacion y edicion de imagenes.</td>
+            <td><span class="money">USD$20.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Posible duplicado con otras herramientas creativas.</td>
+            <td class="actions"><a href="https://www.recraft.ai" target="_blank" rel="noreferrer">Abrir</a><a href="mailto:help@recraft.ai">Soporte</a></td>
+          </tr>
+          <tr data-tags="confirmado">
+            <td><div class="service"><strong>Vercel Pro</strong><span>Hosting y deploys</span></div></td>
+            <td>Hosting / Dev</td>
+            <td>Hosting, deploys y proyectos web.</td>
+            <td><span class="money">USD$20.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag ok">Confirmado</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Conservar si hay proyectos productivos activos.</td>
+            <td class="actions"><a href="https://vercel.com/dashboard" target="_blank" rel="noreferrer">Dashboard</a><a href="https://vercel.com/account/billing" target="_blank" rel="noreferrer">Billing</a></td>
+          </tr>
+          <tr data-tags="verificar">
+            <td><div class="service"><strong>Vercel Domains</strong><span>abargonai.com, localfanatlas.com</span></div></td>
+            <td>Dominios</td>
+            <td>Compras/renovaciones de dominios.</td>
+            <td><span class="money">USD$11.25 c/u</span></td>
+            <td>Probable anual</td>
+            <td><span class="tag watch">Verificar</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Revisar auto-renew y dominios sin uso.</td>
+            <td class="actions"><a href="https://vercel.com/dashboard/domains" target="_blank" rel="noreferrer">Dominios</a></td>
+          </tr>
+          <tr data-tags="cancelable verificar">
+            <td><div class="service"><strong>Creatify</strong><span>Creatify Lab Inc</span></div></td>
+            <td>Video / IA</td>
+            <td>Creativos y video ads con IA.</td>
+            <td><span class="money">USD$39.00</span></td>
+            <td>Mensual</td>
+            <td><span class="tag stop">Pago fallido</span></td>
+            <td><span class="tag medium">Media</span></td>
+            <td>Si no se usa, cancelar antes de actualizar tarjeta.</td>
+            <td class="actions"><a href="https://creatify.ai" target="_blank" rel="noreferrer">Abrir</a><a href="mailto:support@creatify.ai">Soporte</a></td>
+          </tr>
+          <tr data-tags="verificar">
+            <td><div class="service"><strong>Hostinger</strong><span>Nexos AI Credits 20</span></div></td>
+            <td>Hosting / Creditos IA</td>
+            <td>Compra de creditos de IA/hosting.</td>
+            <td><span class="money">USD$23.99</span></td>
+            <td>Puntual</td>
+            <td><span class="tag low">Puntual</span></td>
+            <td><span class="tag low">Baja</span></td>
+            <td>No parece suscripcion; verificar si hay plan activo.</td>
+            <td class="actions"><a href="https://hpanel.hostinger.com" target="_blank" rel="noreferrer">hPanel</a><a href="https://www.hostinger.com" target="_blank" rel="noreferrer">Sitio</a></td>
+          </tr>
+          <tr data-tags="verificar">
+            <td><div class="service"><strong>Next Step Tax / Xero</strong><span>Servicios contables/fiscales</span></div></td>
+            <td>Servicios profesionales</td>
+            <td>IRS letter y preparacion fiscal.</td>
+            <td><span class="money">USD$850 + USD$80</span></td>
+            <td>Puntual / por servicio</td>
+            <td><span class="tag low">No SaaS</span></td>
+            <td><span class="tag low">Baja</span></td>
+            <td>Excluir de cancelaciones SaaS; revisar como gasto profesional.</td>
+            <td class="actions"><a href="https://www.xero.com" target="_blank" rel="noreferrer">Xero</a></td>
+          </tr>
+          <tr data-tags="verificar">
+            <td><div class="service"><strong>Taskade</strong><span>Marketing detectado</span></div></td>
+            <td>Productividad / IA</td>
+            <td>Workspace, agentes y workflows.</td>
+            <td><span class="money">Sin recibo</span></td>
+            <td>Desconocida</td>
+            <td><span class="tag watch">Verificar</span></td>
+            <td><span class="tag low">Baja</span></td>
+            <td>Solo aparece marketing; confirmar si hay cuenta paga.</td>
+            <td class="actions"><a href="https://www.taskade.com/settings/billing" target="_blank" rel="noreferrer">Billing</a><a href="https://www.taskade.com" target="_blank" rel="noreferrer">Abrir</a></td>
+          </tr>
+          <tr data-tags="verificar">
+            <td><div class="service"><strong>Microsoft / OneDrive</strong><span>Storage / M365</span></div></td>
+            <td>Storage / Productividad</td>
+            <td>Avisos de limite de almacenamiento y posible M365/OneDrive.</td>
+            <td><span class="money">Sin recibo</span></td>
+            <td>Desconocida</td>
+            <td><span class="tag watch">Verificar</span></td>
+            <td><span class="tag low">Baja</span></td>
+            <td>Revisar si hay plan activo o solo cuenta gratuita llena.</td>
+            <td class="actions"><a href="https://account.microsoft.com/services" target="_blank" rel="noreferrer">Servicios</a><a href="https://onedrive.live.com/?v=managestorage" target="_blank" rel="noreferrer">Storage</a></td>
+          </tr>
+          <tr data-tags="cancelable">
+            <td><div class="service"><strong>Meta / Facebook Payments</strong><span>PayPal billing agreement</span></div></td>
+            <td>Ads / Pagos</td>
+            <td>Acuerdo de cobro automatico para Meta.</td>
+            <td><span class="money">Sin cargo</span></td>
+            <td>Cancelado</td>
+            <td><span class="tag stop">Cancelado</span></td>
+            <td><span class="tag low">Baja</span></td>
+            <td>Ya aparece cancelado en PayPal; no accionar salvo validar Ads.</td>
+            <td class="actions"><a href="https://www.paypal.com/myaccount/autopay" target="_blank" rel="noreferrer">PayPal</a><a href="https://business.facebook.com/billing_hub" target="_blank" rel="noreferrer">Meta</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="footnotes">
+      <article class="note-card">
+        <h2>Orden sugerido de revision</h2>
+        <p>AWS, Google Cloud, Atlassian, UXPin, Anthropic, n8n, Google Workspace y Rackspace. Son los de mayor impacto o mayor riesgo operativo.</p>
+      </article>
+      <article class="note-card">
+        <h2>Criterio de cancelacion</h2>
+        <p>Cancelar primero duplicados creativos/IA sin owner claro: Creatify, Recraft, HeyGen, Beautiful.ai, Grok. Mantener solo herramientas con uso semanal o proyecto activo.</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+    const rows = Array.from(document.querySelectorAll('#subscriptions tbody tr'));
+    const search = document.getElementById('search');
+    let activeFilter = 'all';
+
+    function applyFilters() {
+      const term = search.value.trim().toLowerCase();
+      rows.forEach((row) => {
+        const tags = row.dataset.tags || '';
+        const matchesFilter = activeFilter === 'all' || tags.includes(activeFilter);
+        const matchesSearch = !term || row.innerText.toLowerCase().includes(term);
+        row.style.display = matchesFilter && matchesSearch ? '' : 'none';
+      });
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        buttons.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    search.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>

@@ -24,6 +24,13 @@
       "tags": ["tools", "modelos", "herramientas"]
     },
     {
+      "title": "SaaS y Suscripciones",
+      "type": "tool",
+      "description": "Auditoria de cargos, renovaciones, costos cloud y herramientas para decidir cancelaciones.",
+      "href": "/tools/saas-subscriptions/",
+      "tags": ["saas", "suscripciones", "costos", "auditoria", "cancelaciones"]
+    },
+    {
       "title": "Clientes",
       "type": "client",
       "description": "Reportes, saldos de horas, entregables, builds, autorizaciones y presupuestos por cliente.",
