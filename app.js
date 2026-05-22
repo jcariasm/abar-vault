@@ -66,7 +66,7 @@ filterButtons.forEach((button) => {
   });
 });
 
-fetch('/vault/manifest.json')
+fetch('/manifest.json')
   .then((response) => response.json())
   .then((library) => {
     document.querySelector('#library-title').textContent = library.title;

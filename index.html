@@ -8,48 +8,58 @@
   </head>
   <body>
     <main>
-      <section class="hero">
-        <div>
-          <div class="kicker">
-            <img src="/assets/abargon-logo-transparent.png" alt="Abargon" />
-            <strong>Vault</strong>
-          </div>
-          <h1 id="library-title">Abar Vault</h1>
-          <p id="library-description">Archivo, leads, clientes y tools en un solo espacio ordenado.</p>
-          <div class="hero-metrics" aria-label="Enfoque de la biblioteca">
-            <div>
-              <strong>01</strong>
-              <span>Leads</span>
-            </div>
-            <div>
-              <strong>02</strong>
-              <span>Tools</span>
-            </div>
-            <div>
-              <strong>03</strong>
-              <span>Clientes</span>
-            </div>
-          </div>
-          <a class="portal-cta" href="/vault/">Abrir estructura del Vault</a>
-        </div>
+      <header class="vault-hero">
+        <a class="brand" href="/">Abar Vault</a>
+        <p>Organizacion del site</p>
+        <h1>Archivo, leads, clientes y tools en un solo Abar Vault.</h1>
+        <p class="lede">
+          Esta estructura separa archivo, oportunidades comerciales, herramientas de diagnostico y espacios de entrega para clientes activos.
+        </p>
+      </header>
+
+      <section class="map" aria-label="Mapa del Vault">
+        <article>
+          <span>01</span>
+          <h2>Leads</h2>
+          <p>Prospectos, propuestas, presupuestos y materiales en proceso de venta.</p>
+          <a href="/leads/">Abrir leads</a>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Tools</h2>
+          <p>Herramientas para diagnostico, ROI, pipeline, benchmarks y crecimiento.</p>
+          <a href="/tools/">Abrir tools</a>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>Clientes</h2>
+          <p>Reportes, saldos, builds, autorizaciones, entregables y presupuestos aprobados.</p>
+          <a href="/clientes/">Abrir clientes</a>
+        </article>
+        <article>
+          <span>04</span>
+          <h2>Archivo</h2>
+          <p>Templates, guias internas, documentos y formatos maestros para repetir el proceso con orden.</p>
+          <a href="/archivo/">Abrir archivo</a>
+        </article>
       </section>
 
-      <section class="toolbar" aria-label="Controles de biblioteca">
-        <label class="search">
-          <span aria-hidden="true">Search</span>
-          <input id="search-input" placeholder="Buscar por nombre, tema o etiqueta" />
-        </label>
-        <div class="segments" role="tablist" aria-label="Filtrar por tipo">
-          <button class="active" data-filter="all">Todo</button>
-          <button data-filter="lead">Leads</button>
-          <button data-filter="client">Clientes</button>
-          <button data-filter="simulator">Tools</button>
-          <button data-filter="document">Archivo</button>
-        </div>
+      <section class="diagram" aria-label="Estructura propuesta">
+        <h2>Arquitectura actual</h2>
+        <pre>vault/
+  leads/
+    juan-carlos-bautista-jacobo/
+  tools/
+    sales-pipeline/
+    roi-marketing/
+    sail-away/
+    creator-economy-benchmarks/
+  clientes/
+    axelera/
+    arva/
+    saldo/
+  archivo/</pre>
       </section>
-
-      <section class="grid" id="library-grid" aria-label="Contenido publicado"></section>
     </main>
-    <script src="/app.js" type="module"></script>
   </body>
 </html>

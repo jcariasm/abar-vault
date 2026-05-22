@@ -1,66 +1,69 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/vault/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=300"
-        }
-      ]
-    },
-    {
-      "source": "/library/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=300"
-        }
-      ]
-    }
-  ],
   "redirects": [
     {
-      "source": "/clientes",
-      "destination": "/vault/clientes",
-      "permanent": false
+      "source": "/vault",
+      "destination": "/",
+      "statusCode": 301
     },
     {
-      "source": "/clientes/:path*",
-      "destination": "/vault/clientes/:path*",
-      "permanent": false
+      "source": "/vault/clientes/:path*",
+      "destination": "/clientes/:path*",
+      "statusCode": 301
     },
     {
-      "source": "/arva",
-      "destination": "/vault/clientes/arva",
-      "permanent": false
+      "source": "/vault/leads/:path*",
+      "destination": "/leads/:path*",
+      "statusCode": 301
     },
     {
-      "source": "/arva/:path*",
-      "destination": "/vault/clientes/arva/:path*",
-      "permanent": false
+      "source": "/vault/tools/:path*",
+      "destination": "/tools/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/archivo/:path*",
+      "destination": "/archivo/:path*",
+      "statusCode": 301
     },
     {
       "source": "/vault/simuladores",
-      "destination": "/vault/tools",
-      "permanent": false
+      "destination": "/tools",
+      "statusCode": 301
     },
     {
       "source": "/vault/simuladores/:path*",
-      "destination": "/vault/tools/:path*",
-      "permanent": false
+      "destination": "/tools/:path*",
+      "statusCode": 301
     },
     {
       "source": "/vault/documentos",
-      "destination": "/vault/archivo",
-      "permanent": false
+      "destination": "/archivo",
+      "statusCode": 301
     },
     {
       "source": "/vault/documentos/:path*",
-      "destination": "/vault/archivo/:path*",
-      "permanent": false
+      "destination": "/archivo/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/arva",
+      "destination": "/clientes/arva",
+      "statusCode": 301
+    },
+    {
+      "source": "/arva/:path*",
+      "destination": "/clientes/arva/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/simuladores",
+      "destination": "/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/simuladores/:path*",
+      "destination": "/tools/:path*",
+      "statusCode": 301
     }
   ]
 }

@@ -3,56 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Repositorio de documentos para clientes | Abargon</title>
-    <link rel="stylesheet" href="/clientes/styles.css" />
+    <title>Clientes | Abar Vault</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <main>
-      <header>
-        <a class="back" href="/">Volver al laboratorio</a>
-        <div class="brand">AB</div>
-        <p>ABARGON CLIENT DOCS</p>
-        <h1>Repositorio de documentos para clientes.</h1>
-        <p class="lede">
-          Un punto de acceso ordenado para entregables, guias, reportes y materiales de trabajo compartibles.
-        </p>
+      <header class="section-header">
+        <div>
+          <p class="section-kicker">Vault / Clientes</p>
+          <h1>Clientes activos y espacios de entrega.</h1>
+        </div>
+        <a href="/">Volver al Vault</a>
       </header>
-
-      <section class="notice">
-        <strong>Acceso</strong>
-        <span>
-          Esta version es publica por enlace. Para documentos confidenciales, conviene activar proteccion por usuario, contrasena o un flujo privado de entrega.
-        </span>
+      <section class="cards">
+        <article>
+          <span>Cliente activo</span>
+          <h2>Axelera</h2>
+          <p>Reporte anual de horas, actividades, builds, entregables y autorizaciones.</p>
+          <strong class="status">Entrega hoy</strong>
+          <a href="/clientes/axelera/">Abrir Axelera</a>
+        </article>
+        <article>
+          <span>Cliente activo</span>
+          <h2>ARVA</h2>
+          <p>Presupuesto Real Milan 2026 y futuro archivo de seguimiento.</p>
+          <a href="/clientes/arva/">Abrir ARVA</a>
+        </article>
+        <article>
+          <span>Template</span>
+          <h2>Portal de saldo</h2>
+          <p>Base para horas contratadas, horas ejercidas, saldo, actividades y entregables.</p>
+          <a href="/clientes/saldo/">Abrir saldo</a>
+        </article>
       </section>
-
-      <section class="notice">
-        <strong>Saldo</strong>
-        <span>
-          Nuevo mockup aprobable para que cada cliente revise horas consumidas, saldo disponible, actividades y entregables:
-          <a href="/clientes/saldo/">abrir portal de saldo</a>.
-        </span>
-      </section>
-
-      <section class="notice">
-        <strong>Axelera</strong>
-        <span>
-          Reporte interno anual para normalizar saldo de horas, actividades, entregables, builds y autorizaciones:
-          <a href="/clientes/axelera/">abrir reporte Axelera</a>.
-        </span>
-      </section>
-
-      <section class="toolbar" aria-label="Controles de documentos">
-        <label class="search">
-          <span aria-hidden="true">Search</span>
-          <input id="search-input" placeholder="Buscar por cliente, tema o etiqueta" />
-        </label>
-        <select id="client-filter" aria-label="Filtrar por cliente">
-          <option value="all">Todos los clientes</option>
-        </select>
-      </section>
-
-      <section class="documents" id="documents" aria-label="Documentos disponibles"></section>
     </main>
-    <script src="/clientes/portal.js" type="module"></script>
   </body>
 </html>

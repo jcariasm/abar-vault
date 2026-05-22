@@ -6,49 +6,49 @@
       "title": "Sales Pipeline Abargon",
       "type": "simulator",
       "description": "Dashboard interactivo para revisar pipeline, pipe ponderado, forecast, cambios semanales y concentracion de riesgo.",
-      "href": "/vault/tools/sales-pipeline/",
+      "href": "/tools/sales-pipeline/",
       "tags": ["ventas", "pipeline", "forecast", "abargon"]
     },
     {
       "title": "Creator Economy Revenue Benchmarks",
       "type": "simulator",
       "description": "Artifact interactivo para comparar modelos de monetizacion y mezcla de ingresos en creadores y companias de medios.",
-      "href": "/vault/tools/creator-economy-benchmarks/",
+      "href": "/tools/creator-economy-benchmarks/",
       "tags": ["creator economy", "monetizacion", "benchmarks", "revenue"]
     },
     {
       "title": "Simulador de ROI en marketing digital",
       "type": "simulator",
       "description": "Calcula inversion, clientes, CAC, ingresos y retorno estimado para una campana orientada a adquisicion rentable.",
-      "href": "/vault/tools/roi-marketing/",
+      "href": "/tools/roi-marketing/",
       "tags": ["marketing", "roi", "performance", "pesos"]
     },
     {
       "title": "Sail Away Growth Simulator",
       "type": "simulator",
       "description": "Calcula potencial de crecimiento rentable, preparacion comercial y ruta sugerida de asesoria.",
-      "href": "/vault/tools/sail-away/",
+      "href": "/tools/sail-away/",
       "tags": ["ventas", "growth", "sail away", "asesoria"]
     },
     {
       "title": "Portal de saldo de clientes",
       "type": "document",
       "description": "Mockup navegable para revisar horas contratadas, horas consumidas, saldo disponible, actividades y entregables por cliente.",
-      "href": "/vault/clientes/saldo/",
+      "href": "/clientes/saldo/",
       "tags": ["clientes", "saldo", "horas", "entregables"]
     },
     {
       "title": "Reporte interno Axelera",
       "type": "document",
       "description": "Vista interna anual para revisar saldo de horas, actividades normalizadas, builds, entregables y autorizaciones pendientes de Axelera.",
-      "href": "/vault/clientes/axelera/",
+      "href": "/clientes/axelera/",
       "tags": ["clientes", "axelera", "horas", "builds", "ok"]
     },
     {
       "title": "Presupuesto Real Milan 2026",
       "type": "document",
       "description": "Documento HTML de presupuesto ARVA para revision interna y consulta desde el site.",
-      "href": "/vault/clientes/arva/",
+      "href": "/clientes/arva/",
       "tags": ["arva", "presupuesto", "real milan", "2026"]
     },
     {
@@ -62,7 +62,7 @@
       "title": "Ejemplo de simulador",
       "type": "simulator",
       "description": "Mini simulador incluido para comprobar que las experiencias interactivas se abren correctamente.",
-      "href": "/vault/tools/ejemplo/",
+      "href": "/tools/ejemplo/",
       "tags": ["simulador", "interactivo"]
     }
   ]
