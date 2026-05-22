@@ -9,3 +9,4 @@ scratch_*
 outputs/
 tmp-screens/
 backup-pre-vault-*.zip
+*-original-*-pages.pdf
