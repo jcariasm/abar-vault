@@ -16,7 +16,7 @@
         <nav aria-label="Secciones">
           <a href="#resumen">Resumen</a>
           <a href="#anual">Anual</a>
-          <a href="#actividades">Actividades</a>
+          <a href="#actividades">Tareas</a>
           <a href="#builds">Builds</a>
           <a href="#ok">OK cliente</a>
         </nav>
@@ -28,13 +28,13 @@
           <p class="private">Revision interna</p>
           <h1>Axelera</h1>
           <p class="summary">
-            Reporte anual de horas y saldo, con detalle operativo de enero a mayo para explicar que se trabajo, que se libero y que requiere autorizacion del cliente.
+            Reporte anual de horas con rollover trimestral. El saldo a favor o en contra se reinicia cada tres meses para evitar arrastres historicos y explicar que se trabajo, que se libero y que requiere autorizacion del cliente.
           </p>
         </div>
         <div class="hero-note">
           <span>Regla de control</span>
           <p>
-            Cada bloque debe ligar actividad, Jira/build, evidencia y OK. Los meses agosto-diciembre solo tienen total mensual; enero-mayo ya tienen detalle de actividades.
+            Cada bloque debe ligar tarea, Jira/build, evidencia y OK. El rollover se pone en cero al inicio de cada trimestre: agosto, noviembre, febrero y mayo.
           </p>
         </div>
       </section>
@@ -52,12 +52,12 @@
         </article>
         <article>
           <span>Saldo a mayo</span>
-          <strong>85</strong>
-          <small>horas acumuladas</small>
+          <strong>24</strong>
+          <small>horas del trimestre mayo-jul</small>
         </article>
         <article class="risk">
           <span>Proyeccion jul</span>
-          <strong>245</strong>
+          <strong>184</strong>
           <small>si junio/julio no tienen consumo</small>
         </article>
       </section>
@@ -75,7 +75,7 @@
           <div class="panel-head row">
             <div>
               <h2>Reporte anual</h2>
-              <p>La diferencia mensual es horas contratadas menos horas ejercidas. Negativo indica sobreconsumo en ese mes.</p>
+              <p>La diferencia mensual es horas contratadas menos horas ejercidas. El saldo acumulado se reinicia cada tres meses.</p>
             </div>
           </div>
           <div class="table-wrap">
@@ -86,7 +86,7 @@
                   <th>Contratadas</th>
                   <th>Ejercidas</th>
                   <th>Diferencia</th>
-                  <th>Saldo acumulado</th>
+                  <th>Saldo trimestral</th>
                   <th>Lectura</th>
                 </tr>
               </thead>
@@ -99,8 +99,8 @@
       <section class="panel main-panel activity-section" id="actividades">
           <div class="panel-head row">
             <div>
-              <h2>Actividades normalizadas</h2>
-              <p>Detalle disponible de enero a mayo. Agosto-diciembre quedan como totales hasta recibir el desglose.</p>
+              <h2>Tareas normalizadas</h2>
+              <p>Detalle disponible de enero a mayo. Las sesiones se expresan como tareas de validacion, alineacion o seguimiento para que el reporte explique trabajo accionable.</p>
             </div>
             <div class="controls">
               <button class="filter active" type="button" data-month="all">Todo</button>
@@ -117,7 +117,7 @@
                 <tr>
                   <th>Mes</th>
                   <th>Dia</th>
-                  <th>Descripcion</th>
+                  <th>Tarea</th>
                   <th>Hrs</th>
                   <th>Clasificacion</th>
                   <th>Seguimiento</th>
@@ -184,8 +184,8 @@
               <span>Presupuesto sugerido: 5-8h</span>
             </article>
             <article>
-              <strong>OK-AX-SOPORTE-JUNTAS</strong>
-              <p>Confirmar si juntas y coordinacion consumen bolsa o se reportan como no billable.</p>
+              <strong>OK-AX-COORDINACION-TAREAS</strong>
+              <p>Confirmar si tareas de validacion, alineacion y seguimiento consumen bolsa o se reportan como no billable.</p>
               <span>Regla pendiente</span>
             </article>
           </div>

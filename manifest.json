@@ -38,6 +38,13 @@
       "tags": ["clientes", "reportes", "entregables"]
     },
     {
+      "title": "Altech",
+      "type": "client",
+      "description": "Cliente activo. Control trimestral de horas, scoring, reportes, app management y tareas accionables por workstream.",
+      "href": "/clientes/altech/",
+      "tags": ["cliente", "altech", "sofom", "scoring", "reportes"]
+    },
+    {
       "title": "Axelera",
       "type": "client",
       "description": "Cliente activo. Reporte anual de horas, actividades, builds, entregables y autorizaciones.",

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Altech | Abar Vault</title>
+    <link rel="stylesheet" href="/clientes/altech/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/clientes/">
+          <span class="brand-mark">AB</span>
+          <span>Abargon</span>
+        </a>
+        <nav aria-label="Secciones">
+          <a href="#resumen">Resumen</a>
+          <a href="#rollover">Rollover</a>
+          <a href="#tareas">Tareas</a>
+          <a href="#ok">OK cliente</a>
+        </nav>
+        <a class="quiet-link" href="/clientes/">Clientes</a>
+      </header>
+
+      <section class="hero" id="resumen">
+        <div>
+          <p class="private">Cliente activo / SOFOM ENR</p>
+          <h1>Altech Financiera</h1>
+          <p class="summary">
+            Espacio operativo para calificacion de creditos, reportes, app management y workstreams activos de la plataforma Altech. El control de horas debe leerse por trimestre: cada tres meses el saldo a favor o en contra se reinicia en cero.
+          </p>
+        </div>
+        <div class="hero-note">
+          <span>Regla de control</span>
+          <p>
+            No reportar sesiones como unidad principal. Cada bloque debe expresarse como tarea accionable: definicion, desarrollo, pruebas, liberacion, monitoreo, soporte, documentacion o autorizacion.
+          </p>
+        </div>
+      </section>
+
+      <section class="kpis" aria-label="Resumen contractual">
+        <article>
+          <span>Piso mensual</span>
+          <strong>238</strong>
+          <small>hrs aproximadas</small>
+        </article>
+        <article>
+          <span>Tarifa</span>
+          <strong>$1,050</strong>
+          <small>MXN por hora</small>
+        </article>
+        <article>
+          <span>Horizonte</span>
+          <strong>24</strong>
+          <small>meses ene 2025-dic 2026</small>
+        </article>
+        <article class="risk">
+          <span>Rollover</span>
+          <strong>90</strong>
+          <small>dias; saldo reinicia</small>
+        </article>
+      </section>
+
+      <section class="dashboard" id="rollover">
+        <aside class="panel">
+          <div class="panel-head">
+            <h2>Lectura trimestral</h2>
+            <p>El saldo no se arrastra todo el año. Cada trimestre empieza en cero y se evalua contra el consumo real de Jira/Harvest.</p>
+          </div>
+          <div class="month-bars" id="quarter-bars"></div>
+        </aside>
+
+        <section class="panel main-panel">
+          <div class="panel-head row">
+            <div>
+              <h2>Modelo de rollover</h2>
+              <p>Base contractual mensual: 238h. El consumo real queda pendiente de conectar con Jira/Harvest.</p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="annual-table">
+              <thead>
+                <tr>
+                  <th>Trimestre</th>
+                  <th>Meses</th>
+                  <th>Bolsa base</th>
+                  <th>Horas reales</th>
+                  <th>Saldo al cierre</th>
+                  <th>Regla</th>
+                </tr>
+              </thead>
+              <tbody id="quarter-rows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel main-panel activity-section" id="tareas">
+        <div class="panel-head row">
+          <div>
+            <h2>Tareas sugeridas por workstream</h2>
+            <p>Estas tareas sustituyen el lenguaje de sesiones. Sirven para convertir conversaciones, seguimiento y coordinacion en trabajo verificable contra Jira, Harvest y entregables.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Workstream</th>
+                <th>Tarea sugerida</th>
+                <th>Evidencia esperada</th>
+                <th>OK / siguiente paso</th>
+              </tr>
+            </thead>
+            <tbody id="task-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Entregables activos</h2>
+            <p>Vista inicial para explicar avance sin depender de sesiones como descriptor principal.</p>
+          </div>
+          <div class="deliverables" id="deliverable-cards"></div>
+        </section>
+
+        <section class="panel" id="ok">
+          <div class="panel-head">
+            <h2>Autorizaciones necesarias</h2>
+            <p>Separar aprobaciones de alcance, aprobaciones regulatorias y aprobaciones de presupuesto.</p>
+          </div>
+          <div class="ok-list">
+            <article>
+              <strong>OK-ALT-ROLLOVER-TRIMESTRAL</strong>
+              <p>Confirmar regla comercial: cada trimestre inicia con saldo cero; no se arrastra saldo a favor o en contra.</p>
+              <span>Aplica a reportes de horas desde el siguiente corte</span>
+            </article>
+            <article>
+              <strong>OK-ALT-TAREAS-ACCIONABLES</strong>
+              <p>Confirmar que sesiones de seguimiento se reportan como tareas accionables: definicion, validacion, pruebas, soporte o liberacion.</p>
+              <span>Evita malentendidos de facturacion</span>
+            </article>
+            <article>
+              <strong>OK-ALT-HARVEST-JIRA</strong>
+              <p>Conectar reporte mensual a Jira/Harvest para calcular consumo real por trimestre.</p>
+              <span>Necesario para saldos definitivos</span>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="/clientes/altech/report.js" type="module"></script>
+  </body>
+</html>
