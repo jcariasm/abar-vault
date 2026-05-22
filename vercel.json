@@ -6,8 +6,43 @@
       "statusCode": 301
     },
     {
+      "source": "/vault/",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/clientes",
+      "destination": "/clientes",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/clientes/",
+      "destination": "/clientes",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/clientes/:path*/",
+      "destination": "/clientes/:path*",
+      "statusCode": 301
+    },
+    {
       "source": "/vault/clientes/:path*",
       "destination": "/clientes/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/leads",
+      "destination": "/leads",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/leads/",
+      "destination": "/leads",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/leads/:path*/",
+      "destination": "/leads/:path*",
       "statusCode": 301
     },
     {
@@ -16,8 +51,38 @@
       "statusCode": 301
     },
     {
+      "source": "/vault/tools",
+      "destination": "/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/tools/",
+      "destination": "/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/tools/:path*/",
+      "destination": "/tools/:path*",
+      "statusCode": 301
+    },
+    {
       "source": "/vault/tools/:path*",
       "destination": "/tools/:path*",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/archivo",
+      "destination": "/archivo",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/archivo/",
+      "destination": "/archivo",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/archivo/:path*/",
+      "destination": "/archivo/:path*",
       "statusCode": 301
     },
     {
@@ -31,6 +96,16 @@
       "statusCode": 301
     },
     {
+      "source": "/vault/simuladores/",
+      "destination": "/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/simuladores/:path*/",
+      "destination": "/tools/:path*",
+      "statusCode": 301
+    },
+    {
       "source": "/vault/simuladores/:path*",
       "destination": "/tools/:path*",
       "statusCode": 301
@@ -38,6 +113,16 @@
     {
       "source": "/vault/documentos",
       "destination": "/archivo",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/documentos/",
+      "destination": "/archivo",
+      "statusCode": 301
+    },
+    {
+      "source": "/vault/documentos/:path*/",
+      "destination": "/archivo/:path*",
       "statusCode": 301
     },
     {
@@ -51,6 +136,16 @@
       "statusCode": 301
     },
     {
+      "source": "/arva/",
+      "destination": "/clientes/arva",
+      "statusCode": 301
+    },
+    {
+      "source": "/arva/:path*/",
+      "destination": "/clientes/arva/:path*",
+      "statusCode": 301
+    },
+    {
       "source": "/arva/:path*",
       "destination": "/clientes/arva/:path*",
       "statusCode": 301
@@ -58,6 +153,16 @@
     {
       "source": "/simuladores",
       "destination": "/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/simuladores/",
+      "destination": "/tools",
+      "statusCode": 301
+    },
+    {
+      "source": "/simuladores/:path*/",
+      "destination": "/tools/:path*",
       "statusCode": 301
     },
     {
