@@ -87,6 +87,13 @@
       "tags": ["cliente", "gba", "grounded by ana", "business analytics", "kpis", "funnel", "pseo", "marketing"]
     },
     {
+      "title": "FinBe ABC",
+      "type": "client",
+      "description": "Cliente activo. Presupuesto MySQL/AWS, documento tecnico para actualizacion de BD y materiales de soporte para Bepensa.",
+      "href": "/clientes/finbe/",
+      "tags": ["cliente", "finbe", "bepensa", "aws", "mysql", "presupuesto", "sow"]
+    },
+    {
       "title": "Portal de saldo",
       "type": "client",
       "description": "Mockup base para revisar horas contratadas, horas consumidas, saldo disponible y entregables.",
