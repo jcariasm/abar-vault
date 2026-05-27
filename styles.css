@@ -93,6 +93,88 @@ article span {
   font-weight: 900;
 }
 
+.diagram-header {
+  max-width: 760px;
+  margin-bottom: 22px;
+}
+
+.diagram-header span {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.diagram-header h2 {
+  margin-top: 8px;
+}
+
+.architecture-root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(20, 108, 148, 0.32);
+  background: #eaf3f6;
+  padding: 18px 20px;
+}
+
+.architecture-root strong {
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.architecture-root small {
+  color: var(--blue);
+  font-weight: 850;
+}
+
+.architecture-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.architecture-grid::before {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 1px;
+  height: 18px;
+  background: var(--line);
+  content: "";
+}
+
+.architecture-node {
+  min-height: 246px;
+  background: #ffffff;
+}
+
+.architecture-node h3 {
+  margin: 8px 0 8px;
+  font-size: 22px;
+  line-height: 1.12;
+}
+
+.architecture-node ul {
+  display: grid;
+  gap: 6px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architecture-node li {
+  border-left: 3px solid rgba(122, 169, 92, 0.62);
+  color: var(--copy);
+  padding-left: 9px;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.32;
+}
+
 h2 {
   margin: 8px 0 10px;
   font-size: 26px;
@@ -170,6 +252,11 @@ pre {
   }
 
   .section-header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .architecture-root {
     align-items: start;
     flex-direction: column;
   }
