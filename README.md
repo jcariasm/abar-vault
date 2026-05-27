@@ -22,3 +22,12 @@ Luego abre `http://127.0.0.1:5173`.
 ## Publicacion
 
 El proyecto esta preparado como sitio estatico para Vercel. Al conectarlo con GitHub, Vercel puede publicar cada cambio enviado a `main`.
+
+## Basic Auth en Vercel
+
+El archivo `middleware.js` protege el Vault con Basic Auth cuando existen estas variables de entorno en Vercel:
+
+- `VAULT_AUTH_USER`
+- `VAULT_AUTH_PASSWORD`
+
+No hardcodear credenciales en el repositorio. Si esas variables no existen, el sitio queda abierto para no bloquear un deploy accidental.
