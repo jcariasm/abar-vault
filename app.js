@@ -2,14 +2,20 @@ const typeLabels = {
   client: 'Cliente',
   document: 'Documento',
   lead: 'Lead',
-  simulator: 'Tool'
+  partner: 'Partner',
+  sales: 'Sales material',
+  simulator: 'Tool',
+  tool: 'Tool'
 };
 
 const typeIcons = {
   client: 'CLI',
   document: 'DOC',
   lead: 'LED',
-  simulator: 'SIM'
+  partner: 'PAR',
+  sales: 'SAL',
+  simulator: 'SIM',
+  tool: 'TOL'
 };
 
 const state = {

@@ -1,6 +1,6 @@
 {
   "title": "Abar Vault",
-  "description": "Archivo, leads, clientes y tools en un solo espacio ordenado.",
+  "description": "Archivo, leads, partners, clientes, tools y sales material en un solo espacio ordenado.",
   "items": [
     {
       "title": "Leads",
@@ -15,6 +15,27 @@
       "description": "Espacio de lead para concentrar presupuesto, propuesta, conversaciones y siguientes pasos.",
       "href": "/leads/juan-carlos-bautista-jacobo/",
       "tags": ["lead", "juan carlos bautista jacobo", "seguimiento"]
+    },
+    {
+      "title": "Partners",
+      "type": "partner",
+      "description": "Aliados, canales, acuerdos de colaboracion y materiales compartidos por relacion.",
+      "href": "/partners/",
+      "tags": ["partners", "aliados", "canales", "colaboracion"]
+    },
+    {
+      "title": "Sales material",
+      "type": "sales",
+      "description": "Material comercial reusable por tema, vertical, oferta, contexto de negocio y etapa de venta.",
+      "href": "/sales-material/",
+      "tags": ["sales material", "ventas", "comercial", "material"]
+    },
+    {
+      "title": "Entendimiento del negocio",
+      "type": "sales",
+      "description": "Material de las tres lineas de servicio de Abargon para conectar negocio, tecnologia y crecimiento.",
+      "href": "/sales-material/entendimiento-del-negocio/",
+      "tags": ["sales material", "entendimiento del negocio", "lineas de servicio", "abargon"]
     },
     {
       "title": "Tools",

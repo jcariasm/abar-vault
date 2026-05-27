@@ -1,11 +1,13 @@
 # Abar Vault
 
-Vault web para organizar archivo, leads, clientes y tools en un solo espacio.
+Vault web para organizar archivo, leads, partners, clientes, tools y sales material en un solo espacio.
 
 ## Estructura
 
 - `vault`: estructura principal del sitio.
 - `vault/leads`: prospectos, propuestas, presupuestos y acuerdos previos al cierre.
+- `vault/partners`: aliados, canales, acuerdos de colaboracion y materiales compartidos.
+- `vault/sales-material`: material comercial reusable por tema, vertical, oferta y etapa de venta.
 - `vault/tools`: tools HTML, simuladores, apps estaticas o carpetas con recursos interactivos.
 - `vault/clientes`: espacios por cliente con reportes, saldos, builds, entregables y autorizaciones.
 - `vault/archivo`: templates, guias, documentos y formatos maestros.
