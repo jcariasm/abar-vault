@@ -30,6 +30,16 @@
   ],
   "redirects": [
     {
+      "source": "/clientes/finbe/presupuestos",
+      "destination": "/clientes/finbe",
+      "statusCode": 301
+    },
+    {
+      "source": "/clientes/finbe/presupuestos/",
+      "destination": "/clientes/finbe",
+      "statusCode": 301
+    },
+    {
       "source": "/vault",
       "destination": "/",
       "statusCode": 301
