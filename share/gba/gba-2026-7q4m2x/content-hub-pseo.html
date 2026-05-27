@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>GBA — Content Hub + Programmatic SEO</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #1a1a1a; padding: 20px; line-height: 1.5; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.metric { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px; }
+.metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric-val { font-size: 22px; font-weight: 600; margin-top: 2px; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid #e8e8e8; margin-bottom: 16px; }
+.tab { padding: 8px 14px; font-size: 13px; font-weight: 500; background: none; border: none; color: #888; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #1a1a1a; border-bottom-color: #1D9E75; }
+.tab-panel { display: none; } .tab-panel.active { display: block; }
+.card { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.card p { font-size: 13px; color: #555; margin-bottom: 6px; }
+.chart-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.chart-container { position: relative; height: 300px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #666; margin-bottom: 10px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; vertical-align: middle; margin-right: 4px; }
+.info { background: #EBF5FF; border-left: 3px solid #378ADD; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; margin-bottom: 16px; }
+.success { background: #E8F5E9; border-left: 3px solid #2E7D32; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; margin-bottom: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; }
+th { background: #f5f5f5; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; border-bottom: 1px solid #e8e8e8; }
+td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+.r { text-align: right; }
+</style>
+</head>
+<body>
+
+<h1>Content Hub + Programmatic SEO</h1>
+<p class="sub">Palancas de tráfico orgánico para acelerar de 18-20 a 15-17 meses</p>
+
+<div class="metrics">
+  <div class="metric"><div class="metric-label">Timeline original</div><div class="metric-val">18-20 mo</div></div>
+  <div class="metric"><div class="metric-label">Con content/pSEO</div><div class="metric-val" style="color:#0a8a5a">15-17 mo</div></div>
+  <div class="metric"><div class="metric-label">Sesiones org. extra</div><div class="metric-val">+18K/mes</div></div>
+  <div class="metric"><div class="metric-label">CAC incremental</div><div class="metric-val" style="color:#0a8a5a">$0</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('compare')">Comparativa</button>
+  <button class="tab" onclick="switchTab('hub')">Content hub</button>
+  <button class="tab" onclick="switchTab('pseo')">Programmatic SEO</button>
+  <button class="tab" onclick="switchTab('traffic')">Tráfico</button>
+</div>
+
+<div id="tab-compare" class="tab-panel active">
+  <div class="legend">
+    <span><span class="legend-dot" style="background:#1D9E75"></span>+ Content/pSEO (25%/mes pico)</span>
+    <span><span class="legend-dot" style="background:#7F77DD"></span>Original (20%/mes)</span>
+    <span><span class="legend-dot" style="background:#B4B2A9"></span>Conservador (10%/mes)</span>
+    <span style="color:#E24B4A">— — Meta 1,000</span>
+  </div>
+  <div class="chart-wrap"><div class="chart-container"><canvas id="cmpChart"></canvas></div></div>
+</div>
+
+<div id="tab-hub" class="tab-panel">
+  <div class="info"><strong>Concepto:</strong> "The Earthing Journal" o "Sleep & Ground" — blog/magazine independiente sobre ciencia del sueño, earthing, biohacking. Dominio propio. Links editoriales hacia GBA.</div>
+
+  <div class="card">
+    <div class="card-title">Por qué funciona para GBA</div>
+    <p>Un sitio de producto no rankea para queries informacionales ("¿qué es earthing?"). Una propiedad editorial sí.</p>
+    <p>Construye autoridad sin parecer vendedor. El lector descubre GBA como "los expertos que escriben esto".</p>
+    <p>Captura emails de audiencia fría → nurturing → conversión en 30-60 días.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ejecución</div>
+    <p><strong>Setup:</strong> Dominio + WordPress/Ghost ($20/mes). Logo propio, "by Grounded by Ana" en footer.</p>
+    <p><strong>Contenido:</strong> 4 artículos/mes (2 educativos, 1 estudio reseñado, 1 lifestyle). AI-assisted.</p>
+    <p><strong>CTA:</strong> Cada artículo con link contextual a GBA. Lead magnet: "Guía de 7 días de Earthing".</p>
+    <p><strong>Timeline:</strong> Live mes 2-3. 5K sesiones/mes para mes 8. 8K+ para mes 12.</p>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Setup cost</div><div class="metric-val">$500</div></div>
+    <div class="metric"><div class="metric-label">Costo mensual</div><div class="metric-val">$300/mes</div></div>
+    <div class="metric"><div class="metric-label">Tráfico mes 12</div><div class="metric-val">8K/mes</div></div>
+  </div>
+</div>
+
+<div id="tab-pseo" class="tab-panel">
+  <div class="info"><strong>Concepto:</strong> 100-120 páginas generadas desde templates + data para capturar long-tail tipo "grounding sheets for [X]".</div>
+
+  <table>
+    <thead><tr><th>Template</th><th class="r">Páginas</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Condiciones</td><td class="r">30</td><td>"grounding sheets for back pain / insomnia / perimenopause"</td></tr>
+      <tr><td>Comparativas</td><td class="r">20</td><td>"grounding sheet vs weighted blanket / melatonin"</td></tr>
+      <tr><td>Tamaños/tipos</td><td class="r">15</td><td>"grounding sheet queen / king / california king / crib"</td></tr>
+      <tr><td>Educativas</td><td class="r">25</td><td>"how does grounding work / earthing science studies"</td></tr>
+      <tr><td>Locales</td><td class="r">30</td><td>"grounding sheets [ciudad]" — top 30 metros US</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px" class="card">
+    <div class="card-title">Proyección de tráfico</div>
+    <p>120 páginas × 80-100 visitas/mes = <strong>10,000 sesiones/mes</strong> (mes 10-12)</p>
+    <p>CR de long-tail con intención de compra: <strong>2-3x mayor</strong> que tráfico genérico</p>
+    <p>Cada página con CTA directo a PDP + email capture</p>
+  </div>
+
+  <div class="success"><strong>Ventana:</strong> Groundbam no hace SEO (su fuerza es TikTok). El long-tail está vacío. Quien lo llene primero gana.</div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Páginas</div><div class="metric-val">120</div></div>
+    <div class="metric"><div class="metric-label">Setup cost</div><div class="metric-val">$800</div></div>
+    <div class="metric"><div class="metric-label">Tráfico mes 12</div><div class="metric-val">10K/mes</div></div>
+    <div class="metric"><div class="metric-label">CR esperado</div><div class="metric-val">2-3x</div></div>
+  </div>
+</div>
+
+<div id="tab-traffic" class="tab-panel">
+  <div class="legend">
+    <span><span class="legend-dot" style="background:#378ADD"></span>Paid</span>
+    <span><span class="legend-dot" style="background:#7F77DD"></span>Influencers</span>
+    <span><span class="legend-dot" style="background:#1D9E75"></span>Blog Shopify</span>
+    <span><span class="legend-dot" style="background:#D85A30"></span>Content hub</span>
+    <span><span class="legend-dot" style="background:#D4537E"></span>Programmatic</span>
+    <span><span class="legend-dot" style="background:#888"></span>Directo/email</span>
+  </div>
+  <div class="chart-wrap"><div class="chart-container" style="height:240px"><canvas id="trafChart"></canvas></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const mo=[];const orig=[];const enh=[];const cons=[];
+let vo=39,ve=39,vc=39;
+for(let i=0;i<=24;i++){mo.push('M'+i);orig.push(Math.round(vo));enh.push(Math.round(ve));cons.push(Math.round(vc));if(i<6){vo*=1.20;ve*=1.22;}else if(i<12){vo*=1.18;ve*=1.22;}else if(i<18){vo*=1.15;ve*=1.18;}else{vo*=1.12;ve*=1.14;}vc*=1.10;}
+new Chart(document.getElementById('cmpChart'),{type:'line',data:{labels:mo,datasets:[{label:'+Content/pSEO',data:enh,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',fill:true,tension:0.3,pointRadius:0,borderWidth:2.5},{label:'Original',data:orig,borderColor:'#7F77DD',borderDash:[4,2],fill:false,tension:0.3,pointRadius:0,borderWidth:1.5},{label:'Conservador',data:cons,borderColor:'#B4B2A9',borderDash:[5,5],fill:false,tension:0.3,pointRadius:0,borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:1400,ticks:{callback:v=>v.toLocaleString()}},x:{ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:13}}}},plugins:[{afterDraw(c){const ctx=c.ctx;const y=c.scales.y.getPixelForValue(1000);ctx.save();ctx.strokeStyle='#E24B4A';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(c.scales.x.left,y);ctx.lineTo(c.scales.x.right,y);ctx.stroke();ctx.fillStyle='#E24B4A';ctx.font='600 12px sans-serif';ctx.fillText('1,000 u/mes',c.scales.x.right-85,y-6);ctx.restore();}}]});
+
+new Chart(document.getElementById('trafChart'),{type:'bar',data:{labels:['Sin content/pSEO','Con content/pSEO'],datasets:[{label:'Paid',data:[7000,7000],backgroundColor:'#378ADD'},{label:'Influencers',data:[8000,8000],backgroundColor:'#7F77DD'},{label:'Blog Shopify',data:[4000,4000],backgroundColor:'#1D9E75'},{label:'Content hub',data:[0,8000],backgroundColor:'#D85A30'},{label:'Programmatic',data:[0,10000],backgroundColor:'#D4537E'},{label:'Directo/email',data:[6000,6000],backgroundColor:'#888'}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{callback:v=>(v/1000)+'K'}},y:{stacked:true}}}});
+</script>
+</body>
+</html>

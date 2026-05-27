@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>GBA — Dashboard KPIs y Funnel</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #1a1a1a; padding: 20px; line-height: 1.5; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.metric { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px; }
+.metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric-val { font-size: 22px; font-weight: 600; margin-top: 2px; }
+.metric-delta { font-size: 11px; margin-top: 2px; }
+.up { color: #0a8a5a; } .down { color: #c0392b; }
+.section { margin-bottom: 24px; }
+.section-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.chart-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.chart-container { position: relative; height: 260px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; }
+th { background: #f5f5f5; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; border-bottom: 1px solid #e8e8e8; }
+td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+tr:last-child td { border-bottom: none; }
+.r { text-align: right; }
+.bar-bg { height: 8px; background: #f0f0f0; border-radius: 4px; margin-top: 4px; }
+.bar { height: 8px; border-radius: 4px; }
+.funnel-step { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.funnel-step:last-child { border-bottom: none; }
+.funnel-label { width: 160px; font-size: 13px; font-weight: 500; }
+.funnel-bar-wrap { flex: 1; }
+.funnel-val { width: 60px; text-align: right; font-size: 13px; font-weight: 600; }
+.insight { background: #EBF5FF; border-left: 3px solid #378ADD; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #1a1a1a; margin-bottom: 16px; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid #e8e8e8; margin-bottom: 16px; }
+.tab { padding: 8px 16px; font-size: 13px; font-weight: 500; background: none; border: none; color: #888; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #1a1a1a; border-bottom-color: #534AB7; }
+.tab-panel { display: none; } .tab-panel.active { display: block; }
+</style>
+</head>
+<body>
+
+<h1>Grounded by Ana — Dashboard KPIs</h1>
+<p class="sub">Data de la junta del 25 mayo 2026 + KPIs Excel 2026</p>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('overview')">Resumen</button>
+  <button class="tab" onclick="switchTab('funnel')">Funnel</button>
+  <button class="tab" onclick="switchTab('paid')">Paid media</button>
+  <button class="tab" onclick="switchTab('forecast')">Forecast</button>
+</div>
+
+<div id="tab-overview" class="tab-panel active">
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Ventas/mes</div><div class="metric-val">39</div><div class="metric-delta down">Meta: 1,000</div></div>
+    <div class="metric"><div class="metric-label">AOV</div><div class="metric-val">$233</div><div class="metric-delta up">Sano</div></div>
+    <div class="metric"><div class="metric-label">Revenue/mes</div><div class="metric-val">$9,087</div><div class="metric-delta">Meta: $233K</div></div>
+    <div class="metric"><div class="metric-label">Sesiones/mes</div><div class="metric-val">5,000</div><div class="metric-delta">Meta: 45K</div></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">CR a carrito</div><div class="metric-val">6.3%</div><div class="metric-delta down">Meta: 12%</div></div>
+    <div class="metric"><div class="metric-label">CR global</div><div class="metric-val">0.8%</div><div class="metric-delta down">Benchmark: 3%</div></div>
+    <div class="metric"><div class="metric-label">Cart→Checkout</div><div class="metric-val">86%</div><div class="metric-delta up">Sano</div></div>
+    <div class="metric"><div class="metric-label">CPA paid</div><div class="metric-val">$98</div><div class="metric-delta down">Meta: <$40</div></div>
+  </div>
+
+  <div class="insight">
+    <strong>Insight clave:</strong> El funnel se rompe post-cart por falta de nurturing y credibilidad de marca nueva. Influencers generan 65% del revenue. Paid no genera ventas directas para esta categoría nueva.
+  </div>
+
+  <div class="chart-wrap">
+    <div class="section-title">Revenue por canal</div>
+    <div class="chart-container"><canvas id="channelChart"></canvas></div>
+  </div>
+</div>
+
+<div id="tab-funnel" class="tab-panel">
+  <div class="chart-wrap">
+    <div class="section-title">Funnel de conversión</div>
+    <div class="funnel-step">
+      <div class="funnel-label">Sesiones</div>
+      <div class="funnel-bar-wrap"><div class="bar-bg"><div class="bar" style="width:100%;background:#534AB7"></div></div></div>
+      <div class="funnel-val">5,000</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-label">Add to cart</div>
+      <div class="funnel-bar-wrap"><div class="bar-bg"><div class="bar" style="width:6.3%;background:#7F77DD"></div></div></div>
+      <div class="funnel-val">315</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-label">Checkout</div>
+      <div class="funnel-bar-wrap"><div class="bar-bg"><div class="bar" style="width:5.4%;background:#1D9E75"></div></div></div>
+      <div class="funnel-val">271</div>
+    </div>
+    <div class="funnel-step">
+      <div class="funnel-label">Compra</div>
+      <div class="funnel-bar-wrap"><div class="bar-bg"><div class="bar" style="width:0.8%;background:#D85A30"></div></div></div>
+      <div class="funnel-val">39</div>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <strong>Diagnóstico:</strong> Cart→Checkout 86% está sano. El problema está en dos puntos: (1) solo 6.3% de sesiones agregan a carrito (meta: 12%), y (2) checkout→compra cae de 86% a 14% — falta nurturing, confianza, y urgencia post-carrito.
+  </div>
+
+  <table>
+    <thead><tr><th>Etapa</th><th class="r">Tasa</th><th class="r">Meta</th><th class="r">Gap</th></tr></thead>
+    <tbody>
+      <tr><td>Sesión → Add to cart</td><td class="r">6.3%</td><td class="r">12%</td><td class="r" style="color:#c0392b">-5.7pp</td></tr>
+      <tr><td>Cart → Checkout</td><td class="r">86%</td><td class="r">90%</td><td class="r" style="color:#888">-4pp</td></tr>
+      <tr><td>Checkout → Compra</td><td class="r">14%</td><td class="r">20%</td><td class="r" style="color:#c0392b">-6pp</td></tr>
+      <tr><td>Sesión → Compra (global)</td><td class="r" style="font-weight:600">0.8%</td><td class="r" style="font-weight:600">4.5%</td><td class="r" style="color:#c0392b;font-weight:600">-3.7pp</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div id="tab-paid" class="tab-panel">
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Inversión acumulada</div><div class="metric-val">$880</div></div>
+    <div class="metric"><div class="metric-label">Ventas atribuidas</div><div class="metric-val">~9</div></div>
+    <div class="metric"><div class="metric-label">CPA</div><div class="metric-val">$98</div><div class="metric-delta down">No viable</div></div>
+    <div class="metric"><div class="metric-label">ROAS</div><div class="metric-val">2.4x</div><div class="metric-delta down">Meta: 4x</div></div>
+  </div>
+
+  <div class="insight">
+    <strong>Conclusión:</strong> Paid media NO genera ventas directas para esta categoría nueva. Usar paid solo para awareness hasta que CR global supere 3%. Influencers son 65% del revenue — el canal de crecimiento principal.
+  </div>
+
+  <div class="chart-wrap">
+    <div class="section-title">Inversión paid vs ventas (mensual)</div>
+    <div class="chart-container"><canvas id="paidChart"></canvas></div>
+  </div>
+</div>
+
+<div id="tab-forecast" class="tab-panel">
+  <div class="metrics">
+    <div class="metric"><div class="metric-label">Breakeven mensual</div><div class="metric-val">Feb 2027</div></div>
+    <div class="metric"><div class="metric-label">Breakeven acumulado</div><div class="metric-val">Jul 2027</div></div>
+    <div class="metric"><div class="metric-label">Meta 1,000 u (agresivo)</div><div class="metric-val">15-17 mo</div></div>
+    <div class="metric"><div class="metric-label">Meta 1,000 u (conservador)</div><div class="metric-val">34 mo</div></div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="section-title">Proyección de ventas mensuales</div>
+    <div class="chart-container"><canvas id="forecastChart"></canvas></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Channel revenue chart
+new Chart(document.getElementById('channelChart'),{
+  type:'doughnut',
+  data:{
+    labels:['Influencers','Orgánico/Directo','Paid Media','Email/Referral'],
+    datasets:[{data:[65,20,10,5],backgroundColor:['#7F77DD','#1D9E75','#378ADD','#D85A30'],borderWidth:0}]
+  },
+  options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{font:{size:12},padding:16}}}}
+});
+
+// Paid chart
+new Chart(document.getElementById('paidChart'),{
+  type:'bar',
+  data:{
+    labels:['Ene','Feb','Mar','Abr','May'],
+    datasets:[
+      {label:'Gasto ($)',data:[150,180,200,170,180],backgroundColor:'#378ADD',yAxisID:'y'},
+      {label:'Ventas',data:[1,2,2,2,2],backgroundColor:'#D85A30',yAxisID:'y2'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:12}}}},
+    scales:{
+      y:{position:'left',title:{display:true,text:'Gasto ($)'},ticks:{callback:v=>'$'+v}},
+      y2:{position:'right',title:{display:true,text:'Ventas'},grid:{display:false},min:0,max:10}
+    }
+  }
+});
+
+// Forecast chart
+const months=[];const agg=[];const cons=[];
+let va=39,vc=39;
+for(let i=0;i<=24;i++){
+  months.push('M'+i);agg.push(Math.round(va));cons.push(Math.round(vc));
+  if(i<6){va*=1.22;} else if(i<12){va*=1.20;} else{va*=1.16;}
+  vc*=1.10;
+}
+new Chart(document.getElementById('forecastChart'),{
+  type:'line',
+  data:{
+    labels:months,
+    datasets:[
+      {label:'Agresivo (+content/pSEO)',data:agg,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',fill:true,tension:0.3,pointRadius:0},
+      {label:'Conservador (10%/mes)',data:cons,borderColor:'#B4B2A9',borderDash:[5,5],fill:false,tension:0.3,pointRadius:0}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{font:{size:12}}}},
+    scales:{y:{min:0,max:1400,ticks:{callback:v=>v.toLocaleString()}},x:{ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:13}}}
+  },
+  plugins:[{afterDraw(c){const ctx=c.ctx;const y=c.scales.y.getPixelForValue(1000);ctx.save();ctx.strokeStyle='#E24B4A';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(c.scales.x.left,y);ctx.lineTo(c.scales.x.right,y);ctx.stroke();ctx.fillStyle='#E24B4A';ctx.font='600 12px sans-serif';ctx.fillText('1,000 u/mes',c.scales.x.right-85,y-6);ctx.restore();}}]
+});
+</script>
+</body>
+</html>

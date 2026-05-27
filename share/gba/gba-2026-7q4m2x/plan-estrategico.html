@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>GBA — Plan Estratégico 1,000 Unidades</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #1a1a1a; padding: 20px; line-height: 1.5; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.metric { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px; }
+.metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric-val { font-size: 22px; font-weight: 600; margin-top: 2px; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid #e8e8e8; margin-bottom: 16px; }
+.tab { padding: 8px 14px; font-size: 13px; font-weight: 500; background: none; border: none; color: #888; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #1a1a1a; border-bottom-color: #534AB7; }
+.tab-panel { display: none; } .tab-panel.active { display: block; }
+.phase { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.phase-head { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; }
+.phase-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.phase-title { font-size: 15px; font-weight: 600; }
+.phase-meta { font-size: 12px; color: #888; }
+.phase-body { padding: 0 16px 14px; }
+.tactic { display: flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+.tactic:last-child { border-bottom: none; }
+.cat { font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: 600; white-space: nowrap; height: fit-content; margin-top: 2px; }
+.cat-v { background: #E8F5E9; color: #2E7D32; } .cat-m { background: #F3E5F5; color: #7B1FA2; }
+.cat-a { background: #E3F2FD; color: #1565C0; } .cat-p { background: #FFF8E1; color: #F57F17; }
+.exit { background: #F5F5F5; border-radius: 8px; padding: 10px 14px; margin-top: 10px; font-size: 12px; color: #444; }
+.chart-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; }
+.chart-container { position: relative; height: 300px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #666; margin-bottom: 10px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; vertical-align: middle; margin-right: 4px; }
+.budget-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; }
+.budget-table th { background: #f5f5f5; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; border-bottom: 1px solid #e8e8e8; }
+.budget-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+.budget-table tr:last-child td { border-bottom: none; font-weight: 600; background: #f9f9f9; }
+.r { text-align: right; }
+</style>
+</head>
+<body>
+
+<h1>Plan Estratégico — Ruta a 1,000 Ventas/Mes</h1>
+<p class="sub">Grounded by Ana · Con content hub + programmatic SEO · Timeline: 15-17 meses</p>
+
+<div class="metrics">
+  <div class="metric"><div class="metric-label">Meta</div><div class="metric-val">1,000 u/mes</div></div>
+  <div class="metric"><div class="metric-label">Timeline</div><div class="metric-val" style="color:#0a8a5a">15-17 mo</div></div>
+  <div class="metric"><div class="metric-label">Inversión total</div><div class="metric-val">$141K</div></div>
+  <div class="metric"><div class="metric-label">Revenue acumulado</div><div class="metric-val">$1.67M</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('phases')">Fases</button>
+  <button class="tab" onclick="switchTab('projection')">Proyección</button>
+  <button class="tab" onclick="switchTab('budget')">Inversión</button>
+</div>
+
+<div id="tab-phases" class="tab-panel active">
+  <div class="phase" style="border-left:3px solid #7F77DD">
+    <div class="phase-head" onclick="this.parentElement.querySelector('.phase-body').style.display=this.parentElement.querySelector('.phase-body').style.display==='none'?'block':'none'">
+      <div class="phase-icon" style="background:#EEEDFE;color:#534AB7">🚀</div>
+      <div><div class="phase-title">Fase 1: Fundación y CR</div><div class="phase-meta">Meses 1-4 · Jun-Sep 2026 · $2,500/mes</div></div>
+    </div>
+    <div class="phase-body">
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Optimizar PDP: video testimonial hero, badge "91% duermen mejor", selector visual, countdown stock</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Pop-up captura email (10% off) + landing page para tráfico frío</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Activar Klaviyo completo: bienvenida 5-email, carrito abandonado 3-touch, post-compra</span></div>
+      <div class="tactic"><span class="cat cat-a">Autoridad</span><span>Blog SEO: 8 artículos educativos sobre grounding, ciencia, stainless vs silver</span></div>
+      <div class="tactic"><span class="cat cat-m">Marca</span><span>Landing "La Ciencia del Grounding" con estudios e infografías</span></div>
+      <div class="tactic"><span class="cat cat-p">Posición</span><span>Messaging: "Biophysics, not magic" — wellness premium basado en ciencia</span></div>
+      <div class="tactic"><span class="cat cat-a">Autoridad</span><span>Content hub editorial separado + setup de 40 páginas programmatic SEO</span></div>
+      <div class="exit">✅ Exit: CR carrito ≥10% · CR global ≥2.5% · 100+ ventas/mes · Email list 1,500+</div>
+    </div>
+  </div>
+
+  <div class="phase" style="border-left:3px solid #1D9E75">
+    <div class="phase-head" onclick="this.parentElement.querySelector('.phase-body').style.display=this.parentElement.querySelector('.phase-body').style.display==='none'?'block':'none'">
+      <div class="phase-icon" style="background:#E1F5EE;color:#0F6E56">📈</div>
+      <div><div class="phase-title">Fase 2: Escalar tráfico</div><div class="phase-meta">Meses 5-10 · Oct 2026-Mar 2027 · $5,000/mes</div></div>
+    </div>
+    <div class="phase-body">
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Lanzar TikTok Shop con affiliate program (15-20% comisión)</span></div>
+      <div class="tactic"><span class="cat cat-m">Marca</span><span>Programa influencers: 5 micro mensuales + 2 macro trimestrales</span></div>
+      <div class="tactic"><span class="cat cat-a">Autoridad</span><span>Campaña UGC "Show Your Data" con Oura Ring/Garmin/Apple Watch</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Escalar Meta Ads: lookalike compradores + retarget PDP + DPA</span></div>
+      <div class="tactic"><span class="cat cat-p">Posición</span><span>PR: sheets a sleep coaches, quiroprácticos, fisioterapeutas</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Amazon listing ($10 arriba de Shopify para proteger D2C)</span></div>
+      <div class="tactic"><span class="cat cat-a">Autoridad</span><span>Escalar pSEO a 120 páginas + 4 artículos/mes en content hub</span></div>
+      <div class="exit">✅ Exit: 20K+ sesiones/mes · 300+ ventas · TikTok Shop activo · CPA <$50</div>
+    </div>
+  </div>
+
+  <div class="phase" style="border-left:3px solid #D85A30">
+    <div class="phase-head" onclick="this.parentElement.querySelector('.phase-body').style.display=this.parentElement.querySelector('.phase-body').style.display==='none'?'block':'none'">
+      <div class="phase-icon" style="background:#FAECE7;color:#993C1D">🔥</div>
+      <div><div class="phase-title">Fase 3: Aceleración</div><div class="phase-meta">Meses 11-16 · Abr-Sep 2027 · $8,000/mes</div></div>
+    </div>
+    <div class="phase-body">
+      <div class="tactic"><span class="cat cat-m">Marca</span><span>Lanzar grounding mat (escritorio/yoga) — AOV boost + cross-sell</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Subscription model: cable reemplazo + sheet upgrade con 15% off</span></div>
+      <div class="tactic"><span class="cat cat-a">Autoridad</span><span>Estudio propio con sleep lab o universidad</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Paid $3K-5K/mes: Google Shopping + YouTube ads (CR >3%)</span></div>
+      <div class="tactic"><span class="cat cat-p">Posición</span><span>Wholesale: 5-10 boutiques wellness, spas, clínicas de sueño</span></div>
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Referral program: $25 off referrer + referee</span></div>
+      <div class="exit">✅ Exit: 40K+ sesiones · 600+ ventas · 2+ canales · Repeat 20%+</div>
+    </div>
+  </div>
+
+  <div class="phase" style="border-left:3px solid #D4537E">
+    <div class="phase-head" onclick="this.parentElement.querySelector('.phase-body').style.display=this.parentElement.querySelector('.phase-body').style.display==='none'?'block':'none'">
+      <div class="phase-icon" style="background:#FBEAF0;color:#993556">👑</div>
+      <div><div class="phase-title">Fase 4: Meta 1,000</div><div class="phase-meta">Meses 17-20 · Oct 2027-Ene 2028 · $12,000/mes</div></div>
+    </div>
+    <div class="phase-body">
+      <div class="tactic"><span class="cat cat-v">Ventas</span><span>Full-funnel paid $8K-12K/mes: Meta, Google, TikTok, YouTube</span></div>
+      <div class="tactic"><span class="cat cat-m">Marca</span><span>Brand ambassadors: 3-5 wellness figures con deals anuales</span></div>
+      <div class="tactic"><span class="cat cat-a">Autoridad</span><span>Podcast tour: Ana en 10+ podcasts wellness/biohacking</span></div>
+      <div class="tactic"><span class="cat cat-p">Posición</span><span>Expansión SKU: crib, RV, California King, gifting sets</span></div>
+      <div class="exit">🏆 Meta: 1,000 u/mes = $233K revenue = $23.3K fee Ábargon</div>
+    </div>
+  </div>
+</div>
+
+<div id="tab-projection" class="tab-panel">
+  <div class="legend">
+    <span><span class="legend-dot" style="background:#1D9E75"></span>Plan agresivo + content/pSEO</span>
+    <span><span class="legend-dot" style="background:#B4B2A9"></span>Conservador (10%/mes)</span>
+    <span style="color:#E24B4A">— — Meta 1,000</span>
+  </div>
+  <div class="chart-wrap"><div class="chart-container"><canvas id="projChart"></canvas></div></div>
+</div>
+
+<div id="tab-budget" class="tab-panel">
+  <table class="budget-table">
+    <thead><tr><th>Fase</th><th>Meses</th><th class="r">$/mes</th><th class="r">Total</th><th class="r">Ventas exit</th></tr></thead>
+    <tbody>
+      <tr><td>1. Fundación</td><td>1-4</td><td class="r">$2,500</td><td class="r">$10,000</td><td class="r">100/mes</td></tr>
+      <tr><td>2. Escalar</td><td>5-10</td><td class="r">$5,000</td><td class="r">$30,000</td><td class="r">300/mes</td></tr>
+      <tr><td>3. Aceleración</td><td>11-16</td><td class="r">$8,000</td><td class="r">$48,000</td><td class="r">600/mes</td></tr>
+      <tr><td>4. Meta 1000</td><td>17-20</td><td class="r">$12,000</td><td class="r">$48,000</td><td class="r">1,000/mes</td></tr>
+      <tr><td>TOTAL</td><td>20 mo</td><td class="r">—</td><td class="r">$136,000</td><td class="r">1,000/mes</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px">
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#7F77DD"></span>Influencers 35%</span>
+      <span><span class="legend-dot" style="background:#378ADD"></span>Paid 30%</span>
+      <span><span class="legend-dot" style="background:#1D9E75"></span>SEO 15%</span>
+      <span><span class="legend-dot" style="background:#D85A30"></span>Email 8%</span>
+      <span><span class="legend-dot" style="background:#D4537E"></span>PR 7%</span>
+      <span><span class="legend-dot" style="background:#888"></span>Tools 5%</span>
+    </div>
+    <div class="chart-wrap"><div class="chart-container" style="height:240px"><canvas id="budgChart"></canvas></div></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Projection
+const mo=[];const ag=[];const co=[];let va=39,vc=39;
+for(let i=0;i<=24;i++){mo.push('M'+i);ag.push(Math.round(va));co.push(Math.round(vc));if(i<6)va*=1.22;else if(i<12)va*=1.20;else if(i<18)va*=1.18;else va*=1.14;vc*=1.10;}
+new Chart(document.getElementById('projChart'),{type:'line',data:{labels:mo,datasets:[{label:'Agresivo',data:ag,borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',fill:true,tension:0.3,pointRadius:0,borderWidth:2.5},{label:'Conservador',data:co,borderColor:'#B4B2A9',borderDash:[5,5],fill:false,tension:0.3,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:1400,ticks:{callback:v=>v.toLocaleString()}},x:{ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:13}}}},plugins:[{afterDraw(c){const ctx=c.ctx;const y=c.scales.y.getPixelForValue(1000);ctx.save();ctx.strokeStyle='#E24B4A';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(c.scales.x.left,y);ctx.lineTo(c.scales.x.right,y);ctx.stroke();ctx.fillStyle='#E24B4A';ctx.font='600 12px sans-serif';ctx.fillText('1,000 u/mes',c.scales.x.right-85,y-6);ctx.restore();}}]});
+
+// Budget donut
+new Chart(document.getElementById('budgChart'),{type:'doughnut',data:{labels:['Influencers','Paid','SEO','Email','PR','Tools'],datasets:[{data:[35,30,15,8,7,5],backgroundColor:['#7F77DD','#378ADD','#1D9E75','#D85A30','#D4537E','#888'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{display:false}}}});
+</script>
+</body>
+</html>
