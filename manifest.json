@@ -59,6 +59,13 @@
       "tags": ["cliente", "arva", "presupuesto", "real milan"]
     },
     {
+      "title": "GBA / Grounded by Ana",
+      "type": "client",
+      "description": "Cliente activo. Tableros de analisis de negocio: KPIs, funnel, plan estrategico, content hub, pSEO y presupuesto trimestral.",
+      "href": "/clientes/gba/",
+      "tags": ["cliente", "gba", "grounded by ana", "business analytics", "kpis", "funnel", "pseo", "marketing"]
+    },
+    {
       "title": "Portal de saldo",
       "type": "client",
       "description": "Mockup base para revisar horas contratadas, horas consumidas, saldo disponible y entregables.",

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBA — How Much: Gasto vs Unidades por Q</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #1a1a1a; padding: 20px; line-height: 1.5; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.metric { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 14px; }
+.metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+.metric-val { font-size: 22px; font-weight: 600; margin-top: 2px; }
+.chart-wrap { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.chart-container { position: relative; height: 340px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #666; margin-bottom: 10px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; vertical-align: middle; margin-right: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; }
+th { background: #f5f5f5; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 11px; color: #666; text-transform: uppercase; border-bottom: 1px solid #e8e8e8; }
+td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; }
+tr:last-child td { border-bottom: none; font-weight: 600; background: #f9f9f9; }
+.r { text-align: right; }
+.hi { color: #0a8a5a; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>How Much — Gasto Marketing vs Unidades Vendidas</h1>
+<p class="sub">Grounded by Ana · Proyección trimestral 20 meses</p>
+
+<div class="metrics">
+  <div class="metric"><div class="metric-label">Inversión total</div><div class="metric-val">$141K</div></div>
+  <div class="metric"><div class="metric-label">Unidades totales</div><div class="metric-val">7,184</div></div>
+  <div class="metric"><div class="metric-label">Revenue acumulado</div><div class="metric-val">$1.67M</div></div>
+  <div class="metric"><div class="metric-label">CPA promedio</div><div class="metric-val" style="color:#0a8a5a">$19.63</div></div>
+</div>
+
+<div class="legend">
+  <span><span class="legend-dot" style="background:#7F77DD"></span>Gasto marketing ($K)</span>
+  <span><span class="legend-dot" style="background:#1D9E75"></span>Unidades vendidas</span>
+  <span style="color:#E24B4A">— — CPA ($)</span>
+</div>
+
+<div class="chart-wrap"><div class="chart-container"><canvas id="qChart"></canvas></div></div>
+
+<table>
+  <thead><tr><th>Trimestre</th><th>Periodo</th><th class="r">Gasto mkt</th><th class="r">Unidades</th><th class="r">Revenue</th><th class="r">CPA</th><th class="r">ROAS</th><th class="r">Fee Ábargon</th></tr></thead>
+  <tbody id="tbody"></tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<script>
+const monthlyGrowth=[1.15,1.18,1.20,1.22,1.22,1.22,1.20,1.20,1.18,1.18,1.16,1.16,1.15,1.14,1.13,1.12,1.10,1.10,1.08,1.06];
+const monthlySpend=[2500,2500,2500,2500,4500,4500,5000,5000,5500,5500,7000,7500,8000,8000,8500,9000,10000,11000,12000,12000];
+let units=39;const mu=[39];
+for(let i=0;i<20;i++){units=Math.round(units*monthlyGrowth[i]);mu.push(units);}
+
+const quarters=[
+  {label:'Q3 2026',period:'Jun-Ago 2026',months:[1,2,3]},
+  {label:'Q4 2026',period:'Sep-Nov 2026',months:[4,5,6]},
+  {label:'Q1 2027',period:'Dic-Feb 2027',months:[7,8,9]},
+  {label:'Q2 2027',period:'Mar-May 2027',months:[10,11,12]},
+  {label:'Q3 2027',period:'Jun-Ago 2027',months:[13,14,15]},
+  {label:'Q4 2027',period:'Sep-Nov 2027',months:[16,17,18]},
+  {label:'Q1 2028',period:'Dic-Ene 2028',months:[19,20]},
+];
+
+const qData=quarters.map(q=>{
+  const spend=q.months.reduce((s,m)=>s+(monthlySpend[m-1]||0),0);
+  const u=q.months.reduce((s,m)=>s+(mu[m]||0),0);
+  const rev=u*233;const cpa=u>0?spend/u:0;const roas=spend>0?rev/spend:0;
+  return{...q,spend,u,rev,cpa,roas,fee:rev*0.10};
+});
+const totS=qData.reduce((s,q)=>s+q.spend,0);
+const totU=qData.reduce((s,q)=>s+q.u,0);
+const totR=qData.reduce((s,q)=>s+q.rev,0);
+
+new Chart(document.getElementById('qChart'),{
+  type:'bar',
+  data:{
+    labels:qData.map(q=>q.label),
+    datasets:[
+      {label:'Gasto ($K)',data:qData.map(q=>Math.round(q.spend/100)/10),backgroundColor:'#7F77DD',yAxisID:'y',order:2,barPercentage:0.5,categoryPercentage:0.7},
+      {label:'Unidades',data:qData.map(q=>q.u),backgroundColor:'#1D9E75',yAxisID:'y2',order:1,barPercentage:0.5,categoryPercentage:0.7},
+      {label:'CPA ($)',data:qData.map(q=>Math.round(q.cpa*100)/100),type:'line',borderColor:'#E24B4A',backgroundColor:'transparent',borderDash:[5,3],pointRadius:4,pointBackgroundColor:'#E24B4A',yAxisID:'y3',order:0,tension:0.3}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      y:{position:'left',title:{display:true,text:'Gasto ($K)',font:{size:11}},ticks:{callback:v=>'$'+v+'K'},min:0,max:40},
+      y2:{position:'right',title:{display:true,text:'Unidades',font:{size:11}},grid:{display:false},ticks:{callback:v=>v.toLocaleString()},min:0,max:3500},
+      y3:{display:false,min:0,max:60},
+      x:{grid:{display:false}}
+    }
+  }
+});
+
+const tbody=document.getElementById('tbody');
+qData.forEach(q=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${q.label}</td><td>${q.period}</td><td class="r">$${(q.spend/1000).toFixed(1)}K</td><td class="r">${q.u.toLocaleString()}</td><td class="r">$${(q.rev/1000).toFixed(0)}K</td><td class="r ${q.cpa<25?'hi':''}">\$${q.cpa.toFixed(0)}</td><td class="r hi">${q.roas.toFixed(1)}x</td><td class="r">$${(q.fee/1000).toFixed(1)}K</td>`;
+  tbody.appendChild(tr);
+});
+const tr=document.createElement('tr');
+tr.innerHTML=`<td>TOTAL</td><td>20 meses</td><td class="r">$${(totS/1000).toFixed(0)}K</td><td class="r">${totU.toLocaleString()}</td><td class="r">$${(totR/1000).toFixed(0)}K</td><td class="r hi">\$${(totS/totU).toFixed(0)}</td><td class="r hi">${(totR/totS).toFixed(1)}x</td><td class="r">$${(totR*0.10/1000).toFixed(0)}K</td>`;
+tbody.appendChild(tr);
+</script>
+</body>
+</html>
