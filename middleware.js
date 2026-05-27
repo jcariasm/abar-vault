@@ -28,6 +28,16 @@ function parseBasicAuth(header) {
 }
 
 export default function middleware(request) {
+  const pathname = new URL(request.url).pathname;
+
+  if (pathname === '/share' || pathname.startsWith('/share/')) {
+    return next({
+      headers: {
+        'X-Vault-Auth': 'share-bypass',
+      },
+    });
+  }
+
   const expectedUser = process.env.VAULT_AUTH_USER;
   const expectedPassword = process.env.VAULT_AUTH_PASSWORD;
 
