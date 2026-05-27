@@ -30,6 +30,31 @@
   ],
   "redirects": [
     {
+      "source": "/leads/juan-carlos-bautista-jacobo/call-prep-bautista-jacobo-atdt.pdf",
+      "destination": "/leads/juan-carlos-bautista-jacobo/materiales/v1-sin-gestion-urbana/call-prep-bautista-jacobo-atdt.pdf",
+      "statusCode": 301
+    },
+    {
+      "source": "/leads/juan-carlos-bautista-jacobo/call-prep-bautista-jacobo-atdt.pptx",
+      "destination": "/leads/juan-carlos-bautista-jacobo/materiales/v1-sin-gestion-urbana/call-prep-bautista-jacobo-atdt.pptx",
+      "statusCode": 301
+    },
+    {
+      "source": "/leads/juan-carlos-bautista-jacobo/materiales/bautista-smart-city-narrativa-v2.html",
+      "destination": "/leads/juan-carlos-bautista-jacobo/materiales/v1-sin-gestion-urbana/bautista-smart-city-narrativa-v2.html",
+      "statusCode": 301
+    },
+    {
+      "source": "/leads/juan-carlos-bautista-jacobo/materiales/bautista-smart-city-narrativa-v2.pdf",
+      "destination": "/leads/juan-carlos-bautista-jacobo/materiales/v1-sin-gestion-urbana/bautista-smart-city-narrativa-v2.pdf",
+      "statusCode": 301
+    },
+    {
+      "source": "/leads/juan-carlos-bautista-jacobo/materiales/gestion-urbana-reporte-ciudadano-24-horas.pdf",
+      "destination": "/leads/juan-carlos-bautista-jacobo/materiales/v1-sin-gestion-urbana/gestion-urbana-reporte-ciudadano-24-horas.pdf",
+      "statusCode": 301
+    },
+    {
       "source": "/clientes/finbe/presupuestos",
       "destination": "/clientes/finbe",
       "statusCode": 301
