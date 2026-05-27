@@ -30,10 +30,16 @@ function parseBasicAuth(header) {
 export default function middleware(request) {
   const pathname = new URL(request.url).pathname;
 
-  if (pathname === '/share' || pathname.startsWith('/share/')) {
+  const isShareRoute = pathname === '/share' || pathname.startsWith('/share/');
+  const isPublicAsset =
+    pathname === '/styles.css' ||
+    pathname === '/favicon.ico' ||
+    pathname.startsWith('/assets/');
+
+  if (isShareRoute || isPublicAsset) {
     return next({
       headers: {
-        'X-Vault-Auth': 'share-bypass',
+        'X-Vault-Auth': isShareRoute ? 'share-bypass' : 'asset-bypass',
       },
     });
   }
