@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBA — Plan de Implementación</title>
+<style>
+:root { color-scheme: light; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #1a1a1a; padding: 20px; line-height: 1.5; }
+h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.sub { font-size: 13px; color: #666; margin-bottom: 20px; }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid #e8e8e8; margin-bottom: 16px; flex-wrap: wrap; }
+.tab { padding: 8px 14px; font-size: 13px; font-weight: 500; background: none; border: none; color: #888; cursor: pointer; border-bottom: 2px solid transparent; }
+.tab.active { color: #1a1a1a; border-bottom-color: #534AB7; }
+.tp { display: none; } .tp.active { display: block; }
+.month { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.month-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #e8e8e8; }
+.month-head:hover { background: #fafafa; }
+.month-title { font-size: 15px; font-weight: 600; }
+.month-tag { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+.month-body { padding: 4px 16px 12px; }
+.task { display: grid; grid-template-columns: minmax(0,1fr) 100px 90px; gap: 8px; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; align-items: start; }
+.task:last-child { border-bottom: none; }
+.task-owner { color: #666; font-size: 12px; text-align: center; }
+.task-status { font-size: 11px; padding: 2px 8px; border-radius: 6px; text-align: center; font-weight: 600; white-space: nowrap; }
+.st-do { background: #E8F5E9; color: #2E7D32; }
+.st-ab { background: #E3F2FD; color: #1565C0; }
+.st-ext { background: #F3E5F5; color: #7B1FA2; }
+.st-camp { background: #FFF8E1; color: #F57F17; }
+.dep { font-size: 12px; color: #888; padding: 10px 0 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #f0f0f0; }
+.qw { font-size: 13px; color: #666; margin-bottom: 16px; }
+.gantt { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; }
+.gantt th { padding: 8px 4px; text-align: center; font-weight: 600; font-size: 10px; color: #666; text-transform: uppercase; border-bottom: 1px solid #e8e8e8; background: #f9f9f9; }
+.gantt td { padding: 5px 3px; border-bottom: 1px solid #f0f0f0; }
+.gantt tr:last-child td { border-bottom: none; }
+.gantt .rl { font-size: 12px; white-space: nowrap; padding: 5px 10px; font-weight: 500; }
+.bc { height: 16px; border-radius: 4px; }
+.kpi-section { background: #fff; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.kpi-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+.kpi-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+.kpi-bar-bg { height: 7px; background: #f0f0f0; border-radius: 4px; margin: 4px 0 10px; }
+.kpi-bar { height: 7px; border-radius: 4px; }
+.info { background: #EBF5FF; border-left: 3px solid #378ADD; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; margin-bottom: 16px; }
+.legend-row { display: flex; flex-wrap: wrap; gap: 12px; font-size: 11px; color: #888; margin: 8px 0 16px; }
+.legend-row span { display: flex; align-items: center; gap: 4px; }
+.ldot { width: 12px; height: 12px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<h1>Plan de Implementación — Ruta a 1,000 Ventas/Mes</h1>
+<p class="sub">Grounded by Ana · Desglose mes a mes con responsables, entregables y checkpoints</p>
+
+<div class="tabs">
+  <button class="tab active" onclick="sT('gantt')">Roadmap</button>
+  <button class="tab" onclick="sT('m1')">Mes 1</button>
+  <button class="tab" onclick="sT('m2')">Mes 2</button>
+  <button class="tab" onclick="sT('m3')">Mes 3</button>
+  <button class="tab" onclick="sT('m4')">Mes 4</button>
+  <button class="tab" onclick="sT('m56')">Mes 5-6</button>
+  <button class="tab" onclick="sT('m78')">Mes 7-10</button>
+  <button class="tab" onclick="sT('m1116')">Mes 11-16</button>
+  <button class="tab" onclick="sT('m1720')">Mes 17-20</button>
+  <button class="tab" onclick="sT('kpis')">Checkpoints</button>
+</div>
+
+<!-- ROADMAP GANTT -->
+<div id="t-gantt" class="tp active">
+  <p class="qw">Fase 1 (meses 1-4) — desglose por stream de trabajo, semana a semana</p>
+  <table class="gantt">
+    <thead><tr><th style="text-align:left;min-width:140px">Stream</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>S5</th><th>S6</th><th>S7</th><th>S8</th><th>S9</th><th>S10</th><th>S11</th><th>S12</th><th>S13</th><th>S14</th><th>S15</th><th>S16</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">CRO / PDP</td><td colspan="2"><div class="bc" style="background:#7F77DD"></div></td><td colspan="2"><div class="bc" style="background:#7F77DD;opacity:0.6"></div></td><td colspan="4"><div class="bc" style="background:#7F77DD;opacity:0.35"></div></td><td colspan="4"><div class="bc" style="background:#7F77DD;opacity:0.35"></div></td><td colspan="4"></td></tr>
+      <tr><td class="rl">Klaviyo email</td><td><div class="bc" style="background:#1D9E75"></div></td><td colspan="3"><div class="bc" style="background:#1D9E75"></div></td><td colspan="4"><div class="bc" style="background:#1D9E75;opacity:0.5"></div></td><td colspan="8"></td></tr>
+      <tr><td class="rl">Blog SEO (8 art.)</td><td colspan="2"></td><td colspan="6"><div class="bc" style="background:#D85A30"></div></td><td colspan="6"><div class="bc" style="background:#D85A30;opacity:0.5"></div></td><td colspan="2"></td></tr>
+      <tr><td class="rl">Content hub setup</td><td colspan="4"><div class="bc" style="background:#D4537E"></div></td><td colspan="4"><div class="bc" style="background:#D4537E;opacity:0.5"></div></td><td colspan="8"></td></tr>
+      <tr><td class="rl">pSEO (40 pgs)</td><td colspan="4"></td><td colspan="6"><div class="bc" style="background:#378ADD"></div></td><td colspan="6"><div class="bc" style="background:#378ADD;opacity:0.5"></div></td></tr>
+      <tr><td class="rl">Landing ciencia</td><td colspan="4"></td><td colspan="4"><div class="bc" style="background:#888"></div></td><td colspan="8"></td></tr>
+      <tr><td class="rl">About Us + messaging</td><td colspan="3"><div class="bc" style="background:#888;opacity:0.6"></div></td><td colspan="13"></td></tr>
+      <tr><td class="rl">Hotjar / Clarity</td><td><div class="bc" style="background:#555;opacity:0.5"></div></td><td colspan="15"></td></tr>
+      <tr><td class="rl">TikTok Shop apply</td><td colspan="2"><div class="bc" style="background:#E24B4A"></div></td><td colspan="6"><div class="bc" style="background:#E24B4A;opacity:0.25"></div></td><td colspan="8"></td></tr>
+    </tbody>
+  </table>
+  <div class="legend-row">
+    <span><span class="ldot" style="background:#7F77DD"></span>CRO</span>
+    <span><span class="ldot" style="background:#1D9E75"></span>Email</span>
+    <span><span class="ldot" style="background:#D85A30"></span>Blog</span>
+    <span><span class="ldot" style="background:#D4537E"></span>Content hub</span>
+    <span><span class="ldot" style="background:#378ADD"></span>pSEO</span>
+    <span><span class="ldot" style="background:#888"></span>Páginas</span>
+    <span><span class="ldot" style="background:#E24B4A"></span>TikTok</span>
+    <span>Sólido = activo · Transparente = iteración</span>
+  </div>
+
+  <p class="qw" style="margin-top:24px">Fases 2-4 (meses 5-20) — streams de alto nivel</p>
+  <table class="gantt">
+    <thead><tr><th style="text-align:left;min-width:140px">Stream</th><th>M5</th><th>M6</th><th>M7</th><th>M8</th><th>M9</th><th>M10</th><th>M11</th><th>M12</th><th>M13</th><th>M14</th><th>M15</th><th>M16</th><th>M17</th><th>M18</th><th>M19</th><th>M20</th></tr></thead>
+    <tbody>
+      <tr><td class="rl">TikTok Shop</td><td colspan="6"><div class="bc" style="background:#E24B4A"></div></td><td colspan="10"><div class="bc" style="background:#E24B4A;opacity:0.45"></div></td></tr>
+      <tr><td class="rl">Influencers</td><td colspan="16"><div class="bc" style="background:#7F77DD"></div></td></tr>
+      <tr><td class="rl">Paid scale</td><td colspan="6"><div class="bc" style="background:#378ADD;opacity:0.4"></div></td><td colspan="6"><div class="bc" style="background:#378ADD;opacity:0.65"></div></td><td colspan="4"><div class="bc" style="background:#378ADD"></div></td></tr>
+      <tr><td class="rl">pSEO (+80 pgs)</td><td colspan="6"><div class="bc" style="background:#D4537E"></div></td><td colspan="10"></td></tr>
+      <tr><td class="rl">Content hub</td><td colspan="16"><div class="bc" style="background:#D85A30;opacity:0.55"></div></td></tr>
+      <tr><td class="rl">Amazon</td><td colspan="4"><div class="bc" style="background:#888"></div></td><td colspan="12"><div class="bc" style="background:#888;opacity:0.4"></div></td></tr>
+      <tr><td class="rl">Producto #2</td><td colspan="6"></td><td colspan="4"><div class="bc" style="background:#1D9E75"></div></td><td colspan="6"><div class="bc" style="background:#1D9E75;opacity:0.45"></div></td></tr>
+      <tr><td class="rl">Referral program</td><td colspan="6"></td><td colspan="4"><div class="bc" style="background:#7F77DD;opacity:0.45"></div></td><td colspan="6"><div class="bc" style="background:#7F77DD;opacity:0.25"></div></td></tr>
+      <tr><td class="rl">PR / Wholesale</td><td colspan="2"><div class="bc" style="background:#888;opacity:0.35"></div></td><td colspan="4"><div class="bc" style="background:#888;opacity:0.55"></div></td><td colspan="6"><div class="bc" style="background:#888"></div></td><td colspan="4"><div class="bc" style="background:#888;opacity:0.45"></div></td></tr>
+      <tr><td class="rl">Estudio / Podcast</td><td colspan="6"></td><td colspan="6"><div class="bc" style="background:#D85A30"></div></td><td colspan="4"><div class="bc" style="background:#D85A30;opacity:0.45"></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MES 1 -->
+<div id="t-m1" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 1 — Junio 2026: Quick wins y setup</div><div class="month-tag" style="background:#EEEDFE;color:#534AB7">$2,500</div></div>
+    <div class="month-body">
+      <div class="dep">Semana 1-2: Quick wins técnicos</div>
+      <div class="task"><span>Instalar Hotjar/Clarity para mapas de calor y grabaciones</span><span class="task-owner">Gabriel</span><span class="task-status st-do">2 hrs</span></div>
+      <div class="task"><span>Pop-up email capture Klaviyo (10% off primer compra)</span><span class="task-owner">Gabriel</span><span class="task-status st-do">3 hrs</span></div>
+      <div class="task"><span>Corregir meta description PDP de español a inglés</span><span class="task-owner">Gabriel</span><span class="task-status st-do">10 min</span></div>
+      <div class="task"><span>Badge "91% duermen mejor" en above-the-fold del PDP</span><span class="task-owner">Gabriel</span><span class="task-status st-do">1 hr</span></div>
+      <div class="task"><span>Activar flujo carrito abandonado Klaviyo (3 emails)</span><span class="task-owner">Andrea V.</span><span class="task-status st-do">4 hrs</span></div>
+      <div class="task"><span>Aplicar a TikTok Shop (aprobación toma 2-4 semanas)</span><span class="task-owner">Karin</span><span class="task-status st-do">2 hrs</span></div>
+
+      <div class="dep">Semana 2-4: Foundations estratégicas</div>
+      <div class="task"><span>Workshop messaging framework "Biophysics, not magic"</span><span class="task-owner">JC + Ana</span><span class="task-status st-ab">Workshop</span></div>
+      <div class="task"><span>Crear página About Us con historia de Ana y misión</span><span class="task-owner">Gabriel</span><span class="task-status st-do">1 día</span></div>
+      <div class="task"><span>Diseñar flujo bienvenida Klaviyo (5 emails educativos)</span><span class="task-owner">Andrea V.</span><span class="task-status st-do">1 semana</span></div>
+      <div class="task"><span>Comprar dominio content hub + setup WordPress/Ghost</span><span class="task-owner">Gabriel</span><span class="task-status st-do">1 día</span></div>
+      <div class="task"><span>Keyword research completo: blog (30 kw) + pSEO (120 kw)</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Briefing a Andrés/Vanessa para landing "La Ciencia"</span><span class="task-owner">JC</span><span class="task-status st-ext">Agencia ext.</span></div>
+    </div>
+  </div>
+  <div class="info"><strong>Entregables mes 1:</strong> Pop-up live · Carrito abandonado activo · About Us publicado · Content hub dominio comprado · Keyword research completo · TikTok Shop aplicación enviada</div>
+</div>
+
+<!-- MES 2 -->
+<div id="t-m2" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 2 — Julio 2026: CRO y contenido</div><div class="month-tag" style="background:#EEEDFE;color:#534AB7">$2,500</div></div>
+    <div class="month-body">
+      <div class="dep">Semana 5-6: Optimización PDP</div>
+      <div class="task"><span>Grabar video testimonial hero (2-3 clientes con data de wearables)</span><span class="task-owner">Ana</span><span class="task-status st-ext">Producción</span></div>
+      <div class="task"><span>A/B test: selector visual de tamaño vs dropdown actual</span><span class="task-owner">Gabriel</span><span class="task-status st-do">2 días</span></div>
+      <div class="task"><span>Agregar countdown stock limitado / shipping deadline</span><span class="task-owner">Gabriel</span><span class="task-status st-do">3 hrs</span></div>
+      <div class="task"><span>Análisis Hotjar heatmaps — primer diagnóstico de drop-off</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Análisis</span></div>
+
+      <div class="dep">Semana 7-8: Lanzamiento de contenido</div>
+      <div class="task"><span>Publicar primeros 2 artículos en blog Shopify</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Content hub: diseño editorial + primeros 2 artículos live</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Crear template pSEO "grounding sheets for [condición]"</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Flujo post-compra Klaviyo (review request a 14 días + referral)</span><span class="task-owner">Andrea V.</span><span class="task-status st-do">3 días</span></div>
+      <div class="task"><span>Contactar primeros 3 micro-influencers para product seeding</span><span class="task-owner">Ana + Karin</span><span class="task-status st-camp">Outreach</span></div>
+    </div>
+  </div>
+  <div class="info"><strong>Entregables mes 2:</strong> Video testimonial en PDP · 4 artículos publicados (2 blog + 2 hub) · Template pSEO listo · Post-compra Klaviyo activo · 3 influencers contactados</div>
+</div>
+
+<!-- MES 3 -->
+<div id="t-m3" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 3 — Agosto 2026: Escalar contenido + landing ciencia</div><div class="month-tag" style="background:#EEEDFE;color:#534AB7">$2,500</div></div>
+    <div class="month-body">
+      <div class="task"><span>Publicar artículos blog 3-4 + content hub 3-4</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Publicar primeras 15 páginas pSEO (condiciones médicas)</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Landing "La Ciencia del Grounding" live (estudios + infografías)</span><span class="task-owner">Gabriel + Andrés</span><span class="task-status st-ext">Diseño ext.</span></div>
+      <div class="task"><span>Review Klaviyo mes 1: open rates, CTR, revenue atribuido</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Análisis</span></div>
+      <div class="task"><span>Segundo round A/B tests PDP basado en Hotjar data</span><span class="task-owner">Gabriel</span><span class="task-status st-do">Iteración</span></div>
+      <div class="task"><span>Seguimiento TikTok Shop approval + setup tienda si aprobado</span><span class="task-owner">Karin</span><span class="task-status st-do">Pending</span></div>
+      <div class="task"><span>Primeros influencer posts publicados — medir tráfico + ventas</span><span class="task-owner">Ana + Andrea V.</span><span class="task-status st-camp">Medición</span></div>
+    </div>
+  </div>
+  <div class="info"><strong>Entregables mes 3:</strong> Landing ciencia live · 15 páginas pSEO indexadas · 8 artículos totales · Primer reporte Klaviyo · Primeros resultados influencer</div>
+</div>
+
+<!-- MES 4 -->
+<div id="t-m4" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 4 — Septiembre 2026: Checkpoint Fase 1</div><div class="month-tag" style="background:#E8F5E9;color:#2E7D32">GATE 1</div></div>
+    <div class="month-body">
+      <div class="task"><span>Publicar artículos blog 5-8 + content hub 5-8</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Completar 40 páginas pSEO (condiciones + comparativas)</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Bundle promotion campaign vía email + PDP prominente</span><span class="task-owner">Andrea V.</span><span class="task-status st-camp">Campaign</span></div>
+      <div class="task"><span>TikTok Shop: cargar productos + buscar 3 affiliates iniciales</span><span class="task-owner">Karin + Ana</span><span class="task-status st-do">Si aprobado</span></div>
+      <div class="task"><span>Reporte completo Fase 1: CR, sesiones, email list, revenue</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Reporte</span></div>
+      <div class="task"><span>Junta de review con Luis y Ana: go/no-go para Fase 2</span><span class="task-owner">JC + equipo</span><span class="task-status st-ab">Decisión</span></div>
+      <div class="task"><span>Preparar plan Fase 2 ajustado con datos reales de 4 meses</span><span class="task-owner">JC</span><span class="task-status st-ab">Estrategia</span></div>
+    </div>
+  </div>
+  <div class="info"><strong>Gate 1 — Criterios go/no-go para Fase 2:</strong> CR carrito ≥10% · CR global ≥2.5% · 100+ ventas/mes · Email list 1,500+ · Blog con 8+ artículos. Si no se cumplen, extender Fase 1 un mes más e iterar.</div>
+</div>
+
+<!-- MES 5-6 -->
+<div id="t-m56" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 5-6 — Oct-Nov 2026: Arranque Fase 2 — Escalar tráfico</div><div class="month-tag" style="background:#E1F5EE;color:#0F6E56">$5,000/mes</div></div>
+    <div class="month-body">
+      <div class="task"><span>TikTok Shop: onboard 5 micro-creators como affiliates (15-20% comisión)</span><span class="task-owner">Ana + Karin</span><span class="task-status st-do">$500/mes</span></div>
+      <div class="task"><span>Contratar 5 micro-influencers mensuales (wellness/sleep/biohacking)</span><span class="task-owner">Ana + Andrea</span><span class="task-status st-camp">$1,500/mes</span></div>
+      <div class="task"><span>Lanzar campaña UGC "Show Your Data" (Oura/Garmin screenshots)</span><span class="task-owner">Ana</span><span class="task-status st-camp">Campaign</span></div>
+      <div class="task"><span>Escalar Meta Ads: lookalike compradores + retarget PDP + DPA carrito</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">$1,500/mes</span></div>
+      <div class="task"><span>Amazon listing: product page + A+ content + FBA enrollment</span><span class="task-owner">Gabriel + Luis</span><span class="task-status st-do">Setup</span></div>
+      <div class="task"><span>Publicar pSEO páginas 41-80 (tamaños + educativas + locales)</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>PR: enviar sheets a 10 sleep coaches / quiroprácticos / fisios</span><span class="task-owner">Ana + Karin</span><span class="task-status st-camp">Seeding</span></div>
+      <div class="task"><span>Content hub: 4 artículos/mes + backlink outreach a wellness blogs</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Primer macro-influencer trimestral (100K+ followers)</span><span class="task-owner">Ana + JC</span><span class="task-status st-camp">$2,000</span></div>
+    </div>
+  </div>
+  <div class="info"><strong>Entregables mes 5-6:</strong> TikTok Shop activo con 5+ affiliates · Meta Ads escalado · Amazon listing live · 80 páginas pSEO · 10 profesionales de salud con producto · Primer macro-influencer post</div>
+</div>
+
+<!-- MES 7-10 -->
+<div id="t-m78" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 7-10 — Dic 2026 - Mar 2027: Consolidar Fase 2</div><div class="month-tag" style="background:#E1F5EE;color:#0F6E56">$5,000-5,500/mes</div></div>
+    <div class="month-body">
+      <div class="task"><span>Completar 120 páginas pSEO (todas las categorías)</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ábargon</span></div>
+      <div class="task"><span>Escalar TikTok affiliates a 10-15 creators activos</span><span class="task-owner">Ana + Karin</span><span class="task-status st-do">Ongoing</span></div>
+      <div class="task"><span>Mantener 5 micro-influencers/mes + 1 macro/trimestre</span><span class="task-owner">Ana + Andrea</span><span class="task-status st-camp">Ongoing</span></div>
+      <div class="task"><span>Optimizar Meta Ads basado en data de 3+ meses</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Optimización</span></div>
+      <div class="task"><span>Amazon: primeras reviews + PPC campaigns</span><span class="task-owner">Gabriel</span><span class="task-status st-do">Scale</span></div>
+      <div class="task"><span>Holiday campaign Q4: Black Friday + Christmas bundles</span><span class="task-owner">Todo equipo</span><span class="task-status st-camp">Campaign</span></div>
+      <div class="task"><span>Content hub: mantener 4 artículos/mes, medir tráfico orgánico</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Ongoing</span></div>
+      <div class="task"><span>Gate 2 review (mes 10): 20K+ sesiones, 300+ ventas</span><span class="task-owner">JC + equipo</span><span class="task-status st-ab">Decisión</span></div>
+    </div>
+  </div>
+  <div class="info"><strong>Nota Q4:</strong> Black Friday / Cyber Monday / Christmas es la oportunidad más grande del año. Preparar bundles, aumentar presupuesto de influencers temporalmente, y asegurar inventario con 2 meses de anticipación.</div>
+</div>
+
+<!-- MES 11-16 -->
+<div id="t-m1116" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 11-16 — Abr-Sep 2027: Fase 3 — Aceleración</div><div class="month-tag" style="background:#FAECE7;color:#993C1D">$7,000-9,000/mes</div></div>
+    <div class="month-body">
+      <div class="dep">Producto y revenue diversification</div>
+      <div class="task"><span>Desarrollar y lanzar grounding mat (escritorio/yoga)</span><span class="task-owner">Luis + Ana</span><span class="task-status st-ext">Producto</span></div>
+      <div class="task"><span>Cross-sell mat en Klaviyo post-compra + PDP</span><span class="task-owner">Andrea V.</span><span class="task-status st-do">Automation</span></div>
+      <div class="task"><span>Subscription model: cable reemplazo + upgrade con 15% off</span><span class="task-owner">Gabriel</span><span class="task-status st-do">Shopify setup</span></div>
+      <div class="task"><span>Referral program formalizado ($25 off referrer + referee)</span><span class="task-owner">Gabriel</span><span class="task-status st-do">ReferralCandy</span></div>
+
+      <div class="dep">Autoridad y presencia</div>
+      <div class="task"><span>Partnership con sleep lab o universidad para estudio propio</span><span class="task-owner">Ana + JC</span><span class="task-status st-ext">Partnership</span></div>
+      <div class="task"><span>Wholesale pilot: 5-10 boutiques wellness, spas, clínicas de sueño</span><span class="task-owner">Luis + Karin</span><span class="task-status st-camp">B2B sales</span></div>
+      <div class="task"><span>Mini-documental sobre grounding + testimoniales video premium</span><span class="task-owner">Ana + Andrés</span><span class="task-status st-ext">Producción</span></div>
+
+      <div class="dep">Paid scale</div>
+      <div class="task"><span>Escalar paid a $3K-5K/mes: Google Shopping + YouTube ads</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Solo si CR >3%</span></div>
+      <div class="task"><span>Gate 3 review (mes 16): 40K+ sesiones, 600+ ventas</span><span class="task-owner">JC + equipo</span><span class="task-status st-ab">Decisión</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MES 17-20 -->
+<div id="t-m1720" class="tp">
+  <div class="month">
+    <div class="month-head"><div class="month-title">Mes 17-20 — Oct 2027 - Ene 2028: Fase 4 — Meta 1,000</div><div class="month-tag" style="background:#FBEAF0;color:#993556">$10,000-12,000/mes</div></div>
+    <div class="month-body">
+      <div class="task"><span>Full-funnel paid: $8K-12K/mes across Meta, Google, TikTok, YouTube</span><span class="task-owner">Andrea V.</span><span class="task-status st-ab">Full scale</span></div>
+      <div class="task"><span>Brand ambassador program: 3-5 wellness figures con deals anuales</span><span class="task-owner">Ana + JC</span><span class="task-status st-camp">Contratos</span></div>
+      <div class="task"><span>Podcast tour: Ana en 10+ podcasts wellness/biohacking (US + Latam)</span><span class="task-owner">Ana + Karin</span><span class="task-status st-camp">PR outreach</span></div>
+      <div class="task"><span>Expansión SKU: crib, RV, California King, gifting sets holidays</span><span class="task-owner">Luis</span><span class="task-status st-ext">Producto</span></div>
+      <div class="task"><span>Evaluar expansión internacional: UK, Canadá, Australia</span><span class="task-owner">JC + Luis</span><span class="task-status st-ab">Research</span></div>
+      <div class="task"><span>Holiday campaign Q4 2027 (segundo año, con base de datos grande)</span><span class="task-owner">Todo equipo</span><span class="task-status st-camp">Campaign</span></div>
+    </div>
+  </div>
+  <div class="info" style="background:#E8F5E9;border-color:#2E7D32"><strong>Meta final:</strong> 1,000 ventas/mes = $233,000 revenue = $23,300 fee Ábargon/mes. ROAS blended 19x+. Email list 8,000+. 3+ canales de venta activos.</div>
+</div>
+
+<!-- CHECKPOINTS -->
+<div id="t-kpis" class="tp">
+  <div class="kpi-section">
+    <div class="kpi-title"><span>Gate 1 — Mes 4 (fin Fase 1)</span><span class="month-tag" style="background:#EEEDFE;color:#534AB7">Sep 2026</span></div>
+    <div class="kpi-row"><span>CR a carrito</span><span>6.3% → ≥10%</span></div>
+    <div class="kpi-bar-bg"><div class="kpi-bar" style="width:63%;background:#7F77DD"></div></div>
+    <div class="kpi-row"><span>CR global</span><span>0.8% → ≥2.5%</span></div>
+    <div class="kpi-bar-bg"><div class="kpi-bar" style="width:32%;background:#D85A30"></div></div>
+    <div class="kpi-row"><span>Ventas/mes</span><span>39 → ≥100</span></div>
+    <div class="kpi-bar-bg"><div class="kpi-bar" style="width:39%;background:#1D9E75"></div></div>
+    <div class="kpi-row"><span>Email list</span><span>~100 → ≥1,500</span></div>
+    <div class="kpi-bar-bg"><div class="kpi-bar" style="width:7%;background:#378ADD"></div></div>
+    <div class="kpi-row"><span>Blog artículos</span><span>0 → ≥8</span></div>
+    <div class="kpi-bar-bg"><div class="kpi-bar" style="width:0%;background:#888"></div></div>
+    <p style="font-size:12px;color:#888;margin-top:8px"><strong>Si no se cumplen:</strong> extender Fase 1 un mes, iterar sobre CRO y Klaviyo. No escalar gasto.</p>
+  </div>
+
+  <div class="kpi-section">
+    <div class="kpi-title"><span>Gate 2 — Mes 10 (fin Fase 2)</span><span class="month-tag" style="background:#E1F5EE;color:#0F6E56">Mar 2027</span></div>
+    <div class="kpi-row"><span>Sesiones/mes</span><span>≥20,000</span></div>
+    <div class="kpi-row"><span>Ventas/mes</span><span>≥300</span></div>
+    <div class="kpi-row"><span>TikTok Shop</span><span>Activo, 5+ affiliates generando ventas</span></div>
+    <div class="kpi-row"><span>CPA blended</span><span><$50</span></div>
+    <div class="kpi-row"><span>Amazon</span><span>Listing live con reviews</span></div>
+    <div class="kpi-row"><span>pSEO páginas</span><span>120 indexadas</span></div>
+    <p style="font-size:12px;color:#888;margin-top:8px"><strong>Si no se cumplen:</strong> Evaluar qué canal subrindió. Redirigir budget hacia lo que sí funciona. No escalar paid si CPA >$50.</p>
+  </div>
+
+  <div class="kpi-section">
+    <div class="kpi-title"><span>Gate 3 — Mes 16 (fin Fase 3)</span><span class="month-tag" style="background:#FAECE7;color:#993C1D">Sep 2027</span></div>
+    <div class="kpi-row"><span>Sesiones/mes</span><span>≥40,000</span></div>
+    <div class="kpi-row"><span>Ventas/mes</span><span>≥600</span></div>
+    <div class="kpi-row"><span>Canales activos</span><span>2+ (Shopify + TikTok o Amazon)</span></div>
+    <div class="kpi-row"><span>Repeat rate</span><span>≥20%</span></div>
+    <div class="kpi-row"><span>2do producto</span><span>Lanzado y vendiendo</span></div>
+  </div>
+
+  <div class="kpi-section" style="border-color:#2E7D32">
+    <div class="kpi-title"><span>Meta Final — Mes 20</span><span class="month-tag" style="background:#E8F5E9;color:#2E7D32">Ene 2028</span></div>
+    <div class="kpi-row"><span>Ventas/mes</span><span style="font-weight:600;color:#2E7D32">1,000 unidades</span></div>
+    <div class="kpi-row"><span>Revenue/mes</span><span style="font-weight:600">$233,000 USD</span></div>
+    <div class="kpi-row"><span>Fee Ábargon/mes</span><span style="font-weight:600">$23,300 USD</span></div>
+    <div class="kpi-row"><span>ROAS blended</span><span style="font-weight:600;color:#2E7D32">19.4x</span></div>
+    <div class="kpi-row"><span>Email list</span><span>8,000+</span></div>
+  </div>
+</div>
+
+<script>
+function sT(id){
+  document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('t-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
