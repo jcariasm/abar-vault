@@ -233,6 +233,13 @@ pre {
   text-decoration: none;
 }
 
+.header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
 .status {
   display: inline-flex;
   align-items: center;
@@ -254,6 +261,10 @@ pre {
   .section-header {
     align-items: start;
     flex-direction: column;
+  }
+
+  .header-actions {
+    justify-content: flex-start;
   }
 
   .architecture-root {

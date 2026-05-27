@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ábargon — 3 Líneas de Servicio</title>
+<style>
+  :root {
+    --bg-color: #FFFFFF;
+    --bg-card: #F5F5F7;
+    --text-color: #304050;
+    --text-secondary: #606060;
+    --text-muted: #888888;
+    --border-color: #D8D8E0;
+    --highlight: #C8D8F8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-color); color: var(--text-color); }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 24px 16px; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 0; }
+  .tab {
+    flex: 1; padding: 14px 8px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
+    border-radius: 10px 10px 0 0; transition: all 0.2s;
+    color: var(--text-muted);
+    background: var(--bg-card);
+  }
+  .tab.active-ia { background: #6C3AED; color: #fff; }
+  .tab.active-cloud { background: #0891B2; color: #fff; }
+  .tab.active-growth { background: #D97706; color: #fff; }
+  .tab.active-total { background: #304050; color: #fff; }
+  .tab:hover:not([class*="active"]) { background: #E8E8EC; }
+
+  .panel {
+    display: none; border-radius: 0 0 12px 12px; padding: 28px 24px;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color); border-top: none;
+  }
+  .panel.visible { display: block; }
+  .panel-ia { border-top: 3px solid #6C3AED; }
+  .panel-cloud { border-top: 3px solid #0891B2; }
+  .panel-growth { border-top: 3px solid #D97706; }
+  .panel-total { border-top: 3px solid #304050; }
+
+  .line-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+  .line-label.ia { color: #6C3AED; }
+  .line-label.cloud { color: #0891B2; }
+  .line-label.growth { color: #D97706; }
+
+  .line-title { font-size: 22px; font-weight: 700; color: var(--text-color); margin-bottom: 6px; }
+  .line-hook { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
+
+  .stage {
+    display: grid; grid-template-columns: 110px 1fr; gap: 16px;
+    padding: 14px 0; border-bottom: 1px solid var(--border-color);
+    align-items: start;
+  }
+  .stage:last-child { border-bottom: none; }
+  .stage-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-muted); padding-top: 2px;
+  }
+  .stage-content { font-size: 14px; line-height: 1.55; color: var(--text-secondary); }
+  .stage-content strong { font-weight: 600; color: var(--text-color); }
+
+  .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+  .door {
+    padding: 10px 12px; border-radius: 8px; font-size: 13px; line-height: 1.4;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+  }
+  .door-label { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+  .door-label.biz { color: #6C3AED; }
+  .door-label.tech { color: #0891B2; }
+  .door-label.func { color: #D97706; }
+
+  .arrow-down { text-align: center; font-size: 18px; color: var(--text-muted); padding: 2px 0; margin-left: 110px; }
+
+  .ltv-section { margin-top: 18px; }
+  .ltv-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 10px; }
+
+  .math-row {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px;
+    padding: 8px 12px; font-size: 13px; line-height: 1.4;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+  }
+  .math-header { font-weight: 600; color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .math-row .r { text-align: right; }
+  .math-sub { font-size: 11px; color: var(--text-muted); padding-left: 12px; }
+  .math-total {
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px;
+    padding: 10px 12px; font-size: 14px; font-weight: 700;
+    border-top: 2px solid var(--text-color); margin-top: 2px;
+  }
+  .math-total .r { text-align: right; }
+  .math-total.ia { color: #6C3AED; }
+  .math-total.cloud { color: #0891B2; }
+  .math-total.growth { color: #D97706; }
+
+  .deploy-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em; margin-top: 6px;
+  }
+  .deploy-badge.fast { background: #ECFDF5; color: #059669; }
+  .deploy-badge.mid { background: #FEF3C7; color: #B45309; }
+
+  .phase-box {
+    margin-top: 8px; padding: 10px 12px; border-radius: 8px;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    font-size: 13px; line-height: 1.5;
+  }
+  .phase-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+
+  .total-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .total-card {
+    padding: 16px; border-radius: 10px;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+    text-align: center;
+  }
+  .total-card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .total-card-num { font-size: 24px; font-weight: 800; }
+  .total-card-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  .cross-sell-box {
+    padding: 16px; border-radius: 10px; margin-top: 16px;
+    background: var(--bg-card); border: 1px solid var(--border-color);
+  }
+  .cross-sell-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text-color); }
+  .cross-sell-row { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; color: var(--text-secondary); }
+  .cs-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .cs-arrow { color: var(--text-muted); font-size: 16px; }
+
+  .insight-box {
+    margin-top: 16px; padding: 14px 16px; border-radius: 10px;
+    background: var(--bg-card); border-left: 3px solid #6C3AED;
+    font-size: 13px; line-height: 1.55; color: var(--text-secondary);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active-ia" id="tab-ia" onclick="show('ia')">Agentes de IA</button>
+    <button class="tab" id="tab-cloud" onclick="show('cloud')">Direct to Cloud</button>
+    <button class="tab" id="tab-growth" onclick="show('growth')">Growth</button>
+    <button class="tab" id="tab-total" onclick="show('total')">Cuenta completa</button>
+  </div>
+
+  <!-- IA -->
+  <div class="panel panel-ia visible" id="panel-ia">
+    <div class="line-label ia">Línea 01</div>
+    <div class="line-title">Agentes de IA</div>
+    <div class="line-hook">Una pieza que desatora un proceso se resuelve en días, no en meses.</div>
+    <div class="stage">
+      <div class="stage-label">Entrada</div>
+      <div class="stage-content">
+        <strong>Educación → Apetito</strong><br>
+        "¿Qué puedo hacer con esto?" — El decisor no sabe qué es posible. Webinar, masterclass o diagnóstico gratuito abren la puerta.
+        <div class="doors">
+          <div class="door"><div class="door-label biz">Puerta negocio</div><strong>CEO / COO</strong><br>"Quiero automatizar y bajar costos operativos"</div>
+          <div class="door"><div class="door-label tech">Puerta técnica</div><strong>CIO / Dir. IT</strong><br>"¿Cómo integro IA sin romper lo que ya funciona?"</div>
+        </div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+    <div class="stage">
+      <div class="stage-label">Solución</div>
+      <div class="stage-content">
+        <strong>Pieza acotada que desatora un proceso</strong><br>
+        No es un proyecto de software de 6 meses. Es un agente que se inserta en una cadena existente — cobranza, calificación, atención — y produce resultado en días o pocas semanas.
+        <br><span class="deploy-badge fast">Deploy: 2-6 semanas</span> <span style="font-size:12px;color:var(--text-muted)">vs. 4-8 meses de un SaaS o migración cloud</span>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+    <div class="stage">
+      <div class="stage-label">Expansión</div>
+      <div class="stage-content">
+        <strong>Land & expand por agentes</strong><br>
+        Agente 1 → 2 → N. Cada proceso resuelto genera apetito por el siguiente. El caso retail pasó de 1 a 4 agentes en ~12 meses.
+      </div>
+    </div>
+    <div class="ltv-section">
+      <div class="ltv-title">Aritmética de LTV por cuenta</div>
+      <div class="math-row math-header"><div>Concepto</div><div class="r">Unitario</div><div class="r">Año 1</div></div>
+      <div class="math-row"><div>Diagnóstico + discovery</div><div class="r">$80-150K</div><div class="r">$80-150K</div></div>
+      <div class="math-row"><div>Build agente 1</div><div class="r">$300-500K</div><div class="r">$300-500K</div></div>
+      <div class="math-row"><div>Run + monitoreo (×10 meses)</div><div class="r">$40-80K/mes</div><div class="r">$400-800K</div></div>
+      <div class="math-total ia"><div>Año 1 (1 agente)</div><div class="r"></div><div class="r">$0.8-1.5M</div></div>
+      <div style="height:8px"></div>
+      <div class="math-row"><div>Agentes 2-4 build — Año 2</div><div class="r">$250-400K c/u</div><div class="r">$500K-1.2M</div></div>
+      <div class="math-row"><div>Run 4 agentes (×12 meses)</div><div class="r">$80-200K/mes</div><div class="r">$960K-2.4M</div></div>
+      <div class="math-total ia"><div>Año 2+ (3-4 agentes)</div><div class="r"></div><div class="r">$1.5-3.6M</div></div>
+    </div>
+  </div>
+
+  <!-- Cloud -->
+  <div class="panel panel-cloud" id="panel-cloud">
+    <div class="line-label cloud">Línea 02</div>
+    <div class="line-title">Direct to Cloud</div>
+    <div class="line-hook">Salir del datacenter sin pausar lo que ya factura.</div>
+    <div class="stage">
+      <div class="stage-label">Entrada</div>
+      <div class="stage-content">
+        <strong>Dolor de infra → urgencia de migración</strong><br>
+        "Mi datacenter me cuesta demasiado y no escala." Assessment de infraestructura y FinOps como puerta de entrada.
+        <div class="doors">
+          <div class="door"><div class="door-label biz">Puerta negocio</div><strong>CFO / CEO</strong><br>"Quiero bajar el run rate de TI y tener costos predecibles"</div>
+          <div class="door"><div class="door-label tech">Puerta técnica</div><strong>CIO / Dir. Infra</strong><br>"Necesito migrar sin parar la operación"</div>
+        </div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+    <div class="stage">
+      <div class="stage-label">Solución</div>
+      <div class="stage-content">
+        <strong>Migración estructural con FinOps desde día 1</strong><br>
+        Dos fases con quick wins tempranos y reducción de TCO del 34%.
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+          <div class="phase-box">
+            <div class="phase-label" style="color:#0891B2">Fase 1 · Landing Zone (mes 1-3)</div>
+            Infraestructura base: VPC, redes, seguridad, IAM. Migración de primeros workloads no críticos. FinOps reporta ahorros desde semana 2.
+          </div>
+          <div class="phase-box">
+            <div class="phase-label" style="color:#0891B2">Fase 2 · Workloads core (mes 3-9)</div>
+            Bases de datos de producción, ERP, apps que facturan. Cutover planning, ventanas de migración, pruebas de regresión.
+          </div>
+        </div>
+        <br><span class="deploy-badge mid">Proyecto total: 6-9 meses</span> <span style="font-size:12px;color:var(--text-muted)">pero quick wins de FinOps en semana 2</span>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+    <div class="stage">
+      <div class="stage-label">Expansión</div>
+      <div class="stage-content">
+        <strong>Managed services + optimización continua</strong><br>
+        Post-migración: operación cloud, FinOps recurrente, modernización de apps. Ya eres su equipo cloud — no hay razón para salir.
+      </div>
+    </div>
+    <div class="ltv-section">
+      <div class="ltv-title">Aritmética de LTV por cuenta</div>
+      <div class="math-row math-header"><div>Concepto</div><div class="r">Unitario</div><div class="r">Año 1</div></div>
+      <div class="math-row"><div>Assessment + roadmap</div><div class="r">$100-250K</div><div class="r">$100-250K</div></div>
+      <div class="math-row"><div>Fase 1 — Landing zone + primeros workloads</div><div class="r">$300-800K</div><div class="r">$300-800K</div></div>
+      <div class="math-sub">VPC, redes, seguridad, IAM + migración workloads no críticos</div>
+      <div class="math-row"><div>Fase 2 — Workloads core</div><div class="r">$700K-2.2M</div><div class="r">$700K-2.2M</div></div>
+      <div class="math-sub">BDs producción, ERP, apps que facturan, cutover planning</div>
+      <div class="math-row"><div>FinOps + managed (×4-6 meses post-migración)</div><div class="r">$80-150K/mes</div><div class="r">$320-900K</div></div>
+      <div class="math-total cloud"><div>Año 1 (migración completa)</div><div class="r"></div><div class="r">$1.4-4.2M</div></div>
+      <div style="height:8px"></div>
+      <div class="math-row"><div>Managed services (×12 meses)</div><div class="r">$100-200K/mes</div><div class="r">$1.2-2.4M</div></div>
+      <div class="math-row"><div>Nuevos workloads / modernización</div><div class="r">$300-800K</div><div class="r">$300-800K</div></div>
+      <div class="math-total cloud"><div>Año 2+ (operación)</div><div class="r"></div><div class="r">$1.5-3.2M</div></div>
+    </div>
+  </div>
+
+  <!-- Growth -->
+  <div class="panel panel-growth" id="panel-growth">
+    <div class="line-label growth">Línea 03</div>
+    <div class="line-title">Growth (Marketing Digital)</div>
+    <div class="line-hook">Del clic al contrato firmado — con atribución que puedas defender.</div>
+    <div class="stage">
+      <div class="stage-label">Entrada</div>
+      <div class="stage-content">
+        <strong>Pipeline roto → necesidad de tracción</strong><br>
+        "Invierto en digital pero no sé qué genera pipeline real." Auditoría de tracking como puerta de entrada.
+        <div class="doors">
+          <div class="door"><div class="door-label biz">Puerta negocio</div><strong>CEO / Dueño</strong><br>"Necesito más ventas, mi marketing no da resultados medibles"</div>
+          <div class="door"><div class="door-label func">Puerta funcional</div><strong>CMO / Dir. Marketing</strong><br>"Mi funnel no convierte y no puedo demostrar ROI"</div>
+        </div>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+    <div class="stage">
+      <div class="stage-label">Solución</div>
+      <div class="stage-content">
+        <strong>Demanda B2B con atribución honesta</strong><br>
+        Reset de tracking, contenido editorial, outbound + inbound. Pipeline auditable. Lift de 2.7× en 6 meses.
+        <br><span class="deploy-badge mid">Primeros resultados: 8-12 semanas</span> <span style="font-size:12px;color:var(--text-muted)">retainer ongoing</span>
+      </div>
+    </div>
+    <div class="arrow-down">↓</div>
+    <div class="stage">
+      <div class="stage-label">Expansión</div>
+      <div class="stage-content">
+        <strong>Retainer creciente + cross-sell a IA y Cloud</strong><br>
+        Más canales, más contenido, más campañas. Y es la mejor puerta para vender IA y Cloud al mismo cliente — el marketing genera la confianza.
+      </div>
+    </div>
+    <div class="ltv-section">
+      <div class="ltv-title">Aritmética de LTV por cuenta</div>
+      <div class="math-row math-header"><div>Concepto</div><div class="r">Unitario</div><div class="r">Año 1</div></div>
+      <div class="math-row"><div>Auditoría + setup tracking</div><div class="r">$100-200K</div><div class="r">$100-200K</div></div>
+      <div class="math-row"><div>Retainer mensual (×10 meses)</div><div class="r">$60-150K/mes</div><div class="r">$600K-1.5M</div></div>
+      <div class="math-row"><div>Campañas / assets adicionales</div><div class="r">$50-100K c/u</div><div class="r">$100-300K</div></div>
+      <div class="math-total growth"><div>Año 1</div><div class="r"></div><div class="r">$0.8-2M</div></div>
+      <div style="height:8px"></div>
+      <div class="math-row"><div>Retainer (×12 meses, +20%)</div><div class="r">$75-180K/mes</div><div class="r">$900K-2.2M</div></div>
+      <div class="math-total growth"><div>Año 2+</div><div class="r"></div><div class="r">$0.9-2.2M</div></div>
+    </div>
+  </div>
+
+  <!-- Total -->
+  <div class="panel panel-total" id="panel-total">
+    <div class="line-label" style="color:var(--text-muted)">Vista consolidada</div>
+    <div class="line-title">Cuenta completa — las 3 líneas</div>
+    <div class="line-hook">El verdadero LTV es cuando un cliente compra más de una línea.</div>
+
+    <div class="total-grid">
+      <div class="total-card">
+        <div class="total-card-label" style="color:#6C3AED">IA · Año 2+</div>
+        <div class="total-card-num" style="color:#6C3AED">$1.5-3.6M</div>
+        <div class="total-card-sub">3-4 agentes en producción</div>
+      </div>
+      <div class="total-card">
+        <div class="total-card-label" style="color:#0891B2">Cloud · Año 2+</div>
+        <div class="total-card-num" style="color:#0891B2">$1.5-3.2M</div>
+        <div class="total-card-sub">Managed + nuevos workloads</div>
+      </div>
+      <div class="total-card">
+        <div class="total-card-label" style="color:#D97706">Growth · Año 2+</div>
+        <div class="total-card-num" style="color:#D97706">$0.9-2.2M</div>
+        <div class="total-card-sub">Retainer creciente</div>
+      </div>
+    </div>
+
+    <div class="math-total" style="font-size:18px; border-top:3px solid var(--text-color); padding-top:14px;">
+      <div>Cuenta full-stack · Año 2+</div>
+      <div></div>
+      <div class="r">$3.9 — 9M MXN</div>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);text-align:right;margin-top:4px;">5-10 cuentas full-stack = meta de $40M</div>
+
+    <div class="cross-sell-box">
+      <div class="cross-sell-title">Caminos de cross-sell más naturales</div>
+      <div class="cross-sell-row">
+        <div class="cs-dot" style="background:#D97706"></div>
+        <span>Growth genera leads</span>
+        <span class="cs-arrow">→</span>
+        <div class="cs-dot" style="background:#6C3AED"></div>
+        <span>IA automatiza el follow-up y calificación</span>
+      </div>
+      <div class="cross-sell-row">
+        <div class="cs-dot" style="background:#6C3AED"></div>
+        <span>IA necesita escalar</span>
+        <span class="cs-arrow">→</span>
+        <div class="cs-dot" style="background:#0891B2"></div>
+        <span>Cloud da la infraestructura</span>
+      </div>
+      <div class="cross-sell-row">
+        <div class="cs-dot" style="background:#0891B2"></div>
+        <span>Cloud moderniza</span>
+        <span class="cs-arrow">→</span>
+        <div class="cs-dot" style="background:#6C3AED"></div>
+        <span>IA optimiza los procesos que corren en cloud</span>
+      </div>
+    </div>
+
+    <div class="insight-box">
+      <strong>La aritmética del $40M:</strong> No necesitas 40 clientes. Con 5-10 cuentas que compren 2+ líneas llegas a meta. El diagnóstico gratuito es la puerta de entrada universal, pero cada línea tiene su propio par de puertas (negocio + técnica/funcional) para llegar al decisor correcto.
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t => { t.className = 'tab'; });
+  document.getElementById('panel-' + id).classList.add('visible');
+  document.getElementById('tab-' + id).classList.add('active-' + id);
+}
+</script>
+
+</body>
+</html>
