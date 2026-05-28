@@ -3,8 +3,5 @@
   "/clientes/finbe/": "/share/clientes/finbe-aws-mysql-2026-m4q8v2/",
   "/clientes/gba/": "/share/gba/gba-2026-7q4m2x/",
   "/leads/juan-carlos-bautista-jacobo/": "/share/leads/juan-carlos-bautista-jacobo-atdt-2026-v2/",
-  "/leads/juan-carlos-bautista-jacobo/materiales/v1-sin-gestion-urbana/": "/share/leads/juan-carlos-bautista-jacobo-atdt-2026-v2/v1-sin-gestion-urbana/",
-  "/leads/juan-carlos-bautista-jacobo/materiales/v2-con-gestion-urbana/": "/share/leads/juan-carlos-bautista-jacobo-atdt-2026-v2/v2-con-gestion-urbana/",
-  "/sales-material/entendimiento-del-negocio/": "/share/sales-material/abargon-3-lineas-2026-k7p9q2/",
   "/sales-material/": "/share/sales-material/clientes-abargon-2026/"
 }

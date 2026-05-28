@@ -1,25 +1,22 @@
 /* share-button.js — vault-wide share button
-   Reads /share-map.json, checks if current page has a share URL.
-   If yes: shows a floating "Share" button that copies the full share URL. */
+   Fetches share token from /api/share-token (auth required).
+   Builds shareable URL: currentPage?share=TOKEN
+   One click copies to clipboard. */
 
 (function () {
-  // Don't run on /share/ pages themselves
   if (location.pathname.startsWith('/share')) return;
 
-  fetch('/share-map.json')
+  fetch('/api/share-token')
     .then(function (r) { return r.json(); })
-    .then(function (map) {
-      var path = location.pathname;
-      // Normalize: ensure trailing slash
-      if (path.charAt(path.length - 1) !== '/') path += '/';
+    .then(function (data) {
+      var token = data.token;
+      if (!token) return;
 
-      var sharePath = map[path];
-      if (!sharePath) return; // No share for this page
+      var shareURL = location.origin + location.pathname;
+      if (shareURL.charAt(shareURL.length - 1) !== '/' && !shareURL.match(/\.html?$/))
+        shareURL += '/';
+      shareURL += '?share=' + token;
 
-      var origin = location.origin;
-      var shareURL = origin + sharePath;
-
-      // Create button
       var btn = document.createElement('button');
       btn.id = 'vault-share-btn';
       btn.setAttribute('aria-label', 'Copiar share URL');
@@ -29,7 +26,6 @@
         '</svg>' +
         '<span>Share</span>';
 
-      // Styles
       var s = btn.style;
       s.position = 'fixed';
       s.bottom = '24px';
@@ -40,7 +36,7 @@
       s.gap = '7px';
       s.padding = '0 16px';
       s.height = '42px';
-      s.border = '1px solid rgba(16,24,32,0.14)';
+      s.border = 'none';
       s.borderRadius = '0';
       s.background = '#101820';
       s.color = '#ffffff';
@@ -74,5 +70,5 @@
 
       document.body.appendChild(btn);
     })
-    .catch(function () { /* silently fail — no share available */ });
+    .catch(function () { /* not authenticated or error */ });
 })();
