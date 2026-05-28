@@ -70,14 +70,10 @@ nav a {
   gap: 12px;
 }
 
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  background: var(--ink);
-  color: var(--lime);
-  font-size: 13px;
+.brand-logo {
+  display: block;
+  width: 176px;
+  height: auto;
 }
 
 nav {
@@ -194,7 +190,7 @@ h1 {
 
 .kpis {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
   gap: 14px;
   margin-bottom: 16px;
 }
@@ -209,6 +205,35 @@ h1 {
   font-size: clamp(28px, 3vw, 42px);
   line-height: 1;
   overflow-wrap: anywhere;
+}
+
+.kpis .money {
+  border-top: 5px solid currentColor;
+}
+
+.kpis .money strong {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  font-size: clamp(32px, 2.6vw, 42px);
+}
+
+.kpis .postpay {
+  color: #b63d1f;
+}
+
+.kpis .postpay span,
+.kpis .postpay small {
+  color: #8d321d;
+}
+
+.kpis .prepay {
+  color: #007a55;
+}
+
+.kpis .prepay span,
+.kpis .prepay small {
+  color: #006145;
 }
 
 .kpis small {
