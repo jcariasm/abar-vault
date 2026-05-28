@@ -212,5 +212,7 @@ new Chart(document.getElementById('forecastChart'),{
   plugins:[{afterDraw(c){const ctx=c.ctx;const y=c.scales.y.getPixelForValue(1000);ctx.save();ctx.strokeStyle='#E24B4A';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(c.scales.x.left,y);ctx.lineTo(c.scales.x.right,y);ctx.stroke();ctx.fillStyle='#E24B4A';ctx.font='600 12px sans-serif';ctx.fillText('1,000 u/mes',c.scales.x.right-85,y-6);ctx.restore();}}]
 });
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script src="/share-button.js"></script>
 </body>
 </html>

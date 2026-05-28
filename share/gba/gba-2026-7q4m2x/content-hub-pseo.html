@@ -147,5 +147,6 @@ new Chart(document.getElementById('cmpChart'),{type:'line',data:{labels:mo,datas
 
 new Chart(document.getElementById('trafChart'),{type:'bar',data:{labels:['Sin content/pSEO','Con content/pSEO'],datasets:[{label:'Paid',data:[7000,7000],backgroundColor:'#378ADD'},{label:'Influencers',data:[8000,8000],backgroundColor:'#7F77DD'},{label:'Blog Shopify',data:[4000,4000],backgroundColor:'#1D9E75'},{label:'Content hub',data:[0,8000],backgroundColor:'#D85A30'},{label:'Programmatic',data:[0,10000],backgroundColor:'#D4537E'},{label:'Directo/email',data:[6000,6000],backgroundColor:'#888'}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{stacked:true,ticks:{callback:v=>(v/1000)+'K'}},y:{stacked:true}}}});
 </script>
-</body>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </body>
 </html>

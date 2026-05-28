@@ -111,5 +111,6 @@ const tr=document.createElement('tr');
 tr.innerHTML=`<td>TOTAL</td><td>20 meses</td><td class="r">$${(totS/1000).toFixed(0)}K</td><td class="r">${totU.toLocaleString()}</td><td class="r">$${(totR/1000).toFixed(0)}K</td><td class="r hi">\$${(totS/totU).toFixed(0)}</td><td class="r hi">${(totR/totS).toFixed(1)}x</td><td class="r">$${(totR*0.10/1000).toFixed(0)}K</td>`;
 tbody.appendChild(tr);
 </script>
-</body>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </body>
 </html>
