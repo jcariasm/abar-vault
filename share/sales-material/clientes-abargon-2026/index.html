@@ -269,25 +269,25 @@
 
     <main class="shell">
       <section class="hero">
-        <p class="eyebrow">Clientes â€” Abargon</p>
-        <h1>32 aÃ±os de productos digitales.</h1>
-        <p class="lede">Del primer kiosco interactivo de los noventa al agente de IA de hoy: una cartera construida en banca, gobierno, salud, medios, consumo, industria y tecnologÃ­a.</p>
-        <p class="updated">Documento actualizado: mayo 2026 â€” basado en el curriculum institucional y proyectos en operaciÃ³n 2024â€“2026.</p>
+        <p class="eyebrow">Clientes — Abargon</p>
+        <h1>32 años de productos digitales.</h1>
+        <p class="lede">Del primer kiosco interactivo de los noventa al agente de IA de hoy: una cartera construida en banca, gobierno, salud, medios, consumo, industria y tecnología.</p>
+        <p class="updated">Documento actualizado: mayo 2026 — basado en el curriculum institucional y proyectos en operación 2024–2026.</p>
         <div class="stats" aria-label="Resumen de cartera">
           <div class="stat"><strong>111</strong><span>clientes registrados</span></div>
           <div class="stat"><strong>12</strong><span>sectores principales</span></div>
-          <div class="stat"><strong>32+</strong><span>aÃ±os de trayectoria</span></div>
+          <div class="stat"><strong>32+</strong><span>años de trayectoria</span></div>
           <div class="stat"><strong>2026</strong><span>proyectos activos y pipeline</span></div>
         </div>
       </section>
 
       <section class="controls" aria-label="Controles">
         <label class="search">
-          <input id="search" type="search" placeholder="Buscar cliente, sector, tecnologia, premio o aÃ±o" />
+          <input id="search" type="search" placeholder="Buscar cliente, sector, tecnologia, premio o año" />
         </label>
         <div class="toggle" aria-label="Vista">
           <button class="active" data-view="sectors">Sectores</button>
-          <button data-view="alphabetical">AlfabÃ©tico</button>
+          <button data-view="alphabetical">Alfabético</button>
         </div>
       </section>
 
@@ -298,8 +298,8 @@
         <h2>Notas</h2>
         <ul>
           <li>Los clientes marcados como borderline representan propuestas en pipeline o relaciones sin contrato firmado al momento de generar este documento.</li>
-          <li>Los partners y alianzas tecnolÃ³gicas se listan por separado en el documento ejecutivo.</li>
-          <li>Esta lista se genera a partir del curriculum institucional 2024 y proyectos verificados en operaciÃ³n entre 2024 y 2026.</li>
+          <li>Los partners y alianzas tecnológicas se listan por separado en el documento ejecutivo.</li>
+          <li>Esta lista se genera a partir del curriculum institucional 2024 y proyectos verificados en operación entre 2024 y 2026.</li>
         </ul>
       </section>
     </main>
@@ -308,7 +308,7 @@
         <div class="modal-head">
           <div>
             <p class="eyebrow">Screenshots del curriculum</p>
-            <h2 id="modalTitle">MÃ¡s info</h2>
+            <h2 id="modalTitle">Más info</h2>
           </div>
           <button class="close" id="closeModal" aria-label="Cerrar">x</button>
         </div>
@@ -319,67 +319,67 @@
     <script>
       const sectors = [
         { id: 'finanzas', title: 'Banca, finanzas y fintech', clients: [
-          ['Altech (ex-Techfar / Eipex)', 'Plataforma fintech IFPE: wallet, portal admin clientes y back office. En proceso de aprobaciÃ³n por la CNBV.', '2022-vigente'],
-          ['Axelera', 'SOFOM AgÃ©ntica: scoring crediticio con 19 procesos parametrizados y 3 reportes automatizados.', '2025-2026'],
+          ['Altech (ex-Techfar / Eipex)', 'Plataforma fintech IFPE: wallet, portal admin clientes y back office. En proceso de aprobación por la CNBV.', '2022-vigente'],
+          ['Axelera', 'SOFOM Agéntica: scoring crediticio con 19 procesos parametrizados y 3 reportes automatizados.', '2025-2026'],
           ['Banco Azteca', 'Cliente de cartera bancaria.', ''],
-          ['Banco Multisectorial de Inversiones (BMI, El Salvador)', "Portal institucional y portal Red del Desarrollo para programa de crÃ©ditos. Modelo de referencia para el sector oficial salvadoreÃ±o.", '2004-2005'],
-          ['Banco Walmart de MÃ©xico', 'Cliente de cartera bancaria.', ''],
+          ['Banco Multisectorial de Inversiones (BMI, El Salvador)', "Portal institucional y portal Red del Desarrollo para programa de créditos. Modelo de referencia para el sector oficial salvadoreño.", '2004-2005'],
+          ['Banco Walmart de México', 'Cliente de cartera bancaria.', ''],
           ['Banobras', 'Cliente de cartera: banca de desarrollo de infraestructura.', ''],
           ['Banorte', 'Propuesta compleja banca grande. Borderline / sin contrato firmado.', ''],
           ['Bansefi', 'Cliente de cartera: banca de desarrollo.', ''],
-          ['Club de Banqueros de MÃ©xico', 'CD-ROM interactivo institucional.', '1997'],
-          ['CNBV â€” ComisiÃ³n Nacional Bancaria y de Valores', 'Cliente de cartera: regulador financiero.', ''],
-          ['Efectifintech', 'AuditorÃ­a regulatoria CNBV y propuestas tÃ©cnicas.', '2025-2026'],
+          ['Club de Banqueros de México', 'CD-ROM interactivo institucional.', '1997'],
+          ['CNBV — Comisión Nacional Bancaria y de Valores', 'Cliente de cartera: regulador financiero.', ''],
+          ['Efectifintech', 'Auditoría regulatoria CNBV y propuestas técnicas.', '2025-2026'],
           ['Financiera Bepensa', 'Cliente de cartera financiera.', ''],
           ['Financiera Rural', 'Cliente de cartera: financiamiento agropecuario.', ''],
-          ['FinBe / ABC Leasing de MÃ©xico', 'E-commerce pick & go, SharePoint, webservices a CRM, webpay, analÃ­tica, SEO y migraciÃ³n AWS.', '2014-vigente'],
-          ['Grupo Financiero Inbursa', 'Sistema hÃ­brido CD-ROM + intranet para capacitaciÃ³n de fuerza de ventas Afore.', '1999'],
-          ['Grupo Financiero Serfin', 'Minisitio Mundial Corea-JapÃ³n 2002, e-marketing y banners en AmericaOnLine.', '2002'],
-          ['Doopla / Grupo Finansiell', 'Fintech mexicana de crÃ©dito persona a persona. ParticipaciÃ³n enfocada en UX, arquitectura de experiencia y desarrollo de plataforma web/app.', ''],
-          ['ING Wealth Management', 'Cliente de cartera: gestiÃ³n patrimonial.', ''],
-          ['Kubo Financiero', 'Fintech mexicana de renombre. ParticipaciÃ³n como investors y en UX para experiencia digital financiera.', ''],
-          ['Mercer (Beneflex)', 'Sistema web de beneficios flexibles multipaÃ­s para grandes empresas.', '2008-2012'],
-          ['Nacional Financiera (Nafinsa)', "Portal institucional y extranet PyMEs Red de Negocios con simulador de crÃ©ditos. 1er lugar World Summit Award ONU 2007.", '2002-2003'],
-          ['Sociedad Hipotecaria Federal (SHF)', 'Portal corporativo e intranet con 23 aplicaciones. CalificaciÃ³n 10/10 en evaluaciÃ³n oficial 2010.', '2009-2013']
+          ['FinBe / ABC Leasing de México', 'E-commerce pick & go, SharePoint, webservices a CRM, webpay, analítica, SEO y migración AWS.', '2014-vigente'],
+          ['Grupo Financiero Inbursa', 'Sistema híbrido CD-ROM + intranet para capacitación de fuerza de ventas Afore.', '1999'],
+          ['Grupo Financiero Serfin', 'Minisitio Mundial Corea-Japón 2002, e-marketing y banners en AmericaOnLine.', '2002'],
+          ['Doopla / Grupo Finansiell', 'Fintech mexicana de crédito persona a persona. Participación enfocada en UX, arquitectura de experiencia y desarrollo de plataforma web/app.', ''],
+          ['ING Wealth Management', 'Cliente de cartera: gestión patrimonial.', ''],
+          ['Kubo Financiero', 'Fintech mexicana de renombre. Participación como investors y en UX para experiencia digital financiera.', ''],
+          ['Mercer (Beneflex)', 'Sistema web de beneficios flexibles multipaís para grandes empresas.', '2008-2012'],
+          ['Nacional Financiera (Nafinsa)', "Portal institucional y extranet PyMEs Red de Negocios con simulador de créditos. 1er lugar World Summit Award ONU 2007.", '2002-2003'],
+          ['Sociedad Hipotecaria Federal (SHF)', 'Portal corporativo e intranet con 23 aplicaciones. Calificación 10/10 en evaluación oficial 2010.', '2009-2013']
         ]},
-        { id: 'gobierno', title: 'Gobierno e instituciones pÃºblicas', clients: [
-          ['AMIVTAC', 'AsociaciÃ³n profesional de ingenierÃ­a de vÃ­as terrestres e infraestructura.', ''],
-          ['APEC 2002 MÃ©xico', 'Portal, intranet logÃ­stica, acreditaciÃ³n en lÃ­nea y Conserje en lÃ­nea para 14,000 asistentes.', '2002'],
+        { id: 'gobierno', title: 'Gobierno e instituciones públicas', clients: [
+          ['AMIVTAC', 'Asociación profesional de ingeniería de vías terrestres e infraestructura.', ''],
+          ['APEC 2002 México', 'Portal, intranet logística, acreditación en línea y Conserje en línea para 14,000 asistentes.', '2002'],
           ['Auditorio Nacional', 'Cliente de cartera institucional.', ''],
-          ['Casa de Moneda de MÃ©xico', 'Cliente histÃ³rico institucional.', ''],
-          ['Ceneval', 'Cliente de cartera: evaluaciÃ³n educativa nacional.', ''],
-          ['CFE â€” ComisiÃ³n Federal de Electricidad', 'Portal institucional cfe.gob.mx, sitio presa El CajÃ³n e intranet.', '2000-2012'],
-          ['CPTM / Visit Mexico', 'Portal oficial de turismo en 8 idiomas. 9.7M sesiones y 7.6M usuarios al aÃ±o en 2017.', '2015-2018'],
+          ['Casa de Moneda de México', 'Cliente histórico institucional.', ''],
+          ['Ceneval', 'Cliente de cartera: evaluación educativa nacional.', ''],
+          ['CFE — Comisión Federal de Electricidad', 'Portal institucional cfe.gob.mx, sitio presa El Cajón e intranet.', '2000-2012'],
+          ['CPTM / Visit Mexico', 'Portal oficial de turismo en 8 idiomas. 9.7M sesiones y 7.6M usuarios al año en 2017.', '2015-2018'],
           ['Gobierno de Baja California', 'Cliente de cartera: gobierno estatal.', ''],
           ['Gobierno de Guanajuato', 'Cliente de cartera: gobierno estatal.', ''],
-          ['IFAI / INAI', 'Cliente de cartera: transparencia y protecciÃ³n de datos.', ''],
-          ['Infonavit', 'RediseÃ±o del portal sobre IBM WebSphere. Premio AMIPCI 2009 en Gobierno ElectrÃ³nico.', '2008-2011'],
-          ['Libros MÃ©xico (Conaculta)', 'Cliente de cartera cultural.', ''],
-          ['Pemex', 'Portal institucional pemex.com e intranets de DirecciÃ³n General, ComunicaciÃ³n Social y PlaneaciÃ³n Financiera.', '2002'],
-          ['Presidencia de la RepÃºblica', 'Cliente de cartera del sector federal.', ''],
+          ['IFAI / INAI', 'Cliente de cartera: transparencia y protección de datos.', ''],
+          ['Infonavit', 'Rediseño del portal sobre IBM WebSphere. Premio AMIPCI 2009 en Gobierno Electrónico.', '2008-2011'],
+          ['Libros México (Conaculta)', 'Cliente de cartera cultural.', ''],
+          ['Pemex', 'Portal institucional pemex.com e intranets de Dirección General, Comunicación Social y Planeación Financiera.', '2002'],
+          ['Presidencia de la República', 'Cliente de cartera del sector federal.', ''],
           ['SCT', 'Cliente de cartera: sector federal.', '']
         ]},
-        { id: 'salud', title: 'Salud y farmacÃ©utica', clients: [
-          ['Abbott Laboratories de MÃ©xico', 'Cliente de cartera farmacÃ©utica.', ''],
-          ['AbbVie FarmacÃ©uticos', 'Cliente de cartera farmacÃ©utica.', ''],
-          ['Bayer de MÃ©xico', 'Portal institucional bayer.com.mx y migraciÃ³n a ColdFusion.', '2000-2004'],
-          ['Bristol-Myers Squibb', 'Cliente de cartera farmacÃ©utica.', ''],
-          ['Farmacias Especializadas', 'Cliente de cartera: retail farmacÃ©utico.', ''],
-          ['Marzam', 'Cliente de cartera: distribuciÃ³n farmacÃ©utica.', ''],
-          ['Pfizer', 'Portal corporativo MX, sitios de producto y plataforma multipaÃ­s Champix/Libre de Cigarro con CRM en 7 paÃ­ses.', '2004-2008'],
+        { id: 'salud', title: 'Salud y farmacéutica', clients: [
+          ['Abbott Laboratories de México', 'Cliente de cartera farmacéutica.', ''],
+          ['AbbVie Farmacéuticos', 'Cliente de cartera farmacéutica.', ''],
+          ['Bayer de México', 'Portal institucional bayer.com.mx y migración a ColdFusion.', '2000-2004'],
+          ['Bristol-Myers Squibb', 'Cliente de cartera farmacéutica.', ''],
+          ['Farmacias Especializadas', 'Cliente de cartera: retail farmacéutico.', ''],
+          ['Marzam', 'Cliente de cartera: distribución farmacéutica.', ''],
+          ['Pfizer', 'Portal corporativo MX, sitios de producto y plataforma multipaís Champix/Libre de Cigarro con CRM en 7 países.', '2004-2008'],
           ['Philip Morris Products', 'Cliente de cartera en Nueva York.', ''],
-          ['Roche Syntex', 'Kiosco interactivo Reto MÃ©xico para capacitaciÃ³n de mÃ©dicos residentes.', '1997'],
-          ['Sandoz / Grupo Novartis', 'Cliente de cartera farmacÃ©utica.', ''],
-          ['Wyeth (hoy Pfizer)', 'Portal corporativo, 8 sitios de Enbrel para Latam e intranet Wyeth MÃ©xico.', '2002-2008']
+          ['Roche Syntex', 'Kiosco interactivo Reto México para capacitación de médicos residentes.', '1997'],
+          ['Sandoz / Grupo Novartis', 'Cliente de cartera farmacéutica.', ''],
+          ['Wyeth (hoy Pfizer)', 'Portal corporativo, 8 sitios de Enbrel para Latam e intranet Wyeth México.', '2002-2008']
         ]},
         { id: 'medios', title: 'Medios y entretenimiento', clients: [
-          ['CIE', 'Portal corporativo trilingÃ¼e e intranet.', '2003 / 2017'],
-          ['Grupo Salinas / TV Azteca', 'FÃ¡brica de software para Azteca Digital y migraciÃ³n a CMS Brightspot.', '2019-vigente'],
-          ['Hispanic Heritage Awards Foundation', 'Website bilingÃ¼e para Hispanic Heritage Award 2002.', '2002'],
-          ['IUSACELL', 'Informe anual 2001 en lÃ­nea. Premio RAO 1 2002.', '2002'],
-          ['MÃ©xico Desconocido', 'Portal turÃ­stico con 40+ secciones, buscador y CMS a la medida.', '2000-2001'],
+          ['CIE', 'Portal corporativo trilingüe e intranet.', '2003 / 2017'],
+          ['Grupo Salinas / TV Azteca', 'Fábrica de software para Azteca Digital y migración a CMS Brightspot.', '2019-vigente'],
+          ['Hispanic Heritage Awards Foundation', 'Website bilingüe para Hispanic Heritage Award 2002.', '2002'],
+          ['IUSACELL', 'Informe anual 2001 en línea. Premio RAO 1 2002.', '2002'],
+          ['México Desconocido', 'Portal turístico con 40+ secciones, buscador y CMS a la medida.', '2000-2001'],
           ['Televisa', 'Intranet corporativa con MS Office SharePoint Server 2007.', '2007-2008'],
-          ['Turner Network Television (TNT)', 'DiseÃ±o de interfaz para tnt.turner.com, primer proyecto internacional.', '1997'],
+          ['Turner Network Television (TNT)', 'Diseño de interfaz para tnt.turner.com, primer proyecto internacional.', '1997'],
           ['Warner Music', 'Cliente de cartera musical.', '']
         ]},
         { id: 'consumo', title: 'FMCG y consumo', clients: [
@@ -387,71 +387,71 @@
           ['Casa Pedro Domecq (Pernod Ricard)', 'Sitio corporativo y calculadora de bebidas para eventos.', '2001-2002'],
           ['Coca-Cola', 'Cliente de cartera en Atlanta, GA.', ''],
           ['Cuervo', 'Propuesta SAP en pipeline.', '2025'],
-          ['FEMSA', 'Servicios de programaciÃ³n bajo modelo de extensiÃ³n.', '2014-vigente'],
+          ['FEMSA', 'Servicios de programación bajo modelo de extensión.', '2014-vigente'],
           ['Gruma', 'Cliente de cartera de alimentos.', ''],
-          ['Grupo Bimbo', 'Portal corporativo e intranet Bimbo Plaza multipaÃ­s. AMIPCI, I-Best y premios de diseÃ±o.', '1999-2009'],
-          ['Omnilife', 'Comunicaciones internas y sistema de gestiÃ³n documental. Propuesta tÃ©cnica.', '2026'],
-          ['PepsiCo de MÃ©xico (Manzanita Sol)', 'Sitio de marca y clubes de lealtad con inteligencia de mercadotecnia.', '2004'],
-          ["Pond's (Unilever)", "Instituto Pond's Interactivo: kiosco digital para evaluaciÃ³n de piel. Premio Macromedia Developers Conference.", '1997']
+          ['Grupo Bimbo', 'Portal corporativo e intranet Bimbo Plaza multipaís. AMIPCI, I-Best y premios de diseño.', '1999-2009'],
+          ['Omnilife', 'Comunicaciones internas y sistema de gestión documental. Propuesta técnica.', '2026'],
+          ['PepsiCo de México (Manzanita Sol)', 'Sitio de marca y clubes de lealtad con inteligencia de mercadotecnia.', '2004'],
+          ["Pond's (Unilever)", "Instituto Pond's Interactivo: kiosco digital para evaluación de piel. Premio Macromedia Developers Conference.", '1997']
         ]},
-        { id: 'industria', title: 'Industria, construcciÃ³n y manufactura', clients: [
-          ['Abilia', 'Cinco propuestas hÃ­bridas / AI-Only / RPA-First. Pipeline sin contrato firmado.', '2025'],
-          ['BCB Impulse', 'Imagen corporativa, CD-ROM, folleto y stand MIPIM Americas Miami. Premios a!DiseÃ±o y Benjamin Franklin Award.', '1998-1999'],
-          ['Bridgestone Firestone de MÃ©xico', 'Cliente de cartera: llantas.', ''],
-          ['Cemex', 'DiseÃ±o del Portal Mundial de Comercio ElectrÃ³nico: concepto, prototipo y especificaciÃ³n.', '2008'],
+        { id: 'industria', title: 'Industria, construcción y manufactura', clients: [
+          ['Abilia', 'Cinco propuestas híbridas / AI-Only / RPA-First. Pipeline sin contrato firmado.', '2025'],
+          ['BCB Impulse', 'Imagen corporativa, CD-ROM, folleto y stand MIPIM Americas Miami. Premios a!Diseño y Benjamin Franklin Award.', '1998-1999'],
+          ['Bridgestone Firestone de México', 'Cliente de cartera: llantas.', ''],
+          ['Cemex', 'Diseño del Portal Mundial de Comercio Electrónico: concepto, prototipo y especificación.', '2008'],
           ['Fester', 'Website corporativo y de productos con sistema interactivo de recomendaciones.', '2001'],
           ['Georgia Pacific', 'Cliente de cartera: papel y empaque.', ''],
           ['Grupo Cementos de Chihuahua (GCC)', 'Cliente de cartera: cemento multinacional.', ''],
-          ['Grupo Condumex', 'Cliente de cartera: cables y equipo elÃ©ctrico.', ''],
+          ['Grupo Condumex', 'Cliente de cartera: cables y equipo eléctrico.', ''],
           ['Grupo Desc', 'CD-ROM 25 aniversario, kiosco, website conmemorativo, informes anuales y sitio de inversionistas.', '1998-2001'],
-          ['ICA', 'Website institucional con proveedores, bolsa de trabajo y base de 50+ aÃ±os de obras.', '2001-2002'],
-          ['Industrias PeÃ±oles', 'Intranet corporativa con OpenCMS, SSO, LDAP e integraciÃ³n de cientos de pÃ¡ginas.', '2005-2006'],
-          ['Izar (Valle de Bravo)', 'Website e intranet de administraciÃ³n inmobiliaria.', '2001'],
-          ['Mexichem (Orbia)', 'Cliente de cartera: quÃ­mica industrial.', ''],
+          ['ICA', 'Website institucional con proveedores, bolsa de trabajo y base de 50+ años de obras.', '2001-2002'],
+          ['Industrias Peñoles', 'Intranet corporativa con OpenCMS, SSO, LDAP e integración de cientos de páginas.', '2005-2006'],
+          ['Izar (Valle de Bravo)', 'Website e intranet de administración inmobiliaria.', '2001'],
+          ['Mexichem (Orbia)', 'Cliente de cartera: química industrial.', ''],
           ['Navalmex', 'Cliente de cartera: industria naval.', ''],
-          ['Oro Negro', 'Cliente de cartera: energÃ­a/perforaciÃ³n.', ''],
-          ['Pulte MÃ©xico', 'Website corporativo y directorio de desarrollos inmobiliarios con mapas.', '2003'],
+          ['Oro Negro', 'Cliente de cartera: energía/perforación.', ''],
+          ['Pulte México', 'Website corporativo y directorio de desarrollos inmobiliarios con mapas.', '2003'],
           ['Salamander', 'SOWs comparativos para ERP: Odoo, Oracle NetSuite y Zoho. Propuesta avanzada.', '2026'],
-          ['Senosiain', 'Cliente de cartera: arquitectura/diseÃ±o.', ''],
+          ['Senosiain', 'Cliente de cartera: arquitectura/diseño.', ''],
           ['Somar', 'Cliente de cartera.', ''],
           ['Sonoco', 'Cliente de cartera: empaque industrial.', '']
         ]},
-        { id: 'logistica', title: 'LogÃ­stica y transporte', clients: [
-          ['Caribbean Airlines', 'Portal de reservaciones y comercio electrÃ³nico. 6.9M sesiones en 2017.', '2017'],
-          ['DHL', 'DiseÃ±o de UI para Customer Connect, software de gestiÃ³n de envÃ­os express.', '1998'],
-          ['Ferromex', 'FÃ¡brica de software para trenes, Chepe, Intermodal y migraciÃ³n portal Java a WordPress.', '2018-2019'],
+        { id: 'logistica', title: 'Logística y transporte', clients: [
+          ['Caribbean Airlines', 'Portal de reservaciones y comercio electrónico. 6.9M sesiones en 2017.', '2017'],
+          ['DHL', 'Diseño de UI para Customer Connect, software de gestión de envíos express.', '1998'],
+          ['Ferromex', 'Fábrica de software para trenes, Chepe, Intermodal y migración portal Java a WordPress.', '2018-2019'],
           ['Mitsui', 'Cliente de cartera: trading internacional.', '']
         ]},
-        { id: 'tecnologia', title: 'TecnologÃ­a y telecomunicaciones', clients: [
+        { id: 'tecnologia', title: 'Tecnología y telecomunicaciones', clients: [
           ['Apple Computers', 'Intranet corporativa en Cupertino por solicitud directa del corporativo.', '1999'],
-          ['AT&T', 'Website de informaciÃ³n financiera para inversionistas.', '1999'],
+          ['AT&T', 'Website de información financiera para inversionistas.', '1999'],
           ['Avantel', 'Cliente de cartera: telecomunicaciones.', ''],
-          ['FCICK', 'ImplementaciÃ³n SAP B1.', '2023-2024'],
-          ['FOA Consulting', 'Cliente de cartera: consultorÃ­a tecnolÃ³gica.', ''],
-          ['IBM', 'Sitio de relaciÃ³n con inversionistas con Elemental Interactive.', '1998-1999'],
-          ['KIO / Klickness', 'Partner/canal para prÃ¡ctica de e-commerce transaccional.', '2023+'],
-          ['Outsource Technology Group (OTG)', 'Website corporativo basado en historias de Ã©xito farmacÃ©uticas.', '1999']
+          ['FCICK', 'Implementación SAP B1.', '2023-2024'],
+          ['FOA Consulting', 'Cliente de cartera: consultoría tecnológica.', ''],
+          ['IBM', 'Sitio de relación con inversionistas con Elemental Interactive.', '1998-1999'],
+          ['KIO / Klickness', 'Partner/canal para práctica de e-commerce transaccional.', '2023+'],
+          ['Outsource Technology Group (OTG)', 'Website corporativo basado en historias de éxito farmacéuticas.', '1999']
         ]},
-        { id: 'turismo', title: 'Turismo y hotelerÃ­a', clients: [
-          ['Casa MÃ©xico LA', 'Marketing digital y contenido para FIFA World Cup 2026 en Los Ãngeles.', '2026'],
+        { id: 'turismo', title: 'Turismo y hotelería', clients: [
+          ['Casa México LA', 'Marketing digital y contenido para FIFA World Cup 2026 en Los Ángeles.', '2026'],
           ['Hoteles City', 'Cliente de cartera hotelera.', ''],
           ['Royal Holiday / Grupo Costamex', 'Website, extranet para promotores, multilenguaje y mantenimiento continuo.', '2002-vigente']
         ]},
         { id: 'retail', title: 'Retail y servicios', clients: [
-          ['Grupo Gayosso', 'E-commerce de servicios funerarios y marketing digital. 30% de aumento en ventas en lÃ­nea.', '2018-2022'],
+          ['Grupo Gayosso', 'E-commerce de servicios funerarios y marketing digital. 30% de aumento en ventas en línea.', '2018-2022'],
           ['i-Decore', 'Cliente de cartera.', ''],
-          ['Inmueblesymas.com / Metros CÃºbicos', 'Portal inmobiliario con 30K+ propiedades y bÃºsqueda centrada en usuario.', '2000+'],
+          ['Inmueblesymas.com / Metros Cúbicos', 'Portal inmobiliario con 30K+ propiedades y búsqueda centrada en usuario.', '2000+'],
           ['Re:Source', 'Website corporativo basado en ciclo de vida del producto.', '2000-2001'],
           ['Sodexo', 'Cliente de cartera: servicios corporativos.', ''],
           ['Super Aki', 'E-commerce pick & go durante pandemia y mejoras UX continuas.', '2020-vigente']
         ]},
-        { id: 'educacion', title: 'EducaciÃ³n y editorial', clients: [
+        { id: 'educacion', title: 'Educación y editorial', clients: [
           ['Santillana', 'Cliente de cartera editorial.', '']
         ]},
         { id: 'otros', title: 'Otros', clients: [
           ['GBA', 'Kickoff abr-2026. Borderline / por confirmar.', '2026'],
           ['Mas Negocio', 'Contrato Macro creado. Borderline / por confirmar.', '2026'],
-          ['UNA â€” UniÃ³n Nacional de Avicultores', "Website e intranet de precios con actualizaciÃ³n cada 3 minutos: bolsa de valores del sector avÃ­cola.", '1999-2000']
+          ['UNA — Unión Nacional de Avicultores', "Website e intranet de precios con actualización cada 3 minutos: bolsa de valores del sector avícola.", '1999-2000']
         ]}
       ];
 
@@ -536,7 +536,7 @@
               <span>${sector}</span>
               ${client[2] ? `<span>${client[2]}</span>` : ''}
             </div>
-            ${evidence ? `<button class="more-info" data-evidence="${evidence.key}">MÃ¡s info</button>` : ''}
+            ${evidence ? `<button class="more-info" data-evidence="${evidence.key}">Más info</button>` : ''}
           </article>
         `;
       }
@@ -553,7 +553,7 @@
         modalTitle.textContent = entry.name;
         modalBody.innerHTML = entry.slides.map((slide) => `
           <section class="shot-group">
-            <h3>${slide.title} Â· slide ${slide.slide}</h3>
+            <h3>${slide.title} · slide ${slide.slide}</h3>
             <div class="shots">
               ${slide.images.map((src) => `<a href="${src}" target="_blank" rel="noreferrer"><img src="${src}" loading="lazy" alt="${entry.name} screenshot" /></a>`).join('')}
             </div>
@@ -611,7 +611,7 @@
               <span class="count">${clients.length} registros</span>
             </div>
             <div class="alpha-list">
-              ${clients.map((item) => `<p class="alpha-item"><strong>${item.name}</strong> â€” ${item.detail} ${item.date ? `<em>${item.date}</em>` : ''}</p>`).join('')}
+              ${clients.map((item) => `<p class="alpha-item"><strong>${item.name}</strong> — ${item.detail} ${item.date ? `<em>${item.date}</em>` : ''}</p>`).join('')}
             </div>
           </section>
         `;
@@ -657,4 +657,5 @@
     </script>
   </body>
 </html>
+
 
