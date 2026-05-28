@@ -38,6 +38,13 @@
       "tags": ["sales material", "entendimiento del negocio", "lineas de servicio", "abargon"]
     },
     {
+      "title": "Lista de clientes Abargon",
+      "type": "sales",
+      "description": "Cartera institucional por sector con proyectos, screenshots del curriculum y vista interactiva para soporte comercial.",
+      "href": "/library/client-documents/general/clientes-abargon.html",
+      "tags": ["sales material", "clientes", "cartera", "sectores", "abargon", "screenshots"]
+    },
+    {
       "title": "Tools",
       "type": "simulator",
       "description": "Tools para diagnosticar escenarios comerciales, marketing, crecimiento y pipeline.",
