@@ -8,7 +8,7 @@ const annualSource = [
   { index: 7, month: 'Febrero', contracted: 80, exercised: 85 },
   { index: 8, month: 'Marzo', contracted: 80, exercised: 79 },
   { index: 9, month: 'Abril', contracted: 80, exercised: 61 },
-  { index: 10, month: 'Mayo', contracted: 80, exercised: 70 },
+  { index: 10, month: 'Mayo', contracted: 80, exercised: 56 },
   { index: 11, month: 'Junio', contracted: 80, exercised: 0, pending: true },
   { index: 12, month: 'Julio', contracted: 80, exercised: 0, pending: true },
 ];
@@ -93,9 +93,6 @@ const activities = [
   { month: 'Mayo', day: '18', description: 'reporte factoraje', hours: 8, type: 'Reporte', track: 'AX-FACTOR-2026-05' },
   { month: 'Mayo', day: '19', description: 'reporte factoraje', hours: 8, type: 'Reporte', track: 'AX-FACTOR-2026-05' },
   { month: 'Mayo', day: '20', description: 'reporte factoraje', hours: 8, type: 'Reporte', track: 'AX-FACTOR-2026-05' },
-  { month: 'Mayo', day: '25', description: 'reporte factoraje', hours: 4, type: 'Reporte', track: 'AX-FACTOR-2026-05' },
-  { month: 'Mayo', day: '26', description: 'reporte factoraje', hours: 4, type: 'Reporte', track: 'AX-FACTOR-2026-05' },
-  { month: 'Mayo', day: '27', description: 'reporte factoraje', hours: 4, type: 'Reporte', track: 'AX-FACTOR-2026-05' },
   { month: 'Mayo', day: '-', description: 'propuestas y pm', hours: 12, type: 'PM', track: 'OK-AX-REPORTES-MAYO' },
 ];
 

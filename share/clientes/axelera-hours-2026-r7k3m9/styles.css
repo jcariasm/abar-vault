@@ -103,6 +103,18 @@ nav a,
   align-items: center;
 }
 
+.top-actions {
+  justify-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.top-actions .quiet-link {
+  justify-self: auto;
+}
+
 nav a:hover,
 .quiet-link:hover,
 .filter:hover,
@@ -468,6 +480,11 @@ td strong {
 
   .quiet-link {
     justify-self: start;
+  }
+
+  .top-actions {
+    justify-self: start;
+    justify-content: flex-start;
   }
 
   .shell {
